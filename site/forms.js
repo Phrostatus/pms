@@ -107,7 +107,8 @@ function verificar_password(textbox, div)	  //true = OK
 function verificar_nome(textbox, div)		//true = OK
 {
 	verificar_null(textbox, div);
-	if(textbox.value.match(/[a-zA-Z]/) == null)
+	$ver_nome = textbox.value.match(/[a-zA-Z\u00E0-\u00FC ]+/);
+	if($ver_nome == null || $ver_nome.length != 1 || $ver_nome[0] != textbox.value)
 	{
 		div.hidden = false;
 		return false;
@@ -122,8 +123,8 @@ function verificar_nome(textbox, div)		//true = OK
 function verificar_mail(textbox, div)
 {
 	verificar_null(textbox, div);
-	if(textbox.value.match(/[a-zA-Z0-9_]*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)/) == null ||
-		textbox.value.match(/[.]$/) != null)
+	if(textbox.value.match(/[a-zA-Z0-9_]+[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)+/g) == null ||
+		textbox.value.match(/[.]$/) != null || textbox.value.match(/[@]/g).length > 1)
 	{
 		div.hidden = false;
 		return false;
