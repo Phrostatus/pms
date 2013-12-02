@@ -22,7 +22,7 @@ function clear_mail(textbox)
 function restore_mail(textbox)
 {
 	if(textbox.value == "")
-		textbox.value = "mail@host.com";	
+		textbox.value = "mail@host.com";
 }
 
 function clear_password(textbox)
@@ -41,7 +41,7 @@ function restore_password(textbox)
 	{
 		textbox.type = "text";
 		textbox.value = "password";
-	}	
+	}
 }
 
 //__ REGIISTO__________________________________________________
@@ -65,7 +65,7 @@ function confirmacao_password(password, confirmacao, div)	//true = OK
 	   div.hidden = true;
 	   return false;
 	}
-	
+
 }
 
 function verificar_null(textbox, div)
@@ -90,7 +90,7 @@ function verificar_telemovel(textbox, div)	  //true = OK
 	}
 }
 
-function verificar_password(textbox, div)	  //true = OK	
+function verificar_password(textbox, div)	  //true = OK
 {
 	if(textbox.value == "" || textbox.value.length < 4)
 	{
@@ -122,7 +122,8 @@ function verificar_nome(textbox, div)		//true = OK
 function verificar_mail(textbox, div)
 {
 	verificar_null(textbox, div);
-	if(textbox.value.match(/[a-zA-Z0-9_]*@([a-zA-Z0-9_.]+.[a-zA-Z0-9_.]+)+/) == null)
+	if(textbox.value.match(/[a-zA-Z0-9_]*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)/) == null ||
+		textbox.value.match(/[.]$/) != null)
 	{
 		div.hidden = false;
 		return false;
@@ -164,6 +165,6 @@ function selelcionarFreguesia(select_concelho)
 {
 	var	select_concelho = document.getElementById("concelho");
 	var	select_freguesia = document.getElementById("freguesia");
-	
+
 	window.location= "procurar_boleia.php?c=" + select_concelho[select_concelho.selectedIndex].value + "&f=" + select_freguesia[select_freguesia.selectedIndex].value;
 }
