@@ -179,3 +179,16 @@ div.rodape
 	
 	border: 1px solid black;
 }
+
+table.procurar_boleia_inserir
+{
+	display:block;
+	float:left;
+	
+	border: 1px solid black;
+}
+
+table.procurar_boleia_inserir tr td
+{
+	border: 1px solid black;
+}
