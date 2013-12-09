@@ -160,13 +160,23 @@ function isNumber(n)
 function selelcionarConcelho(select_concelho)
 {
 	var	select_concelho = document.getElementById("concelho");
-	window.location= "procurar_boleia.php?c=" + select_concelho[select_concelho.selectedIndex].value;
+	window.location= "procurar_boleia.php?concelho=" + select_concelho[select_concelho.selectedIndex].value;
 }
 
-function selelcionarFreguesia(select_concelho)
+
+function selelcionarFreguesia(select_freguesia)
 {
 	var	select_concelho = document.getElementById("concelho");
 	var	select_freguesia = document.getElementById("freguesia");
 
-	window.location= "procurar_boleia.php?c=" + select_concelho[select_concelho.selectedIndex].value + "&f=" + select_freguesia[select_freguesia.selectedIndex].value;
+	window.location= "procurar_boleia.php?concelho=" + select_concelho[select_concelho.selectedIndex].value + "&freguesia=" + select_freguesia[select_freguesia.selectedIndex].value;
 }
+
+function selelcionarLocal(select_local)
+{
+	var	select_concelho = document.getElementById("concelho");
+	var	select_freguesia = document.getElementById("freguesia");
+	var	select_local = document.getElementById("local");
+	window.location= "procurar_boleia.php?concelho=" + select_concelho[select_concelho.selectedIndex].value + "&freguesia=" + select_freguesia[select_freguesia.selectedIndex].value+ "&local=" + select_local[select_local.selectedIndex].value;
+}
+

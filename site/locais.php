@@ -16,6 +16,7 @@
 
 		$result_freguesia = NULL;
 		$result_local = NULL;
+		
 		if(isset($_GET['c']) && is_numeric($_GET['c']))
 		{
 			$query_freguesia = "SELECT * FROM freguesia JOIN concelho ON concelho.id = freguesia.concelho_id
@@ -30,27 +31,36 @@
 			$result_local = mysql_query($query_local);
 		}
 ?>
+		
 		<html>
 			<link rel="stylesheet" type="text/css" href="estilos.css" media="screen" />
 			<body>
 				<div class="body">
+					<?php cabecalho(2); ?>
 					<?php
 						if($_SESSION['tipo'] == "Condutor" || $_SESSION['tipo'] == "Condutor e Passageiro") 
 						{
 					?>
+					<div class="main">
+					
 					<div class="local_paragem">
-						<?php cabecalho(2); ?>
-						<p>Adicionar local de paragem</p>
+						ISto é o que devo fazer
 						
-						//falta por aki a tabela com os locais de paragem já escolhidos
-					</div>  //fim DIV local_paragem
+					</div>
+					<div class="local_paragem" >
+					
 					<?php
-						}
-						if($_SESSION['tipo'] == "Passageiro" || $_SESSION['tipo'] == "Condutor e Passageiro") 
+					if($_SESSION['tipo'] == "Passageiro") 
 						{
 					?>
-						<p>Adicionar local de espera</p>
+						Adicionar local de espera
+						
 					<?php } ?>
+					</div>
+
+					</div>
+					<?php
+						}?>
 					<?php dadosPessoais(0, $result_user); ?>
 					<?php rodape(); ?>
 				</div>

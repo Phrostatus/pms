@@ -59,12 +59,11 @@
 	
 	function ligar_BD()
 	{
-		$host="localhost:3306";
-		$user_name="pms";
-		$pwd="pms";
+		$host="localhost:localhost";
+		$user_name="root";
 		$database_name="pms-carpool";
 	
-		$db=mysql_connect($host, $user_name, $pwd);
+		$db=mysql_connect($host, $user_name);
 		
 		if (mysql_error() > "") print mysql_error() . "<br>";
 		
@@ -177,5 +176,10 @@
 					</div>";
 		}
 	}
+	
+	
+	
+	
+	
 	
 ?>

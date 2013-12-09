@@ -192,3 +192,27 @@ table.procurar_boleia_inserir tr td
 {
 	border: 1px solid black;
 }
+
+div.menuEsquerdo
+{
+	float:left;
+	display:block;
+	width: 200px;
+	height: auto;
+	text-align: center;
+	word-wrap: break-word;
+	
+	border: 1px solid black;
+}
+
+div.menuDireito
+{
+	float:left;
+	display:block;
+	width: 430px;
+	height: auto;
+	text-align: center;
+	word-wrap: break-word;
+	
+	border: 1px solid black;
+}

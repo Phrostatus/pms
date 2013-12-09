@@ -2,10 +2,10 @@
 -- version 4.0.4.1
 -- http://www.phpmyadmin.net
 --
--- Máquina: 127.0.0.1
--- Data de Criação: 13-Nov-2013 às 01:25
--- Versão do servidor: 5.5.32
--- versão do PHP: 5.4.19
+-- Host: 127.0.0.1
+-- Generation Time: Dec 09, 2013 at 02:52 PM
+-- Server version: 5.5.32
+-- PHP Version: 5.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de Dados: `pms-carpool`
+-- Database: `pms-carpool`
 --
 CREATE DATABASE IF NOT EXISTS `pms-carpool` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `pms-carpool`;
@@ -25,7 +25,28 @@ USE `pms-carpool`;
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `condutor`
+-- Table structure for table `concelho`
+--
+
+CREATE TABLE IF NOT EXISTS `concelho` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `concelho`
+--
+
+INSERT INTO `concelho` (`id`, `nome`) VALUES
+(1, 'Funchal'),
+(2, 'Câmara de Lobos'),
+(3, 'Machico');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `condutor`
 --
 
 CREATE TABLE IF NOT EXISTS `condutor` (
@@ -34,101 +55,166 @@ CREATE TABLE IF NOT EXISTS `condutor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `condutor`
+-- Dumping data for table `condutor`
 --
 
 INSERT INTO `condutor` (`utilizador_id`) VALUES
-(1);
+(8);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `local`
+-- Table structure for table `freguesia`
+--
+
+CREATE TABLE IF NOT EXISTS `freguesia` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `concelho_id` int(11) NOT NULL,
+  `nome` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_freguesia_concelho1_idx` (`concelho_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
+
+--
+-- Dumping data for table `freguesia`
+--
+
+INSERT INTO `freguesia` (`id`, `concelho_id`, `nome`) VALUES
+(1, 1, 'São Roque'),
+(2, 1, 'Monte'),
+(3, 1, 'Imaculado Coração de Maria'),
+(4, 1, 'São Pedro'),
+(5, 1, 'São Gonçalo'),
+(6, 1, 'São Martinho'),
+(7, 1, 'Santa Maria Maior'),
+(8, 1, 'Santa Luzia'),
+(9, 1, 'Sé (Funchal)'),
+(10, 2, 'Estreito'),
+(11, 2, 'Câmara de Lobos'),
+(12, 3, 'Machico'),
+(13, 3, 'Caniçal'),
+(14, 3, 'Água de Pena'),
+(15, 3, 'Santo da Serra');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `itinerario`
+--
+
+CREATE TABLE IF NOT EXISTS `itinerario` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `condutor_utilizador_id` int(10) unsigned NOT NULL,
+  `dia` varchar(10) NOT NULL,
+  `lugares_livres` int(11) NOT NULL,
+  `nome` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_local_has_condutor_condutor1_idx` (`condutor_utilizador_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `itinerario`
+--
+
+INSERT INTO `itinerario` (`id`, `condutor_utilizador_id`, `dia`, `lugares_livres`, `nome`) VALUES
+(1, 8, 'segunda', 4, 'Funchal');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `itinerario_has_local`
+--
+
+CREATE TABLE IF NOT EXISTS `itinerario_has_local` (
+  `itinerario_condutor_utilizador_id` int(10) unsigned NOT NULL,
+  `local_id` int(10) unsigned NOT NULL,
+  `hora` time NOT NULL,
+  `tolerancia` int(11) NOT NULL,
+  PRIMARY KEY (`itinerario_condutor_utilizador_id`,`local_id`),
+  KEY `fk_itinerario_has_local_local1_idx` (`local_id`),
+  KEY `fk_itinerario_has_local_itinerario1_idx` (`itinerario_condutor_utilizador_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `itinerario_has_local`
+--
+
+INSERT INTO `itinerario_has_local` (`itinerario_condutor_utilizador_id`, `local_id`, `hora`, `tolerancia`) VALUES
+(8, 1, '11:50:10', 10);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `local`
 --
 
 CREATE TABLE IF NOT EXISTS `local` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `conselho` varchar(45) NOT NULL,
-  `freguesia` varchar(45) NOT NULL,
-  `local` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
+  `freguesia_id` int(11) NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_local_freguesia1` (`freguesia_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=50 ;
 
 --
--- Extraindo dados da tabela `local`
+-- Dumping data for table `local`
 --
 
-INSERT INTO `local` (`id`, `conselho`, `freguesia`, `local`) VALUES
-(1, 'Funchal', 'São Roque', 'Igreja'),
-(2, 'Funchal', 'Monte', 'Igreja'),
-(3, 'Funchal', 'Imaculado Coração de Maria', 'Igreja'),
-(4, 'Funchal', 'São Pedro', 'Igreja'),
-(5, 'Funchal', 'São gonçalo', 'Igreja'),
-(6, 'Funchal', 'São Martinho', 'Igreja'),
-(7, 'Funchal', 'Santa Maria Maior', 'Igreja'),
-(8, 'Funchal', 'Santa Luzia', 'Igreja'),
-(9, 'Funchal', 'Sé (Funchal)', 'Dolce Vita'),
-(10, 'Funchal', 'Sé (Funchal)', 'Jardim de São Francisco'),
-(11, 'Funchal', 'Sé (Funchal)', 'Parque de Santa Catarina'),
-(12, 'Funchal', 'Sé (Funchal)', 'Escola Secundária Francisco Franco'),
-(13, 'Funchal', 'Sé (Funchal)', 'Castelo de São Lourenço'),
-(14, 'Funchal', 'Sé (Funchal)', 'Museu da Eletricidade'),
-(15, 'Funchal', 'Sé (Funchal)', 'Mercado dos Lavradores'),
-(16, 'Funchal', 'Sé (Funchal)', 'Anadia'),
-(17, 'Funchal', 'Sé (Funchal)', 'Marina Shopping'),
-(18, 'Funchal', 'Sé (Funchal)', 'Dolce Vita'),
-(19, 'Funchal', 'Sé (Funchal)', 'Galerias de São Lourenço'),
-(20, 'Funchal', 'Sé (Funchal)', 'Hospital'),
-(21, 'Funchal', 'São Martinho', 'Lido'),
-(22, 'Funchal', 'São Martinho', 'Ponta Gorda'),
-(23, 'Funchal', 'São Martinho', 'Praia Formosa'),
-(24, 'Funchal', 'São Martinho', 'Forúm Madeira'),
-(25, 'Funchal', 'Sé (Funchal)', 'Paragem SAM'),
-(26, 'Camâra de Lobos', 'Estreito de Camâra de Lobos', 'Igreja'),
-(27, 'Camâra de Lobos', 'Estreito de Camâra de Lobos', 'Correios CTT'),
-(28, 'Camâra de Lobos', 'Estreito de Camâra de Lobos', 'Mercado'),
-(29, 'Camâra de Lobos', 'Estreito de Camâra de Lobos', 'Centro Cívico'),
-(30, 'Camâra de Lobos', 'Estreito de Camâra de Lobos', 'Escola Primária'),
-(31, 'Camâra de Lobos', 'Estreito de Camâra de Lobos', 'Bar Viola'),
-(32, 'Camâra de Lobos', 'Camâra de Lobos', 'Biblioteca'),
-(33, 'Camâra de Lobos', 'Camâra de Lobos', 'Igreja'),
-(34, 'Camâra de Lobos', 'Camâra de Lobos', 'Pingo Doce'),
-(35, 'Camâra de Lobos', 'Camâra de Lobos', 'Mercado'),
-(36, 'Camâra de Lobos', 'Camâra de Lobos', 'Modelo'),
-(37, 'Camâra de Lobos', 'Camâra de Lobos', 'Vila do Peixe'),
-(38, 'Camâra de Lobos', 'Camâra de Lobos', 'Correios CTT'),
-(39, 'Camâra de Lobos', 'Camâra de Lobos', 'Parque Estacionamento'),
-(40, 'Machico', 'Machico', 'Central de Autocarros'),
-(41, 'Machico', 'Machico', 'Flor do Campo'),
-(42, 'Machico', 'Machico', 'Igreja Matriz'),
-(43, 'Machico', 'Machico', 'Igreja Caramanchão'),
-(44, 'Machico', 'Machico', 'Igreja Maroços'),
-(45, 'Machico', 'Machico', 'Igreja Ribeira Seca'),
-(46, 'Machico', 'Machico', 'Casa do Povo'),
-(47, 'Machico', 'Caniçal', 'Igreja Matriz'),
-(48, 'Machico', 'Água de Pena', 'Parque Desportivo'),
-(49, 'Machico', 'Santo da Serra', 'Enotel Golf Santo da Serra');
+INSERT INTO `local` (`id`, `freguesia_id`, `nome`) VALUES
+(1, 1, 'Igreja'),
+(2, 2, 'Igreja'),
+(3, 3, 'Igreja'),
+(4, 4, 'Igreja'),
+(5, 5, 'Igreja'),
+(6, 6, 'Igreja'),
+(7, 6, 'Igreja'),
+(8, 6, 'Lido'),
+(9, 6, 'Ponta Gorda'),
+(10, 6, 'Forúm Madeira'),
+(11, 7, 'Igreja'),
+(12, 8, 'Igreja'),
+(13, 9, 'Dolce Vita'),
+(14, 9, 'Jardim de São Francisco'),
+(15, 9, 'Parque de Sta Catarina'),
+(16, 9, 'Escola Secundária Francisco Franco'),
+(17, 9, 'Castelo de São Lourenço'),
+(18, 9, 'Museu da Eletricidade'),
+(19, 9, 'Mercado dos Lavradores'),
+(20, 9, 'Anadia'),
+(21, 9, 'Marina Shopping'),
+(22, 9, 'Dolce Vita'),
+(23, 9, 'Galerias de São Lourenço'),
+(24, 9, 'Hospital'),
+(25, 9, 'Paragem SAM'),
+(26, 10, 'Igreja'),
+(27, 10, 'Correios CTT'),
+(28, 10, 'Mercado'),
+(29, 10, 'Centro Cívico'),
+(30, 10, 'Escola Primária'),
+(31, 10, 'Bar Viola'),
+(32, 11, 'Biblioteca'),
+(33, 11, 'Igreja'),
+(34, 11, 'Pingo Doce'),
+(35, 11, 'Mercado'),
+(36, 11, 'Modelo'),
+(37, 11, 'Vila do Peixe'),
+(38, 11, 'Correios CTT'),
+(39, 11, 'Parque Estacionamento'),
+(40, 12, 'Central de Autocarros'),
+(41, 12, 'Flor do Campo'),
+(42, 12, 'Igreja Matriz'),
+(43, 12, 'Igreja Caramanch'),
+(44, 12, 'Igreja Maro'),
+(45, 12, 'Igreja Ribeira Seca'),
+(46, 12, 'Casa do Povo'),
+(47, 13, 'Igreja Matriz'),
+(48, 14, 'Parque Desportivo'),
+(49, 15, 'Enotel Golf Santo da Serra');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `local_has_condutor`
---
-
-CREATE TABLE IF NOT EXISTS `local_has_condutor` (
-  `local_id` int(10) unsigned NOT NULL,
-  `condutor_utilizador_id` int(10) unsigned NOT NULL,
-  `hora` time DEFAULT NULL,
-  `tolerancia` time DEFAULT NULL,
-  PRIMARY KEY (`local_id`,`condutor_utilizador_id`),
-  KEY `fk_local_has_condutor_condutor1_idx` (`condutor_utilizador_id`),
-  KEY `fk_local_has_condutor_local1_idx` (`local_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `notificacao`
+-- Table structure for table `notificacao`
 --
 
 CREATE TABLE IF NOT EXISTS `notificacao` (
@@ -146,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `notificacao` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `passageiro`
+-- Table structure for table `passageiro`
 --
 
 CREATE TABLE IF NOT EXISTS `passageiro` (
@@ -154,10 +240,17 @@ CREATE TABLE IF NOT EXISTS `passageiro` (
   PRIMARY KEY (`utilizador_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `passageiro`
+--
+
+INSERT INTO `passageiro` (`utilizador_id`) VALUES
+(12);
+
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `utilizador`
+-- Table structure for table `utilizador`
 --
 
 CREATE TABLE IF NOT EXISTS `utilizador` (
@@ -171,49 +264,69 @@ CREATE TABLE IF NOT EXISTS `utilizador` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `telemovel_UNIQUE` (`telemovel`),
   UNIQUE KEY `mail_UNIQUE` (`mail`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
--- Extraindo dados da tabela `utilizador`
+-- Dumping data for table `utilizador`
 --
 
 INSERT INTO `utilizador` (`id`, `password`, `salt`, `nome`, `mail`, `telemovel`, `morada`) VALUES
-(1, 'ac581c2ce2c4a176796986c50629bc01a3ffbb615c1d1b89e4bd5d1009fd005def6d356290bf02960be62fca360cc7eed9d484cc0c2aba2e1e58a0099c9411a5', '1234', 'miguel', 'para_cenas1@hotmail.com', 917754700, NULL);
+(8, 'de0581a85c82d55004c0cfcae19e16041d42e4014c566eae7d82bbe7a1d95af35788860f46c5df78af3e870f00beb5711dcd982a561c5d0d476e5f8aa1ab93f7', '1˜ø°LÎœ$ö¬Íß®©·áÿ%‘Øý˜a8F?èMÒ²r—öú§ÑH=eˆÔYÕhº€ü¢RB¾ ', 'Teste_condutor', 'condutor@c.c', 123456789, ''),
+(12, 'd6b818bb52e528291424a2f0728a6943343129d9c83397a882c94a19bc2f85aa3b15b3a212356cb07b19ac72308be940bb3db9fd04e126e2a55269b70a712111', 'í|ã¶\0]ÙºÞêþÉå&ˆn`IüX}[4y GU9eZŽŽ½9ÝHí¿ûÈëØ¤o]õ8ñXµzÔ=—V', 'Teste_passageiro', 'passageiro@p.p', 213456789, '');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `viagem`
+-- Table structure for table `viagem`
 --
 
 CREATE TABLE IF NOT EXISTS `viagem` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `avaliacao_condutor` int(10) unsigned DEFAULT NULL,
   `avaliacao_passageiro` int(10) unsigned DEFAULT NULL,
-  `data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `condutor_utilizador_id` int(10) unsigned NOT NULL,
+  `data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `fk_viagem_condutor1_idx` (`condutor_utilizador_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `viagem`
+--
+
+INSERT INTO `viagem` (`id`, `avaliacao_condutor`, `avaliacao_passageiro`, `condutor_utilizador_id`, `data`) VALUES
+(1, NULL, NULL, 8, '0000-00-00 00:00:00'),
+(2, NULL, NULL, 8, '2013-12-08 20:51:23');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `viagem_has_local`
+-- Table structure for table `viagem_has_local`
 --
 
 CREATE TABLE IF NOT EXISTS `viagem_has_local` (
   `viagem_id` int(11) NOT NULL,
-  `locail_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`viagem_id`,`locail_id`),
-  KEY `fk_viagem_has_locail_locail1_idx` (`locail_id`),
-  KEY `fk_viagem_has_locail_viagem1_idx` (`viagem_id`)
+  `local_id` int(10) unsigned NOT NULL,
+  `tipo` varchar(45) NOT NULL,
+  PRIMARY KEY (`viagem_id`,`local_id`),
+  KEY `fk_viagem_has_local_local1_idx` (`local_id`),
+  KEY `fk_viagem_has_local_viagem1_idx` (`viagem_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `viagem_has_local`
+--
+
+INSERT INTO `viagem_has_local` (`viagem_id`, `local_id`, `tipo`) VALUES
+(1, 1, 'INICIO'),
+(1, 3, 'FIM'),
+(2, 2, 'INICIO'),
+(2, 7, 'FIM');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `viagem_passageiro`
+-- Table structure for table `viagem_passageiro`
 --
 
 CREATE TABLE IF NOT EXISTS `viagem_passageiro` (
@@ -229,46 +342,65 @@ CREATE TABLE IF NOT EXISTS `viagem_passageiro` (
 --
 
 --
--- Limitadores para a tabela `condutor`
+-- Constraints for table `condutor`
 --
 ALTER TABLE `condutor`
   ADD CONSTRAINT `fk_condutor_utilizador` FOREIGN KEY (`utilizador_id`) REFERENCES `utilizador` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `local_has_condutor`
+-- Constraints for table `freguesia`
 --
-ALTER TABLE `local_has_condutor`
-  ADD CONSTRAINT `fk_local_has_condutor_condutor1` FOREIGN KEY (`condutor_utilizador_id`) REFERENCES `condutor` (`utilizador_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_local_has_condutor_local1` FOREIGN KEY (`local_id`) REFERENCES `local` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `freguesia`
+  ADD CONSTRAINT `fk_freguesia_concelho1` FOREIGN KEY (`concelho_id`) REFERENCES `concelho` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `notificacao`
+-- Constraints for table `itinerario`
+--
+ALTER TABLE `itinerario`
+  ADD CONSTRAINT `fk_local_has_condutor_condutor1` FOREIGN KEY (`condutor_utilizador_id`) REFERENCES `condutor` (`utilizador_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `itinerario_has_local`
+--
+ALTER TABLE `itinerario_has_local`
+  ADD CONSTRAINT `fk_itinerario_has_local_itinerario1` FOREIGN KEY (`itinerario_condutor_utilizador_id`) REFERENCES `itinerario` (`condutor_utilizador_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_itinerario_has_local_local1` FOREIGN KEY (`local_id`) REFERENCES `local` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `local`
+--
+ALTER TABLE `local`
+  ADD CONSTRAINT `fk_local_freguesia1` FOREIGN KEY (`freguesia_id`) REFERENCES `freguesia` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_local_viagem_freguesia1` FOREIGN KEY (`freguesia_id`) REFERENCES `freguesia` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `notificacao`
 --
 ALTER TABLE `notificacao`
   ADD CONSTRAINT `fk_notificacao_utilizador1` FOREIGN KEY (`emissor_id`) REFERENCES `utilizador` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_notificacao_utilizador2` FOREIGN KEY (`recetor_id`) REFERENCES `utilizador` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `passageiro`
+-- Constraints for table `passageiro`
 --
 ALTER TABLE `passageiro`
   ADD CONSTRAINT `fk_passageiro_utilizador1` FOREIGN KEY (`utilizador_id`) REFERENCES `utilizador` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `viagem`
+-- Constraints for table `viagem`
 --
 ALTER TABLE `viagem`
   ADD CONSTRAINT `fk_viagem_condutor1` FOREIGN KEY (`condutor_utilizador_id`) REFERENCES `condutor` (`utilizador_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `viagem_has_local`
+-- Constraints for table `viagem_has_local`
 --
 ALTER TABLE `viagem_has_local`
-  ADD CONSTRAINT `fk_viagem_has_locail_locail1` FOREIGN KEY (`locail_id`) REFERENCES `local` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_viagem_has_locail_viagem1` FOREIGN KEY (`viagem_id`) REFERENCES `viagem` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_viagem_has_local_local1` FOREIGN KEY (`local_id`) REFERENCES `local` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_viagem_has_local_viagem1` FOREIGN KEY (`viagem_id`) REFERENCES `viagem` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `viagem_passageiro`
+-- Constraints for table `viagem_passageiro`
 --
 ALTER TABLE `viagem_passageiro`
   ADD CONSTRAINT `fk_viagem_has_passageiro_passageiro1` FOREIGN KEY (`passageiro_utilizador_id`) REFERENCES `passageiro` (`utilizador_id`) ON DELETE CASCADE ON UPDATE CASCADE,
