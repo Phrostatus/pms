@@ -44,13 +44,13 @@
                 </form>
 				<?php
 					if(isset($_GET['erro']) && $_GET['erro'] == 1)
-						echo "<div class=\"erro_registo\">E-mail j&aacute; registado</div>";
+						echo "<div class='erro_registo'>E-mail j&aacute; registado</div>";
 					else if(isset($_GET['erro']) && $_GET['erro'] == 2)
-						echo "<div class=\"erro_registo\">Telem&oacute;vel j&aacute; registado</div>";
+						echo "<div class='erro_registo'>Telem&oacute;vel j&aacute; registado</div>";
 					else if(isset($_GET['erro']) && $_GET['erro'] == 3)
-						echo "<div class=\"erro_registo\">Nome inv&aacute;lido.</div>";
+						echo "<div class='erro_registo'>Nome inv&aacute;lido.</div>";
 					else if(isset($_GET['erro']) && $_GET['erro'] == 4)
-						echo "<div class=\"erro_registo\">Email inv&aacute;lido.</div>";
+						echo "<div class='erro_registo'>Email inv&aacute;lido.</div>";
 				?>
 			</div>
 			<?php dadosPessoais(2, NULL); ?>
