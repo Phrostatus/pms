@@ -2,9 +2,9 @@
 function imprimirDados($concelho,$freguesia,$local,$dia,$hora,$minutos)
 {
 	
-	
+	$hora_procura=$hora.":".$minutos.":00";
 	$query_listarViagens ="
-	SELECT itinerario.id AS ID_ITINERARIO, itinerario.nome AS NOME, itinerario.dia AS DIA, 
+	SELECT itinerario_has_local.hora as TIME_SEM_TOLERANCIA ,SEC_TO_TIME( TIME_TO_SEC(itinerario_has_local.hora )+ (itinerario_has_local.tolerancia*60)) as TIME_COM_TOLERANCIA ,itinerario.id AS ID_ITINERARIO, itinerario.nome AS NOME, itinerario.dia AS DIA, 
 	itinerario.lugares_livres as LIVRES, itinerario_has_local.tolerancia as TOLERANCIA , itinerario_has_local.hora as HORAS
 	FROM condutor
 	JOIN itinerario ON itinerario.dia='$dia'
@@ -30,35 +30,27 @@ function imprimirDados($concelho,$freguesia,$local,$dia,$hora,$minutos)
 	echo mysql_error();
 	if(!mysql_error())
 	{
+	echo "<table><tr><td>NOME</td><td>DIA</td><td>HORA</td><tr>";
 	while ($row = mysql_fetch_array($result_listarViagens))
 			{
-			$tolerancia=$row['TOLERANCIA'];
-			somaTolerancia($tolerancia);
-			$somaTolerancia=$GLOBALS['hora'].":".$GLOBALS['minutos'].":00";
-			$semTolerancia=$hora.":".$minutos.":00";
-			if($somaTolerancia==$row['HORAS'] || $semTolerancia==$row['HORAS'])
-				echo $row['ID_ITINERARIO']."<br>";
-				echo $row['NOME']."<br>";	
-				echo $row['DIA']."<br>";
+				$hora_procurar=strtotime($hora_procura);
+				$hora_limite_superior=strtotime($row['TIME_COM_TOLERANCIA']);
+				$hora_limite_inferior=strtotime($row['TIME_SEM_TOLERANCIA']);
+				echo "<tr>";
+				if($hora_procurar>=$hora_limite_inferior && $hora_procurar<=$hora_limite_superior)
+				{
+					echo "<td>".$row['NOME']."</td>";
+					echo "<td>".$row['DIA']."</td>";
+					echo "<td>".$row['TIME_SEM_TOLERANCIA']."</td>";
+				}
+				echo "</tr>";
 			}
-			
+			echo "</table>";
 	}
 	else
 	echo "Houve um erro na visualização de viagens! Por favor tente novamente.";
 }
-function somaTolerancia($tolerancia)
-{
-	$aux=$GLOBALS['minutos']-$tolerancia;
-	if($aux<0)
-	{
-		$GLOBALS['minutos']=$GLOBALS['minutos']+$tolerancia+60;
-		$GLOBALS['hora']=$GLOBALS['hora']-1;
-		
-	}
-	else
-	$GLOBALS['minutos']=$aux;
-		
-}
+
 	function selectConcelho()
 	{
 		$query_concelho = "SELECT * from concelho order by nome";
@@ -136,7 +128,7 @@ function somaTolerancia($tolerancia)
 					<?php cabecalho(2); ?>
 					<div class="main">
 						<p>Procurar Boleia</p>
-								<table class="procurar_boleia_inserir">
+								<table class="procurar_boleia_inserir" method="POST">
 									<tr>
 										<th>Concelho:</th>
 										<th>Freguesia:</th>
@@ -144,22 +136,23 @@ function somaTolerancia($tolerancia)
 										<th>Dia:</th>
 										<th>Hora:</th>
 									</tr>
-									<tr>
-									<form name="pesquisa_local" id="pesquisa_local" method="REQUEST" ">
+									
+									<form name="pesquisa_local" id="pesquisa_local" method="POST">
+									<tr>	
 										<td>
-											<select class="procurar_boleia" name="concelho" id="concelho" onChange="selelcionarConcelho()" style="width: 125px">
+											<select class="procurar_boleia"  name="origem_concelho" id="origem_concelho" onChange="selelcionarConcelho()" style="width: 125px">
 												<option> </option>
 												<?php selectConcelho(); ?>
 											</select>
 										</td>
 										<td>
-											<select class="procurar_boleia" name="freguesia" id="freguesia" onChange="selelcionarFreguesia()" style="width: 130px">
+											<select class="procurar_boleia"  name="origem_freguesia" id="origem_freguesia" onChange="selelcionarFreguesia()" style="width: 130px">
 												<option> </option>
 												<?php selectFreguesia(); ?>
 											</select>
 										</td>
 										<td>
-											<select class="procurar_boleia" name="local" id="local" onChange="selelcionarLocal()" style="width: 130px">
+											<select class="procurar_boleia"  name="origem_local" id="origem_local" onChange="selelcionarLocal()" style="width: 130px">
 												<option> </option>
 												<?php 
 												selectLocal(); ?>
@@ -178,7 +171,7 @@ function somaTolerancia($tolerancia)
 											</select>
 										</td>
 										<td>
-											<select class="procurar_boleia_hora" name="hora" id="hora">
+											<select class="procurar_boleia_hora" name="origem_hora" id="origem_hora">
 												<option> </option>
 												<?php for($i=0;$i<24;$i++)
 												{ 
@@ -189,7 +182,7 @@ function somaTolerancia($tolerancia)
 												} ?>
 											</select>
 											:
-											<select class="procurar_boleia_hora" name="minutos" id="minutos">
+											<select class="procurar_boleia_hora" name="origem_minutos" id="origem_minutos">
 												<option> </option>
 												<option value="00"> 00 </option>
 												<option value="05"> 05 </option>
@@ -199,9 +192,67 @@ function somaTolerancia($tolerancia)
 											</select>
 										</td>
 									</tr>
+									
+									<!--Local DEstino-->
+									
+									<tr>	
+										<td>
+											<select class="procurar_boleia"  name="destino_concelho" id="destino_concelho" onChange="selelcionarConcelho()" style="width: 125px">
+												<option> </option>
+												<?php selectConcelho(); ?>
+											</select>
+										</td>
+										<td>
+											<select class="procurar_boleia"  name="destino_freguesia" id="destino_freguesia" onChange="selelcionarFreguesia()" style="width: 130px">
+												<option> </option>
+												<?php selectFreguesia(); ?>
+											</select>
+										</td>
+										<td>
+											<select class="procurar_boleia"  name="destino_destino_local" id="destino_destino_local" onChange="selelcionarLocal()" style="width: 130px">
+												<option> </option>
+												<?php 
+												selectLocal(); ?>
+											</select>
+										</td>
+										<td>
+											<select class="destino_procurar_boleia_dia" name="dia" id="dia">
+												<option> </option>
+												<option value="segunda">Segunda</option>
+												<option value="terca">Ter&ccedil;a</option>
+												<option value="quarta">Quarta</option>
+												<option value="quinta">Quinta</option>
+												<option value="sexta">Sexta</option>
+												<option value="sabado">S&aacute;bado</option>
+												<option value="domingo">Domingo</option>
+											</select>
+										</td>
+										<td>
+											<select class="procurar_boleia_hora" name="destino_hora" id="destino_hora">
+												<option> </option>
+												<?php for($i=0;$i<24;$i++)
+												{ 
+													if($i < 10) 
+														echo "<option value=\"".$i."\">0".$i."</option>";
+													else
+														echo "<option value=\"".$i."\">".$i."</option>";
+												} ?>
+											</select>
+											:
+											<select class="procurar_boleia_hora" name="destino_minutos" id="destino_minutos">
+												<option> </option>
+												<option value="00"> 00 </option>
+												<option value="05"> 05 </option>
+												<?php for($i=10;$i<60;$i+=5){ ?>
+													<option value="<?=$i ?>" > <?php echo $i; ?> </option>
+												<?php } ?>
+											</select>
+										</td>
+									</tr>
+									
+									<input type="hidden" name="estado" value="resultados"  >
+									<tr><input type="submit" value="Procurar"  ></tr>
 								</table>
-								<input type="hidden" name="estado" value="resultados"  >
-							<input type="submit" value="Procurar"  >
 						</form>
 					
 					<div class="menuEsquerdo">
