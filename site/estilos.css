@@ -24,7 +24,7 @@ div.header_div
 	padding-top: 87px;
 	padding-bottom: 87px;
 	text-align: center;
-	
+
 	border: 1px solid black;
 }
 
@@ -34,7 +34,7 @@ div.menu
 	height: 50px;
 	text-align: center;
 	word-wrap: break-word;
-	
+
 	border: 1px solid black;
 }
 
@@ -72,7 +72,7 @@ div.account_div
 	width: 170px;
 	margin: 5 5 5 5;
 	word-wrap: break-word;
-	
+
 	border: 1px solid black;
 }
 
@@ -83,7 +83,7 @@ div.main
 	width: 606px;
 	float:right;
 	text-align:justify;
-	
+
 	border: 1px solid black;
 }
 
@@ -108,8 +108,8 @@ input.login:hover
 {
 	background-color:rgba(255,204,0,0.8);
 }
- 
- 
+
+
 input[type="text"],[type="password"]
 {
 	width:168px;
@@ -118,7 +118,7 @@ input[type="text"],[type="password"]
 
 	float:left;
 }
-	
+
 label.registo
 {
 	width: 130px;
@@ -132,7 +132,7 @@ div.registo_item
 	width:590px;
 	height:30px;
 	float:left;
-	
+
 	border:1px solid black;
 }
 
@@ -151,7 +151,7 @@ div.local_paragem
 	float:left;
 	width:280px;
 	text-align:left;
-	
+
 	border:1px solid black;
 }
 
@@ -161,7 +161,7 @@ div.local_espera
 	float:right;
 	width:280px;
 	text-align:left;
-	
+
 	border:1px solid black;
 }
 
@@ -176,7 +176,7 @@ div.rodape
 	padding-top: 20px;
 	padding-bottom: 20px;
 	text-align: center;
-	
+
 	border: 1px solid black;
 }
 
@@ -184,7 +184,7 @@ table.procurar_boleia_inserir
 {
 	display:block;
 	float:left;
-	
+
 	border: 1px solid black;
 }
 
@@ -201,7 +201,7 @@ div.menuEsquerdo
 	height: auto;
 	text-align: center;
 	word-wrap: break-word;
-	
+
 	border: 1px solid black;
 }
 
@@ -213,6 +213,26 @@ div.menuDireito
 	height: auto;
 	text-align: center;
 	word-wrap: break-word;
-	
+
 	border: 1px solid black;
+}
+
+::-webkit-input-placeholder /* WebKit browsers */
+{
+	color: #333;
+}
+
+:-moz-placeholder /* Mozilla Firefox 4 to 18 */
+{
+	color: #333;
+}
+
+::-moz-placeholder /* Mozilla Firefox 19+ */
+{
+	color: #333;
+}
+
+:-ms-input-placeholder /* Internet Explorer 10+ */
+{
+	color: #333;
 }
