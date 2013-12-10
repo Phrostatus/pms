@@ -133,29 +133,6 @@ function imprimirDados($concelho_o,$freguesia_o,$local_o,$hora_o,$minutos_o,$con
 				$linha_id = mysql_result($result_local, $i, "id");
 				$linha_nome = mysql_result($result_local, $i, "nome");
 				
-				
-				
-				
-				
-				if($valor=="origem")
-				{
-					if(isset($_REQUEST['fo']) && $_REQUEST['fo'] == $linha_id)
-						echo "<option value='$linha_id' selected>$linha_nome</option>";
-					else
-						echo "<option value='$linha_id'>$linha_nome</option>";
-				}
-				else
-				{
-					if(isset($_REQUEST['fd']) && $_REQUEST['fd'] == $linha_id)
-						echo "<option value='$linha_id' selected>$linha_nome</option>";
-					else
-						echo "<option value='$linha_id'>$linha_nome</option>";
-				}
-				$i++;
-				
-				
-				
-				
 				if($valor=="origem")
 				{
 					if(isset($_REQUEST['lo']) && $_REQUEST['lo'] == $linha_id)
