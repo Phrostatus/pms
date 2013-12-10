@@ -186,9 +186,10 @@ table.procurar_boleia_inserir
 {
 	display:block;
 	float:left;
-
+	width: 760px;
 	border: 1px solid black;
 }
+
 
 table.procurar_boleia_inserir tr td
 {

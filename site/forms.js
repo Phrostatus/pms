@@ -160,23 +160,35 @@ function isNumber(n)
 function selelcionarConcelho(select_concelho)
 {
 	var	select_concelho = document.getElementById("concelho");
-	window.location= "procurar_boleia.php?concelho=" + select_concelho[select_concelho.selectedIndex].value;
+	window.location= "procurar_boleia.php?co=" + select_concelho[select_concelho.selectedIndex].value;
 }
 
 
 function selelcionarFreguesia(select_freguesia)
 {
-	var	select_concelho = document.getElementById("concelho");
-	var	select_freguesia = document.getElementById("freguesia");
+	var	select_concelho = document.getElementById("origem_concelho");
+	var	select_freguesia = document.getElementById("origem_freguesia");
 
-	window.location= "procurar_boleia.php?concelho=" + select_concelho[select_concelho.selectedIndex].value + "&freguesia=" + select_freguesia[select_freguesia.selectedIndex].value;
+	window.location= "procurar_boleia.php?concelho=" + select_concelho[select_concelho.selectedIndex].value + "fo=" + select_freguesia[select_freguesia.selectedIndex].value;
 }
 
-function selelcionarLocal(select_local)
+function selecionarOpcoes(select_concelho)
 {
-	var	select_concelho = document.getElementById("concelho");
-	var	select_freguesia = document.getElementById("freguesia");
-	var	select_local = document.getElementById("local");
-	window.location= "procurar_boleia.php?concelho=" + select_concelho[select_concelho.selectedIndex].value + "&freguesia=" + select_freguesia[select_freguesia.selectedIndex].value+ "&local=" + select_local[select_local.selectedIndex].value;
+	var	select_o_concelho = document.getElementById("co");
+	var	select_o_freguesia = document.getElementById("fo");
+	var	select_o_local = document.getElementById("lo");
+	var	select_d_concelho = document.getElementById("cd");
+	var	select_d_freguesia = document.getElementById("fd");
+	var	select_d_local = document.getElementById("ld");
+	
+	window.location= "procurar_boleia.php?co=" 
+	+select_o_concelho[select_o_concelho.selectedIndex].value  +
+	"&fo=" + select_o_freguesia[select_o_freguesia.selectedIndex].value +
+	"&lo="+ select_o_local[select_o_local.selectedIndex].value+
+	
+	"&cd=" +select_d_concelho[select_d_concelho.selectedIndex].value  +
+	"&fd=" + select_d_freguesia[select_d_freguesia.selectedIndex].value +
+	"&ld="+ select_d_local[select_d_local.selectedIndex].value;
+	
 }
 

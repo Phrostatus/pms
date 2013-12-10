@@ -1,8 +1,10 @@
 <?php
-function imprimirDados($concelho,$freguesia,$local,$dia,$hora,$minutos)
+function imprimirDados($concelho_o,$freguesia_o,$local_o,$hora_o,$minutos_o,$concelho_d,$freguesia_d,$local_d,$hora_d,$minutos_d,$dia)
 {
 	
-	$hora_procura=$hora.":".$minutos.":00";
+	$hora_destino=$hora_d.":".$min_d.":00";
+	$hora_origem=$hora_o.":".$min_o.":00";
+	
 	$query_listarViagens ="
 	SELECT itinerario_has_local.hora as TIME_SEM_TOLERANCIA ,SEC_TO_TIME( TIME_TO_SEC(itinerario_has_local.hora )+ (itinerario_has_local.tolerancia*60)) as TIME_COM_TOLERANCIA ,itinerario.id AS ID_ITINERARIO, itinerario.nome AS NOME, itinerario.dia AS DIA, 
 	itinerario.lugares_livres as LIVRES, itinerario_has_local.tolerancia as TOLERANCIA , itinerario_has_local.hora as HORAS
@@ -51,59 +53,124 @@ function imprimirDados($concelho,$freguesia,$local,$dia,$hora,$minutos)
 	echo "Houve um erro na visualização de viagens! Por favor tente novamente.";
 }
 
-	function selectConcelho()
+	function selectConcelho($valor)
 	{
+		
 		$query_concelho = "SELECT * from concelho order by nome";
+		
 		$result_concelho = mysql_query($query_concelho);
 		$i = 0;
 		while($i < mysql_num_rows($result_concelho))
 		{
 			$linha_id = mysql_result($result_concelho, $i, "id");
 			$linha_nome = mysql_result($result_concelho, $i, "nome");
-			if(isset($_GET['concelho']) && $_GET['concelho'] == $linha_id)
-				echo "<option value='$linha_id' selected>$linha_nome</option>";
+			if($valor=="origem")
+			{
+				if(isset($_REQUEST['co']) && $_REQUEST['co'] == $linha_id)
+					echo "<option value='$linha_id' selected>$linha_nome</option>";
+				else
+					echo "<option value='$linha_id'>$linha_nome</option>";
+			}
 			else
-				echo "<option value='$linha_id'>$linha_nome</option>";
+			{
+				if(isset($_REQUEST['cd']) && $_REQUEST['cd'] == $linha_id)
+					echo "<option value='$linha_id' selected>$linha_nome</option>";
+				else
+					echo "<option value='$linha_id'>$linha_nome</option>";
+			}
 			$i++;
 		}
 	}
 
-	function selectFreguesia()
+	function selectFreguesia($valor)
 	{
-		if(isset($_GET['concelho']))
+		if(isset($_REQUEST['cd']) ||isset($_REQUEST['co']))
 		{
-			$query_freguesia = "SELECT * from freguesia WHERE freguesia.concelho_id =\"".$_GET['concelho']."\" order by nome";
+			if($valor=="origem")
+			$query_freguesia = "SELECT * from freguesia WHERE freguesia.concelho_id =\"".$_REQUEST['co']."\" order by nome";
+			else
+			$query_freguesia = "SELECT * from freguesia WHERE freguesia.concelho_id =\"".$_REQUEST['cd']."\" order by nome";
+			
 			$result_freguesia = mysql_query($query_freguesia);
 			$i = 0;
 			while($i < mysql_num_rows($result_freguesia))
 			{
 				$linha_id = mysql_result($result_freguesia, $i, "id");
 				$linha_nome = mysql_result($result_freguesia, $i, "nome");
-				if(isset($_GET['freguesia']) && $_GET['freguesia'] == $linha_id)
-					echo "<option value='$linha_id' selected>$linha_nome</option>";
+				
+				if($valor=="origem")
+				{
+					if(isset($_REQUEST['fo']) && $_REQUEST['fo'] == $linha_id)
+						echo "<option value='$linha_id' selected>$linha_nome</option>";
+					else
+						echo "<option value='$linha_id'>$linha_nome</option>";
+				}
 				else
-					echo "<option value='$linha_id'>$linha_nome</option>";
+				{
+					if(isset($_REQUEST['fd']) && $_REQUEST['fd'] == $linha_id)
+						echo "<option value='$linha_id' selected>$linha_nome</option>";
+					else
+						echo "<option value='$linha_id'>$linha_nome</option>";
+				}
 				$i++;
 			}
 		}
 	}
 	
-	function selectLocal()
+	function selectLocal($valor)
 	{
-		if(isset($_GET['freguesia']))
+		if(isset($_REQUEST['fd']) ||isset($_REQUEST['fo']))
 		{
-			$query_local = "SELECT * from local WHERE local.freguesia_id =\"".$_GET['freguesia']."\" order by nome";
+			if($valor=="origem")
+			$query_local = "SELECT * from local WHERE local.freguesia_id =\"".$_REQUEST['fo']."\" order by nome";
+			else
+			$query_local = "SELECT * from local WHERE local.freguesia_id =\"".$_REQUEST['fd']."\" order by nome";
+			
 			$result_local = mysql_query($query_local);
 			$i = 0;
 			while($i < mysql_num_rows($result_local))
 			{
 				$linha_id = mysql_result($result_local, $i, "id");
 				$linha_nome = mysql_result($result_local, $i, "nome");
-				if(isset($_GET['local']) && $_GET['local'] == $linha_id)
-					echo "<option value=\"".$linha_id."\" selected>".$linha_nome."</option>";
+				
+				
+				
+				
+				
+				if($valor=="origem")
+				{
+					if(isset($_REQUEST['fo']) && $_REQUEST['fo'] == $linha_id)
+						echo "<option value='$linha_id' selected>$linha_nome</option>";
+					else
+						echo "<option value='$linha_id'>$linha_nome</option>";
+				}
 				else
-					echo "<option value=\"".$linha_id."\">".$linha_nome."</option>";
+				{
+					if(isset($_REQUEST['fd']) && $_REQUEST['fd'] == $linha_id)
+						echo "<option value='$linha_id' selected>$linha_nome</option>";
+					else
+						echo "<option value='$linha_id'>$linha_nome</option>";
+				}
 				$i++;
+				
+				
+				
+				
+				if($valor=="origem")
+				{
+					if(isset($_REQUEST['lo']) && $_REQUEST['lo'] == $linha_id)
+						echo "<option value='$linha_id' selected>$linha_nome</option>";
+					else
+						echo "<option value='$linha_id'>$linha_nome</option>";
+				}
+				else
+				{
+					if(isset($_REQUEST['ld']) && $_REQUEST['ld'] == $linha_id)
+						echo "<option value='$linha_id' selected>$linha_nome</option>";
+					else
+						echo "<option value='$linha_id'>$linha_nome</option>";
+				}
+				$i++;	
 			}
 		}
 	}
@@ -129,160 +196,161 @@ function imprimirDados($concelho,$freguesia,$local,$dia,$hora,$minutos)
 					<div class="main">
 						<p>Procurar Boleia</p>
 								<table class="procurar_boleia_inserir" method="POST">
+									
 									<tr>
+										<th></th>
 										<th>Concelho:</th>
 										<th>Freguesia:</th>
 										<th>Local:</th>
-										<th>Dia:</th>
 										<th>Hora:</th>
+										<th>Dia:</th>
+										
 									</tr>
 									
-									<form name="pesquisa_local" id="pesquisa_local" method="POST">
-									<tr>	
-										<td>
-											<select class="procurar_boleia"  name="origem_concelho" id="origem_concelho" onChange="selelcionarConcelho()" style="width: 125px">
-												<option> </option>
-												<?php selectConcelho(); ?>
-											</select>
-										</td>
-										<td>
-											<select class="procurar_boleia"  name="origem_freguesia" id="origem_freguesia" onChange="selelcionarFreguesia()" style="width: 130px">
-												<option> </option>
-												<?php selectFreguesia(); ?>
-											</select>
-										</td>
-										<td>
-											<select class="procurar_boleia"  name="origem_local" id="origem_local" onChange="selelcionarLocal()" style="width: 130px">
-												<option> </option>
-												<?php 
-												selectLocal(); ?>
-											</select>
-										</td>
-										<td>
-											<select class="procurar_boleia_dia" name="dia" id="dia">
-												<option> </option>
-												<option value="segunda">Segunda</option>
-												<option value="terca">Ter&ccedil;a</option>
-												<option value="quarta">Quarta</option>
-												<option value="quinta">Quinta</option>
-												<option value="sexta">Sexta</option>
-												<option value="sabado">S&aacute;bado</option>
-												<option value="domingo">Domingo</option>
-											</select>
-										</td>
-										<td>
-											<select class="procurar_boleia_hora" name="origem_hora" id="origem_hora">
-												<option> </option>
-												<?php for($i=0;$i<24;$i++)
-												{ 
-													if($i < 10) 
-														echo "<option value=\"".$i."\">0".$i."</option>";
-													else
-														echo "<option value=\"".$i."\">".$i."</option>";
-												} ?>
-											</select>
-											:
-											<select class="procurar_boleia_hora" name="origem_minutos" id="origem_minutos">
-												<option> </option>
-												<option value="00"> 00 </option>
-												<option value="05"> 05 </option>
-												<?php for($i=10;$i<60;$i+=5){ ?>
-													<option value="<?=$i ?>" > <?php echo $i; ?> </option>
-												<?php } ?>
-											</select>
-										</td>
-									</tr>
+									<form name="pesquisa_local" id="pesquisa_local" method="REQUEST">
+										
+										<tr>
+											<td>Origem</td>										
+											<td >
+												<select class="procurar_boleia"  name="co" id="co" onChange="selecionarOpcoes()" style="width: 130px">
+													<option> </option>
+													<?php selectConcelho("origem"); ?>
+												</select>
+											</td>
+											<td>
+												<select class="procurar_boleia"  name="fo" id="fo" onChange="selecionarOpcoes()" style="width: 130px">
+													<option> </option>
+													<?php selectFreguesia("origem"); ?>
+												</select>
+											</td>
+											<td>
+												<select class="procurar_boleia"  name="lo" id="lo" onChange="selecionarOpcoes()" style="width: 200px">
+													<option> </option>
+													<?php 
+													selectLocal("origem"); ?>
+												</select>
+											</td>
+											<td>
+												<select class="procurar_boleia_hora" name="hora_o" id="hora_o">
+													<option> </option>
+													<?php for($i=0;$i<24;$i++)
+													{ 
+														if($i < 10) 
+															echo "<option value=\"".$i."\">0".$i."</option>";
+														else
+															echo "<option value=\"".$i."\">".$i."</option>";
+													} ?>
+												</select>
+												:
+												<select class="procurar_boleia_hora" name="min_o" id="min_o">
+													<option> </option>
+													<option value="00"> 00 </option>
+													<option value="05"> 05 </option>
+													<?php for($i=10;$i<60;$i+=5){ ?>
+														<option value="<?=$i ?>" > <?php echo $i; ?> </option>
+													<?php } ?>
+												</select>
+											</td>
+											<td>
+												<select class="procurar_boleia_dia" name="dia" id="dia">
+													<option> </option>
+													<option value="segunda">Segunda</option>
+													<option value="terca">Ter&ccedil;a</option>
+													<option value="quarta">Quarta</option>
+													<option value="quinta">Quinta</option>
+													<option value="sexta">Sexta</option>
+													<option value="sabado">S&aacute;bado</option>
+													<option value="domingo">Domingo</option>
+												</select>
+											</td>
+											
+										</tr>
+										
+										<!--Local DEstino-->
+										
+										<tr>	
+											<td>Destino</td>
+											<td>
+												<select class="procurar_boleia"  name="cd" id="cd" onChange="selecionarOpcoes()" style="width: 130px">
+													<option> </option>
+													<?php selectConcelho("destino"); ?>
+												</select>
+											</td>
+											<td>
+												<select class="procurar_boleia"  name="fd" id="fd" onChange="selecionarOpcoes()" style="width: 130px">
+													<option> </option>
+													<?php selectFreguesia("destino"); ?>
+												</select>
+											</td>
+											<td>
+												<select class="procurar_boleia"  name="ld" id="ld" onChange="selecionarOpcoes()" style="width: 200px">
+													<option> </option>
+													<?php 
+													selectLocal("destino"); ?>
+												</select>
+											</td>
+											<td>
+												<select class="procurar_boleia_hora" name="hora_d" id="hora_d">
+													<option> </option>
+													<?php for($i=0;$i<24;$i++)
+													{ 
+														if($i < 10) 
+															echo "<option value=\"".$i."\">0".$i."</option>";
+														else
+															echo "<option value=\"".$i."\">".$i."</option>";
+													} ?>
+												</select>
+												:
+												<select class="procurar_boleia_hora" name="min_d" id="min_d">
+													<option> </option>
+													<option value="00"> 00 </option>
+													<option value="05"> 05 </option>
+													<?php for($i=10;$i<60;$i+=5){ ?>
+														<option value="<?=$i ?>" > <?php echo $i; ?> </option>
+													<?php } ?>
+												</select>
+											</td>
+										</tr>
+										<tr><td><input type="submit" value="Procurar"  ></td></tr>
+										<input type="hidden" name="estado" value="resultados"  >
+									</form>
 									
-									<!--Local DEstino-->
-									
-									<tr>	
-										<td>
-											<select class="procurar_boleia"  name="destino_concelho" id="destino_concelho" onChange="selelcionarConcelho()" style="width: 125px">
-												<option> </option>
-												<?php selectConcelho(); ?>
-											</select>
-										</td>
-										<td>
-											<select class="procurar_boleia"  name="destino_freguesia" id="destino_freguesia" onChange="selelcionarFreguesia()" style="width: 130px">
-												<option> </option>
-												<?php selectFreguesia(); ?>
-											</select>
-										</td>
-										<td>
-											<select class="procurar_boleia"  name="destino_destino_local" id="destino_destino_local" onChange="selelcionarLocal()" style="width: 130px">
-												<option> </option>
-												<?php 
-												selectLocal(); ?>
-											</select>
-										</td>
-										<td>
-											<select class="destino_procurar_boleia_dia" name="dia" id="dia">
-												<option> </option>
-												<option value="segunda">Segunda</option>
-												<option value="terca">Ter&ccedil;a</option>
-												<option value="quarta">Quarta</option>
-												<option value="quinta">Quinta</option>
-												<option value="sexta">Sexta</option>
-												<option value="sabado">S&aacute;bado</option>
-												<option value="domingo">Domingo</option>
-											</select>
-										</td>
-										<td>
-											<select class="procurar_boleia_hora" name="destino_hora" id="destino_hora">
-												<option> </option>
-												<?php for($i=0;$i<24;$i++)
-												{ 
-													if($i < 10) 
-														echo "<option value=\"".$i."\">0".$i."</option>";
-													else
-														echo "<option value=\"".$i."\">".$i."</option>";
-												} ?>
-											</select>
-											:
-											<select class="procurar_boleia_hora" name="destino_minutos" id="destino_minutos">
-												<option> </option>
-												<option value="00"> 00 </option>
-												<option value="05"> 05 </option>
-												<?php for($i=10;$i<60;$i+=5){ ?>
-													<option value="<?=$i ?>" > <?php echo $i; ?> </option>
-												<?php } ?>
-											</select>
-										</td>
-									</tr>
-									
-									<input type="hidden" name="estado" value="resultados"  >
-									<tr><input type="submit" value="Procurar"  ></tr>
-								</table>
-						</form>
+							</table>
+						
 					
-					<div class="menuEsquerdo">
-					<?php
-					
-					if (isset($_REQUEST['estado'])&&$_REQUEST['estado']=="resultados")
-					{
-						$concelho = $_REQUEST['concelho'];
-						$freguesia = $_REQUEST['freguesia'];
-						$local = $_REQUEST['local'];
-						$dia= $_REQUEST['dia'];
-						$hora=$_REQUEST['hora'];
-						$minutos=$_REQUEST['minutos'];
-						imprimirDados($concelho,$freguesia,$local,$dia,$hora,$minutos);
-					
-					?>
-					</div>
-					<div class="menuDireito">
-					<?php
-					
-						$concelho = $_REQUEST['concelho'];
-						$freguesia = $_REQUEST['freguesia'];
-						$local = $_REQUEST['local'];
-						$dia= $_REQUEST['dia'];
-						$hora=$_REQUEST['hora'];
-						$minutos=$_REQUEST['minutos'];
-						imprimirDados($concelho,$freguesia,$local,$dia,$hora,$minutos);
-					}
-					?>
-					</div>
+						<div class="menuEsquerdo">
+						<?php
+						
+						if (isset($_REQUEST['estado'])&&$_REQUEST['estado']=="resultados")
+						{
+							$dia= $_REQUEST['dia'];
+							$concelho_o = $_REQUEST['co'];
+							$freguesia_o = $_REQUEST['fo'];
+							$local_o = $_REQUEST['lo'];
+							$hora_o=$_REQUEST['hora_o'];
+							$minutos_o=$_REQUEST['min_o'];
+							$concelho_d = $_REQUEST['cd'];
+							$freguesia_d = $_REQUEST['fd'];
+							$local_d = $_REQUEST['ld'];
+							$hora_d=$_REQUEST['hora_d'];
+							$minutos_d=$_REQUEST['min_d'];
+							imprimirDados($concelho_o,$freguesia_o,$local_o,$hora_o,$minutos_o,$concelho_d,$freguesia_d,$local_d,$hora_d,$minutos_d,$dia);
+						
+						?>
+						</div>
+						<div class="menuDireito">
+						<?php
+						
+							$concelho = $_REQUEST['concelho'];
+							$freguesia = $_REQUEST['freguesia'];
+							$local = $_REQUEST['local'];
+							$dia= $_REQUEST['dia'];
+							$hora=$_REQUEST['hora'];
+							$minutos=$_REQUEST['minutos'];
+							imprimirDados($concelho,$freguesia,$local,$dia,$hora,$minutos);
+						}
+						?>
+						</div>
 					
 					</div>
 					<?php dadosPessoais(0, $result); ?>
