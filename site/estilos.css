@@ -8,7 +8,7 @@ body
 div.body
 {
 	display:inline-block;
-	width: 802px;
+	width: 952px;
 	border: 1px solid black;
 	background-image:url(imagens/fundo_body.png);
 	background-repeat:repeat-y;
@@ -19,7 +19,7 @@ div.header_div
 {
 	background-image: url(imagens/header_div.png);
 	/*height: 100px;*/
-	width: 800px;
+	width: 950px;
 	margin: auto;
 	padding-top: 87px;
 	padding-bottom: 87px;
@@ -30,7 +30,7 @@ div.header_div
 
 div.menu
 {
-	width: 800px;
+	width: 950px;
 	height: 50px;
 	text-align: center;
 	word-wrap: break-word;
@@ -171,7 +171,7 @@ div.rodape
 	float:left;
 	background-image: url(imagens/footer_div.png);
 	/*height: 100px;*/
-	width: 800px;
+	width: 950px;
 	margin: auto;
 	padding-top: 20px;
 	padding-bottom: 20px;
@@ -197,7 +197,7 @@ div.menuEsquerdo
 {
 	float:left;
 	display:block;
-	width: 200px;
+	width: 300px;
 	height: auto;
 	text-align: center;
 	word-wrap: break-word;
@@ -209,7 +209,7 @@ div.menuDireito
 {
 	float:left;
 	display:block;
-	width: 430px;
+	width: 450px;
 	height: auto;
 	text-align: center;
 	word-wrap: break-word;
