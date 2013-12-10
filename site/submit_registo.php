@@ -21,15 +21,15 @@
 	ligar_BD();
 
 	// verificação do nome
-	if(preg_match("[a-zA-Z\u00E0-\u00FC ]+", $nome, $reg_match) != 1 || $reg_match[0] != $nome)
+	if(preg_match("#[a-zA-Z ]+#", $nome, $reg_match) != 1 || $reg_match[0] != $nome)
 	{
-		header("LOCATION: registo.php?erro=3");
+		header("LOCATION: registo.php?erro=$reg_match[0]");
 		die();
 	}
 
 	// verificação do email
-	if(preg_match("[a-zA-Z0-9_]+[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)+", $mail, $reg_match) != 1 || $reg_match[0] != $mail ||
-		preg_match("[@]", $mail, $reg_match) == 1 && count($reg_match) != 1)
+	if(preg_match("#[a-zA-Z0-9_]+[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)+#", $mail, $reg_match) != 1 || $reg_match[0] != $mail ||
+		preg_match("#[@]#", $mail, $reg_match) == 1 && count($reg_match) != 1)
 	{
 		header("LOCATION: registo.php?erro=4");
 		die();

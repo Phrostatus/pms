@@ -107,7 +107,7 @@ function verificar_password(textbox, div)	  //true = OK
 function verificar_nome(textbox, div)		//true = OK
 {
 	verificar_null(textbox, div);
-	var ver_nome = textbox.value.match(/[a-zA-Z\u00E0-\u00FC ]+/);
+	var ver_nome = textbox.value.match(/[a-zA-Z\u00E0-\u00FC ]+/g);
 	if(ver_nome == null || ver_nome.length != 1 || ver_nome[0] != textbox.value)
 	{
 		div.hidden = false;
