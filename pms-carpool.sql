@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
+-- version 4.0.9
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 09, 2013 at 02:52 PM
--- Server version: 5.5.32
--- PHP Version: 5.4.19
+-- Generation Time: Dec 10, 2013 at 11:38 AM
+-- Server version: 5.6.14
+-- PHP Version: 5.5.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `pms-carpool`
 --
-CREATE DATABASE IF NOT EXISTS `pms-carpool` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `pms-carpool`;
 
 -- --------------------------------------------------------
 
@@ -110,14 +108,16 @@ CREATE TABLE IF NOT EXISTS `itinerario` (
   `nome` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_local_has_condutor_condutor1_idx` (`condutor_utilizador_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `itinerario`
 --
 
 INSERT INTO `itinerario` (`id`, `condutor_utilizador_id`, `dia`, `lugares_livres`, `nome`) VALUES
-(1, 8, 'segunda', 4, 'Funchal');
+(1, 8, 'quarta', 3, 'Estreito'),
+(2, 8, 'segunda', 3, 'Funchal'),
+(3, 8, 'terca', 3, 'Machico');
 
 -- --------------------------------------------------------
 
@@ -126,21 +126,21 @@ INSERT INTO `itinerario` (`id`, `condutor_utilizador_id`, `dia`, `lugares_livres
 --
 
 CREATE TABLE IF NOT EXISTS `itinerario_has_local` (
-  `itinerario_condutor_utilizador_id` int(10) unsigned NOT NULL,
+  `itinerario_id` int(11) NOT NULL,
   `local_id` int(10) unsigned NOT NULL,
   `hora` time NOT NULL,
   `tolerancia` int(11) NOT NULL,
-  PRIMARY KEY (`itinerario_condutor_utilizador_id`,`local_id`),
+  PRIMARY KEY (`itinerario_id`,`local_id`),
   KEY `fk_itinerario_has_local_local1_idx` (`local_id`),
-  KEY `fk_itinerario_has_local_itinerario1_idx` (`itinerario_condutor_utilizador_id`)
+  KEY `fk_itinerario_has_local_itinerario1_idx` (`itinerario_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `itinerario_has_local`
 --
 
-INSERT INTO `itinerario_has_local` (`itinerario_condutor_utilizador_id`, `local_id`, `hora`, `tolerancia`) VALUES
-(8, 1, '11:50:10', 10);
+INSERT INTO `itinerario_has_local` (`itinerario_id`, `local_id`, `hora`, `tolerancia`) VALUES
+(1, 1, '11:50:00', 20);
 
 -- --------------------------------------------------------
 
@@ -363,7 +363,7 @@ ALTER TABLE `itinerario`
 -- Constraints for table `itinerario_has_local`
 --
 ALTER TABLE `itinerario_has_local`
-  ADD CONSTRAINT `fk_itinerario_has_local_itinerario1` FOREIGN KEY (`itinerario_condutor_utilizador_id`) REFERENCES `itinerario` (`condutor_utilizador_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_itinerario_has_local_itinerario1` FOREIGN KEY (`itinerario_id`) REFERENCES `itinerario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_itinerario_has_local_local1` FOREIGN KEY (`local_id`) REFERENCES `local` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
