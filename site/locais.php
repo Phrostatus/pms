@@ -1,6 +1,7 @@
 ﻿<?php
 	function listarItinerarios()
 	{
+		mysql_set_charset("utf8");
 		$query_itinerario = 'SELECT * FROM itinerario WHERE condutor_utilizador_id="'.$_SESSION['user_id'].'" order by nome';
 		$result_itinerario = mysql_query($query_itinerario);
 		
