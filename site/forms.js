@@ -172,7 +172,7 @@ function selelcionarFreguesia(select_freguesia)
 	window.location= "procurar_boleia.php?concelho=" + select_concelho[select_concelho.selectedIndex].value + "fo=" + select_freguesia[select_freguesia.selectedIndex].value;
 }
 
-function selecionarOpcoes(select_concelho)
+function selecionarOpcoes()
 {
 	var	select_o_concelho = document.getElementById("co");
 	var	select_o_freguesia = document.getElementById("fo");
@@ -181,14 +181,13 @@ function selecionarOpcoes(select_concelho)
 	var	select_d_freguesia = document.getElementById("fd");
 	var	select_d_local = document.getElementById("ld");
 	
-	window.location= "procurar_boleia.php?co=" 
-	+select_o_concelho[select_o_concelho.selectedIndex].value  +
-	"&fo=" + select_o_freguesia[select_o_freguesia.selectedIndex].value +
-	"&lo="+ select_o_local[select_o_local.selectedIndex].value+
-	
-	"&cd=" +select_d_concelho[select_d_concelho.selectedIndex].value  +
-	"&fd=" + select_d_freguesia[select_d_freguesia.selectedIndex].value +
-	"&ld="+ select_d_local[select_d_local.selectedIndex].value;
+	window.location= "procurar_boleia.php?co=" +select_o_concelho[select_o_concelho.selectedIndex].value  +
+										"&fo=" + select_o_freguesia[select_o_freguesia.selectedIndex].value +
+										"&lo="+ select_o_local[select_o_local.selectedIndex].value+
+										
+										"&cd=" +select_d_concelho[select_d_concelho.selectedIndex].value  +
+										"&fd=" + select_d_freguesia[select_d_freguesia.selectedIndex].value +
+										"&ld="+ select_d_local[select_d_local.selectedIndex].value;
 	
 }
 
