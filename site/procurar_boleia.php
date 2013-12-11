@@ -96,7 +96,7 @@
 								<form name="pesquisa_local" id="pesquisa_local" method="REQUEST">
 									<tr>
 										<td>Origem</td>										
-										<td >
+										<td>
 											<select class="procurar_boleia"  name="co" id="co" onChange="selecionarOpcoes()" style="width: 130px">
 												<option> </option>
 												<?php selectConcelho("origem"); ?>

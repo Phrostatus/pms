@@ -147,7 +147,7 @@ div.erro_registo
 	border: 1px solid black;
 }
 
-div.local_paragem
+/*div.local_paragem
 {
 	display:block;
 	float:left;
@@ -165,7 +165,7 @@ div.local_espera
 	text-align:left;
 
 	border:1px solid black;
-}
+}*/
 
 div.rodape
 {
@@ -194,6 +194,37 @@ table.procurar_boleia_inserir
 table.procurar_boleia_inserir tr td
 {
 	border: 1px solid black;
+}
+
+table.locais_itinerario tr td
+{
+	border: 1px solid black;
+}
+
+table.locais_itinerario tr.itinerario_completo
+{
+	border: 1px solid black;
+	color:black;
+}
+
+table.locais_itinerario tr.itinerario_incompleto
+{
+	border: 1px solid black;
+	color:red;
+}
+
+table.locais_itinerario tr.itinerario_completo:hover
+{
+	border: 1px solid black;
+	color:white;
+	background-color:black;
+}
+
+table.locais_itinerario tr.itinerario_incompleto:hover
+{
+	border: 1px solid black;
+	color:red;
+	background-color:black;
 }
 
 div.menuEsquerdo

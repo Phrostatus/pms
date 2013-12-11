@@ -64,6 +64,7 @@
 		$database_name="pms-carpool";
 
 		$db=mysql_connect($host, $user_name);
+		mysql_set_charset("utf8");
 
 		if (mysql_error() > "") print mysql_error() . "<br>";
 
