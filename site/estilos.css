@@ -220,6 +220,35 @@ div.menuDireito
 	border: 1px solid black;
 }
 
+div.menuBoleia_Origem 
+{
+	float:left;
+	display:block;
+	width: 285px;
+	height: auto;
+	text-align: center;
+	word-wrap: break-word;
+	text-align=center;
+	
+border: 1px solid black;
+	
+}
+td 
+{
+text-align=center;
+}
+div.menuBoleia_Destino
+{
+	float:left;
+	display:block;
+	width: 285px;
+	height: auto;
+	text-align: center;
+	word-wrap: break-word;
+border: 1px solid black;
+}
+
+
 ::-webkit-input-placeholder /* WebKit browsers */
 {
 	color: #333;

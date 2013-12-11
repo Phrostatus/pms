@@ -1,53 +1,72 @@
 <?php
-function imprimirDados($concelho_o,$freguesia_o,$local_o,$hora_o,$minutos_o,$concelho_d,$freguesia_d,$local_d,$hora_d,$minutos_d,$dia)
+function imprimirDados($concelho_o,$freguesia_o,$local_o,$horas_o,$concelho_d,$freguesia_d,$local_d,$horas_d,$dia)
 {
 	
-	$hora_destino=$hora_d.":".$min_d.":00";
-	$hora_origem=$hora_o.":".$min_o.":00";
-	
-	$query_listarViagens ="
-	SELECT itinerario_has_local.hora as TIME_SEM_TOLERANCIA ,SEC_TO_TIME( TIME_TO_SEC(itinerario_has_local.hora )+ (itinerario_has_local.tolerancia*60)) as TIME_COM_TOLERANCIA ,itinerario.id AS ID_ITINERARIO, itinerario.nome AS NOME, itinerario.dia AS DIA, 
-	itinerario.lugares_livres as LIVRES, itinerario_has_local.tolerancia as TOLERANCIA , itinerario_has_local.hora as HORAS
+	$listar_Origem =mysql_query("
+	SELECT itinerario_has_local.hora AS TIME_SEM_TOLERANCIA,
+	SEC_TO_TIME( TIME_TO_SEC( itinerario_has_local.hora ) + ( itinerario_has_local.tolerancia *60 ) ) AS TIME_COM_TOLERANCIA,
+	itinerario.id AS ID_ITINERARIO, 
+	itinerario.lugares_livres AS LIVRES, 
+	itinerario_has_local.hora AS HORAS, 
+	local.id AS LOCAL_ID, 
+	local.nome AS NOME_LOCAL
 	FROM condutor
-	JOIN itinerario ON itinerario.dia='$dia'
-	JOIN itinerario_has_local 
-	";
-	
-	
-	
-	
-	$listar_resto=mysql_query("
-	SELECT itinerario_has_local.dia as DIA, itinerario_has_local.nome as NOME ,itinerario_has_local.tolerancia as TOLERANCIA 
-	condutor
-	JOIN itinerario
-	JOIN itinerario_has_local  ON itinerario_has_local.itinerario_condutor_utilizador_id=condutor.id 
-	JOIN local ON local.id = itinerario_has_local.local_id 
-	JOIN concelho concelho.id = '$concelho' 
-	JOIN freguesia freguesia.id = '$freguesia'
-	JOIN ponto ponto.id = '$local'
-	");
+	JOIN itinerario ON itinerario.dia =  '$dia'
+	JOIN itinerario_has_local ON itinerario.id = itinerario_has_local.itinerario_id
+	JOIN LOCAL ON itinerario_has_local.local_id = local.id
 
-	$result_listarViagens=mysql_query($query_listarViagens);
+	");
+	
 	
 	echo mysql_error();
+	
+
 	if(!mysql_error())
 	{
-	echo "<table><tr><td>NOME</td><td>DIA</td><td>HORA</td><tr>";
-	while ($row = mysql_fetch_array($result_listarViagens))
+	echo "<table>
+	<tr> 
+		<th>DIA</th> 
+		<th>ORIGEM</th>
+		<th>CHEGADA</th>
+		<th>PARTIDA</th>
+	<tr>";
+	while ($row = mysql_fetch_array($listar_Origem))
 			{
-				$hora_procurar=strtotime($hora_procura);
-				$hora_limite_superior=strtotime($row['TIME_COM_TOLERANCIA']);
-				$hora_limite_inferior=strtotime($row['TIME_SEM_TOLERANCIA']);
+			$hora_origem=strtotime($horas_o);
+			$hora_origem_limite_superior=strtotime($row['TIME_COM_TOLERANCIA']);
+			$hora_origem_limite_inferior=strtotime($row['TIME_SEM_TOLERANCIA']);
+			
+			$hora_destino=strtotime($horas_d);
+			$hora_destino_limite_superior=strtotime($row['TIME_COM_TOLERANCIA']);
+			$hora_destino_limite_inferior=strtotime($row['TIME_SEM_TOLERANCIA']);
+			
+			if( ($hora_origem>=$hora_origem_limite_inferior && $hora_origem<=$hora_origem_limite_superior) ||
+				($hora_destino>=$hora_destino_limite_inferior && $hora_destino<=$hora_destino_limite_superior))
+				
+			{			
 				echo "<tr>";
-				if($hora_procurar>=$hora_limite_inferior && $hora_procurar<=$hora_limite_superior)
-				{
-					echo "<td>".$row['NOME']."</td>";
-					echo "<td>".$row['DIA']."</td>";
-					echo "<td>".$row['TIME_SEM_TOLERANCIA']."</td>";
-				}
+				
+				echo "<td>$dia</td>";
+				if($hora_origem>=$hora_origem_limite_inferior && $hora_origem<=$hora_origem_limite_superior)
+					{
+						if($row['LOCAL_ID']==$local_o)
+						{
+						echo "<td><center>".$row['NOME_LOCAL']."</center></td>";
+						echo "<td><center>".$row['TIME_SEM_TOLERANCIA']."</center></td>";
+						echo "<td><center>".$row['TIME_COM_TOLERANCIA']."</center></td>";
+						}
+						else 
+						echo "<td><center>-</center></td><td><center>-</center></td><td><center>-</center></td>";
+						
+					}
+				else if ($hora_destino>=$hora_destino_limite_inferior && $hora_destino<=$hora_destino_limite_superior)
 				echo "</tr>";
 			}
 			echo "</table>";
+			
+		}
+			
+			
 	}
 	else
 	echo "Houve um erro na visualização de viagens! Por favor tente novamente.";
@@ -295,7 +314,7 @@ function imprimirDados($concelho_o,$freguesia_o,$local_o,$hora_o,$minutos_o,$con
 							</table>
 						
 					
-						<div class="menuEsquerdo">
+						
 						<?php
 						
 						if (isset($_REQUEST['estado'])&&$_REQUEST['estado']=="resultados")
@@ -311,23 +330,13 @@ function imprimirDados($concelho_o,$freguesia_o,$local_o,$hora_o,$minutos_o,$con
 							$local_d = $_REQUEST['ld'];
 							$hora_d=$_REQUEST['hora_d'];
 							$minutos_d=$_REQUEST['min_d'];
-							imprimirDados($concelho_o,$freguesia_o,$local_o,$hora_o,$minutos_o,$concelho_d,$freguesia_d,$local_d,$hora_d,$minutos_d,$dia);
-						
-						?>
-						</div>
-						<div class="menuDireito">
-						<?php
-						
-							$concelho = $_REQUEST['concelho'];
-							$freguesia = $_REQUEST['freguesia'];
-							$local = $_REQUEST['local'];
-							$dia= $_REQUEST['dia'];
-							$hora=$_REQUEST['hora'];
-							$minutos=$_REQUEST['minutos'];
-							imprimirDados($concelho,$freguesia,$local,$dia,$hora,$minutos);
+							$horas_o=$hora_o.":".$minutos_o.":00";
+							$horas_d=$hora_d.":".$minutos_d.":00";
+							
+							imprimirDados($concelho_o,$freguesia_o,$local_o,$horas_o,$concelho_d,$freguesia_d,$local_d,$horas_d,$dia);
 						}
 						?>
-						</div>
+												
 					
 					</div>
 					<?php dadosPessoais(0, $result); ?>
