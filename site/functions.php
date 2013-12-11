@@ -177,9 +177,102 @@
 		}
 	}
 
+	function selectConcelho($valor)
+	{
+		
+		$query_concelho = "SELECT * from concelho order by nome";
+		
+		$result_concelho = mysql_query($query_concelho);
+		$i = 0;
+		while($i < mysql_num_rows($result_concelho))
+		{
+			$linha_id = mysql_result($result_concelho, $i, "id");
+			$linha_nome = mysql_result($result_concelho, $i, "nome");
+			if($valor=="origem")
+			{
+				if(isset($_REQUEST['co']) && $_REQUEST['co'] == $linha_id)
+					echo "<option value='$linha_id' selected>$linha_nome</option>";
+				else
+					echo "<option value='$linha_id'>$linha_nome</option>";
+			}
+			else
+			{
+				if(isset($_REQUEST['cd']) && $_REQUEST['cd'] == $linha_id)
+					echo "<option value='$linha_id' selected>$linha_nome</option>";
+				else
+					echo "<option value='$linha_id'>$linha_nome</option>";
+			}
+			$i++;
+		}
+	}
 
-
-
-
-
+	function selectFreguesia($valor)
+	{
+		if(isset($_REQUEST['cd']) ||isset($_REQUEST['co']))
+		{
+			if($valor=="origem")
+			$query_freguesia = "SELECT * from freguesia WHERE freguesia.concelho_id =\"".$_REQUEST['co']."\" order by nome";
+			else
+			$query_freguesia = "SELECT * from freguesia WHERE freguesia.concelho_id =\"".$_REQUEST['cd']."\" order by nome";
+			
+			$result_freguesia = mysql_query($query_freguesia);
+			$i = 0;
+			while($i < mysql_num_rows($result_freguesia))
+			{
+				$linha_id = mysql_result($result_freguesia, $i, "id");
+				$linha_nome = mysql_result($result_freguesia, $i, "nome");
+				
+				if($valor=="origem")
+				{
+					if(isset($_REQUEST['fo']) && $_REQUEST['fo'] == $linha_id)
+						echo "<option value='$linha_id' selected>$linha_nome</option>";
+					else
+						echo "<option value='$linha_id'>$linha_nome</option>";
+				}
+				else
+				{
+					if(isset($_REQUEST['fd']) && $_REQUEST['fd'] == $linha_id)
+						echo "<option value='$linha_id' selected>$linha_nome</option>";
+					else
+						echo "<option value='$linha_id'>$linha_nome</option>";
+				}
+				$i++;
+			}
+		}
+	}
+		
+	function selectLocal($valor)
+	{
+		if(isset($_REQUEST['fd']) || isset($_REQUEST['fo']))
+		{
+			if($valor=="origem")
+				$query_local = "SELECT * from local WHERE local.freguesia_id =\"".$_REQUEST['fo']."\" order by nome";
+			else
+				$query_local = "SELECT * from local WHERE local.freguesia_id =\"".$_REQUEST['fd']."\" order by nome";
+			
+			$result_local = mysql_query($query_local);
+			$i = 0;
+			while($i < mysql_num_rows($result_local))
+			{
+				$linha_id = mysql_result($result_local, $i, "id");
+				$linha_nome = mysql_result($result_local, $i, "nome");
+				
+				if($valor=="origem")
+				{
+					if(isset($_REQUEST['lo']) && $_REQUEST['lo'] == $linha_id)
+						echo "<option value='$linha_id' selected>$linha_nome</option>";
+					else
+						echo "<option value='$linha_id'>$linha_nome</option>";
+				}
+				else
+				{
+					if(isset($_REQUEST['ld']) && $_REQUEST['ld'] == $linha_id)
+						echo "<option value='$linha_id' selected>$linha_nome</option>";
+					else
+						echo "<option value='$linha_id'>$linha_nome</option>";
+				}
+				$i++;	
+			}
+		}
+	}
 ?>
