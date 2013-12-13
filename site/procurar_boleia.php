@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	function imprimirDados($concelho_o,$freguesia_o,$local_o,$horas_o,$concelho_d,$freguesia_d,$local_d,$horas_d,$dia)
 	{
 		$listar_Origem =mysql_query("
@@ -138,13 +138,13 @@
 										<td>
 											<select class="procurar_boleia_dia" name="dia" id="dia">
 												<option> </option>
-												<option value="segunda">Segunda</option>
-												<option value="terca">Ter&ccedil;a</option>
-												<option value="quarta">Quarta</option>
-												<option value="quinta">Quinta</option>
-												<option value="sexta">Sexta</option>
-												<option value="sabado">S&aacute;bado</option>
-												<option value="domingo">Domingo</option>
+												<option value="Segunda">Segunda</option>
+												<option value="Terça">Terça</option>
+												<option value="Quarta">Quarta</option>
+												<option value="Quinta">Quinta</option>
+												<option value="Sexta">Sexta</option>
+												<option value="Sábado">Sábado</option>
+												<option value="Domingo">Domingo</option>
 											</select>
 										</td>
 									</tr>

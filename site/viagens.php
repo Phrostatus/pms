@@ -17,8 +17,7 @@
 	function mostrarViagens()
 {
 	$id_utilizador=$_SESSION['user_id'];
-	$mostrarViagens =mysql_query("
-		SELECT viagem_has_local.tipo as TIPO , concelho.nome as CONSELHO, freguesia.nome as FREGUESIA, ponto.nome as LOCAL   
+	$query_viagens = 'SELECT viagem_has_local.tipo as TIPO , concelho.nome as CONSELHO, freguesia.nome as FREGUESIA, ponto.nome as LOCAL   
 		FROM utilizador
 		JOIN condutor
 		JOIN viagem
@@ -28,20 +27,21 @@
 		JOIN concelho
 		JOIN freguesia
 		JOIN ponto
-		WHERE utilizador.id='$id_utilizador'
+		WHERE utilizador.id="$id_utilizador"
 		AND  condutor.utilizador_id=utilizador.id
-		AND viagem.condutor_utilizador_id=condutor.utilizador_id
+		AND viagem.condutor_utilizador_id = condutor.utilizador_id
 		AND viagem_has_local.local_id=local.id
 		AND concelho.id = local.concelho_id
 		AND freguesia.id = local.freguesia_id
 		AND ponto.id = local.local_id
 		GROUP BY viagem_has_local.local_id
-		ORDER BY viagem.id"	
-		);
+		ORDER BY viagem.id)';
 		/*AND local.id = itinerario_has_local.local_id
 		AND concelho.id = '$concelho'
 		AND freguesia.id = '$freguesia'
 		AND ponto.id = '$local'"*/
+	echo $query_viagens;
+	$result_viagens =mysql_query($query_viagens);
 		
 	if(!mysql_error())
 	{

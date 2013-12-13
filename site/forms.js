@@ -191,3 +191,10 @@ function selecionarOpcoes()
 	
 }
 
+function verificar_locais()
+{
+	if(! verificar_nome(document.getElementById("nome"), document.getElementById("erro_nome")))
+		document.getElementById("s1").disabled = true;
+	else
+		document.getElementById("s1").disabled = false;
+}

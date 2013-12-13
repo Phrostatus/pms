@@ -259,15 +259,17 @@ div.menuBoleia_Origem
 	height: auto;
 	text-align: center;
 	word-wrap: break-word;
-	text-align=center;
+	text-align:center;
 	
-border: 1px solid black;
+	border: 1px solid black;
 	
 }
-td 
+
+/*td 
 {
-text-align=center;
-}
+	text-align:center;
+}*/
+
 div.menuBoleia_Destino
 {
 	float:left;
@@ -276,7 +278,8 @@ div.menuBoleia_Destino
 	height: auto;
 	text-align: center;
 	word-wrap: break-word;
-border: 1px solid black;
+	
+	border: 1px solid black;
 }
 
 
