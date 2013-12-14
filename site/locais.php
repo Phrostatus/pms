@@ -24,19 +24,19 @@
 				$result_local = mysql_query($query_local);	//so para saber se ja tem pelo menos 2 locais no itinerario
 				if(mysql_num_rows($result_local) < 2)
 				{ ?>
-					<tr class="itinerario_incompleto" onclick="window.location='locais.php?i=<?=$row['id']?>'"> 
+					<tr class="itinerario_incompleto"> 
 		  <?php }
 				else 
 				{ ?>
-					<tr class="itinerario_completo" onclick="window.location='locais.php?i=<?=$row['id']?>'"> 
+					<tr class="itinerario_completo">
 		  <?php } ?>
-						<td style="width : 173px;"><?=$row["nome"]?></td>
-						<td style="width : 55px;"><?=$row["dia"]?></td>
-						<td style="width : 1px;"><?=$row["lugares_livres"]?></td>
+						<td style="width : 173px;" onclick="window.location='locais.php?i=<?=$row['id']?>'"><?=$row["nome"]?></td>
+						<td style="width : 55px;" onclick="window.location='locais.php?i=<?=$row['id']?>'"><?=$row["dia"]?></td>
+						<td style="width : 1px;" onclick="window.location='locais.php?i=<?=$row['id']?>'"><?=$row["lugares_livres"]?></td>
 						<td style="width : 1px;">
 							<form method="POST" action="apagar_itinerario.php">
 								<input type="hidden" name="itinerario_id" value="<?=$row['id']?>">
-								<input type="button" class="apagar_local" value="X" onClick="if(confirm('Tem a certeza que pretende apagar este local deste itinerário ?')) this.form.submit();">
+								<input type="button" class="apagar_local" value="X" onClick="if(confirm('Tem a certeza que pretende apagar este local deste itinerário ?')) {this.form.submit();}">
 							</form>
 						</td>
 					</tr>
