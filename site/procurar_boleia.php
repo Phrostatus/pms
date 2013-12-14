@@ -194,7 +194,7 @@
 											</select>
 										</td>
 									</tr>
-									<tr><td><input type="submit" value="Procurar"  ></td></tr>
+									<tr><td><input type="submit" value="Procurar"></td></tr>
 									<input type="hidden" name="estado" value="resultados"  >
 								</form>
 							</table>

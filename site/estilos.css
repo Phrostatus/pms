@@ -40,10 +40,8 @@ div.menu
 
 ul.menu
 {
-
-	float:left;
+	float:middle;
 	vertical-align:middle;
-	padding-left: 70px;
 }
 
 li.menu
@@ -68,7 +66,8 @@ div.account_div
 {
 	float:left;
 	background-color: grey;
-	height: 500px;
+	min-height:500px;
+	height:auto;
 	width: 170px;
 	margin: 5 5 5 5;
 	word-wrap: break-word;
@@ -119,6 +118,15 @@ input[type="text"],[type="password"]
 	background-color:#999;
 
 	float:left;
+}
+
+input.apagar_local
+{
+	width:15px;
+	height:17px;
+	margin-bottom:-20px;
+	padding:0 0 0 0;
+	border:0;
 }
 
 label.registo
@@ -175,11 +183,16 @@ div.rodape
 	/*height: 100px;*/
 	width: 950px;
 	margin: auto;
-	padding-top: 20px;
-	padding-bottom: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 	text-align: center;
 
 	border: 1px solid black;
+}
+
+table
+{
+	border-collapse: collapse;
 }
 
 table.procurar_boleia_inserir
@@ -196,15 +209,14 @@ table.procurar_boleia_inserir tr td
 	border: 1px solid black;
 }
 
+table.locais_itinerario
+{
+	border-collapse: collapse;
+}
+
 table.locais_itinerario tr td
 {
 	border: 1px solid black;
-}
-
-table.locais_itinerario tr.itinerario_completo
-{
-	border: 1px solid black;
-	color:black;
 }
 
 table.locais_itinerario tr.itinerario_incompleto
@@ -225,6 +237,18 @@ table.locais_itinerario tr.itinerario_incompleto:hover
 	border: 1px solid black;
 	color:red;
 	background-color:black;
+}
+
+table.insere_itinerario
+{
+	margin-left:-8px;
+	margin-right:-8px;
+}
+
+table.insere_local
+{
+	margin-left:-8px;
+	margin-right:-8px;
 }
 
 div.menuEsquerdo

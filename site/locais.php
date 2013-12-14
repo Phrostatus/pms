@@ -14,7 +14,7 @@
 			echo "<tr>";
 				echo '<th>Itinerário</th>';
 				echo '<th>Dia</th>';
-				echo '<th>Nr Lugares</th>';
+				echo '<th>Vagas</th>';
 			echo '</tr>';
 			while($row = mysql_fetch_array($result_itinerario))
 			{
@@ -22,15 +22,25 @@
 													JOIN itinerario ON itinerario.id = itinerario_has_local.itinerario_id
 													WHERE itinerario.id = "'.$row['id'].'"';
 				$result_local = mysql_query($query_local);	//so para saber se ja tem pelo menos 2 locais no itinerario
-				if(mysql_num_rows($result_local) < 2) { ?>
-					<tr class="itinerario_incompleto" onclick="window.location='locais.php?i=<?=$row['id']?>'"> <?php }
-				else { ?>
-					<tr class="itinerario_completo" onclick="window.location='locais.php?i=<?=$row['id']?>'"> <?php }
-						echo '<td style="width : 150px;">'.$row["nome"].'</td>';
-						echo '<td style="width : 55px;">'.$row["dia"].'</td>';
-						echo '<td style="width : 1px;">'.$row["lugares_livres"].'</td>';
-					echo '</tr>';
-			}
+				if(mysql_num_rows($result_local) < 2)
+				{ ?>
+					<tr class="itinerario_incompleto" onclick="window.location='locais.php?i=<?=$row['id']?>'"> 
+		  <?php }
+				else 
+				{ ?>
+					<tr class="itinerario_completo" onclick="window.location='locais.php?i=<?=$row['id']?>'"> 
+		  <?php } ?>
+						<td style="width : 173px;"><?=$row["nome"]?></td>
+						<td style="width : 55px;"><?=$row["dia"]?></td>
+						<td style="width : 1px;"><?=$row["lugares_livres"]?></td>
+						<td style="width : 1px;">
+							<form method="POST" action="apagar_itinerario.php">
+								<input type="hidden" name="itinerario_id" value="<?=$row['id']?>">
+								<input type="button" class="apagar_local" value="X" onClick="if(confirm('Tem a certeza que pretende apagar este local deste itinerário ?')) this.form.submit();">
+							</form>
+						</td>
+					</tr>
+	  <?php }
 		echo '</table>';
 	}
 
@@ -38,6 +48,8 @@
 	{
 		if(isset($_REQUEST['i']) && is_numeric($_REQUEST['i']))
 		{
+			echo '<center>Locais do itinerário selecionado</center>';
+			
 			$query_local = 'SELECT itinerario_has_local.local_id AS local_id, itinerario_has_local.itinerario_id AS itinerario_id, local.nome AS local, freguesia.nome AS freguesia, concelho.nome as concelho, itinerario_has_local.hora, itinerario_has_local.tolerancia
 									FROM local 
 									JOIN freguesia ON local.freguesia_id = freguesia.id
@@ -51,8 +63,8 @@
 			
 			if(mysql_num_rows($result_local) == 0)
 			{
-				echo 'Não existem locais';
-				return;
+				echo 'Não existem locais.';
+				return true;
 			} ?>
 				<table class="locais_itinerario">
 					<tr>
@@ -75,12 +87,18 @@
 							<form method="POST" action="apagar_local.php">
 								<input type="hidden" name="itinerario_id" value="<?=$row['itinerario_id']?>">
 								<input type="hidden" name="local_id" value="<?=$row['local_id']?>">
-								<input type="submit" value="X" onClick="confirm('Tem a certeza que pretende apagar este local deste itinerário ?')">
+								<input type="button" class="apagar_local" value="X" onClick="if(confirm('Tem a certeza que pretende apagar este local deste itinerário ?')) this.form.submit();">
 							</form>
 						</td>
 					</tr>
 		  <?php }
 			echo '</table>';
+			return true;
+		}
+		else
+		{
+			echo "<center>Selecione um itinerário</center>";
+			return false;
 		}
 	}
 
@@ -96,31 +114,11 @@
 		$query_user = "SELECT * FROM utilizador 	
 			WHERE id = \"".$_SESSION['user_id']."\"";
 		$result_user = mysql_query($query_user);	//para poder mostrar os dados pessoais na barra lateral
-		
-		$query_concelho = "SELECT * FROM concelho order by `nome` ASC";
-		$result_concelho = mysql_query($query_concelho);
-
-		$result_freguesia = NULL;
-		$result_local = NULL;
-		
-		if(isset($_GET['c']) && is_numeric($_GET['c']))
-		{
-			$query_freguesia = "SELECT * FROM freguesia JOIN concelho ON concelho.id = freguesia.concelho_id
-									WHERE concelho.id = ".$_GET['c'];
-			$result_freguesia = mysql_query($query_freguesia);
-		}
-		
-		if(isset($_GET['c']) && is_numeric($_GET['c']))
-		{
-			$query_local = "SELECT * FROM local JOIN freguesia ON freguesia.id = local.freguesia_id
-									WHERE freguesia.id = ".$_GET['f'];
-			$result_local = mysql_query($query_local);
-		}
 ?>
-		
 		<html>
 			<meta http-equiv="Content-type" content="text/html;charset=utf-8" />
 			<link rel="stylesheet" type="text/css" href="estilos.css" media="screen" />
+			<script type="text/javascript" src="forms.js">	</script>
 			<body>
 				<div class="body">
 					<?php cabecalho(2); ?>
@@ -130,22 +128,22 @@
 					?>
 					<div class="main">
 						<div class="menuEsquerdo">
+							<center>Lista de Itinerários</center>
 							<?php listarItinerarios(); ?>  <!-- listar os itinerários -->
 							<br><br>
 							<form method="POST" action="adicionar_itinerario.php">
 								<fieldset>
 								<legend>Adicionar novo itinerário</legend>
-								<table>
+								<table class="insere_itinerario">
 									<tr>
 										<td>Nome</td>
 										<td>Dia</td>
-										<td>Nr Lugares</td>
+										<td>Vagas</td>
 									</tr>
 									<tr>
-										<td><input type="text" name="nome_itinerario" id="nome_itinerario" style="width:103px;"></td>
+										<td><input type="text" name="nome_itinerario" id="nome_itinerario" style="width:150px;"></td>
 										<td>
 											<select name="dia_itinerario">
-												<option></option>
 												<option value="Segunda">Segunda</option>
 												<option value="Terça">Terça</option>
 												<option value="Quarta">Quarta</option>
@@ -165,18 +163,92 @@
 										</td>
 									</tr>
 									<tr>
-										<td colspan=3 align="center"><input type="submit"></td>
+										<td colspan=3 align="center"><input type="submit" value="Adicionar Itinerário"></td>
 									</tr>
 									</table>
 								</fieldset>
 							</form>
 							<?php
-							if(isset($_GET['erro']) && $_GET['erro'] == 1)
+							if(isset($_GET['erro_i']) && $_GET['erro_i'] == 1)
 								echo '<div><p class="erro">ERRO: Itinerário já existe</p></div>';
 							?>
 						</div>
-						<div class="menuDireito" >
-							<?php listarLocais(); ?>  <!-- listar os locais do itinerario selecionado -->
+						<div class="menuDireito">
+							<?php 
+							if(listarLocais())	// listar os locais do itinerario selecionado retorna false se nao tiver itinerario selecionado
+							{	?>  
+								<br><br>
+								<form name="insere_local" id="pesquisa_local" method="REQUEST" action="adicionar_local.php">
+								<fieldset>
+									<legend>Adicionar local ao itinerário selecionado</legend>
+									<table class="insere_local">
+										<tr>
+											<td>Concelho</td>
+											<td>Freguesia</td>
+											<td>Local</td>
+											<td>Hora</td>
+											<td>Espera</td>
+										</tr>
+										<tr>
+											<td>
+												<select class="insere_local"  name="co" id="co" onChange='selecionarOpcoes_locais(<?=$_REQUEST["i"]?>)' style="width: 85px; height:20px;">
+													<option> </option>
+													<?php selectConcelho("origem"); ?>
+												</select>
+											</td>
+											<td>
+												<select class="insere_local"  name="fo" id="fo" onChange="selecionarOpcoes_locais(<?=$_REQUEST["i"]?>)" style="width: 90px; height:20px;">
+													<option> </option>
+													<?php selectFreguesia("origem"); ?>
+												</select>
+											</td>
+											<td>
+												<select class="insere_local"  name="lo" id="lo" style="width: 107px; height:20px">
+													<option> </option>
+													<?php selectLocal("origem"); ?>
+												</select>
+											</td>
+											<td>
+												<select class="insere_local_hora" name="hora" id="hora" style="width:41px;">
+													<?php for($i=0;$i<24;$i++)
+													{ 
+														if($i < 10) 
+															echo "<option value=\"".$i."\">0".$i."</option>";
+														else
+															echo "<option value=\"".$i."\">".$i."</option>";
+													} ?>
+												</select>
+												:
+												<select class="insere_local_hora" name="min" id="min" style="width:41px;">
+													<option value="00"> 00 </option>
+													<option value="05"> 05 </option>
+													<?php for($i=10;$i<60;$i+=5){ ?>
+														<option value="<?=$i ?>" > <?php echo $i; ?> </option>
+													<?php } ?>
+												</select>
+											</td>
+											<td>
+												<select class="insere_local_espera" name="espera" id="espera" style="width: 41px; height:20px;">
+													<option value="5">5</option>
+													<option value="10">10</option>
+													<option value="15">15</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="5" align="center">
+												<input type="hidden" name="itinerario_id" value='<?=$_REQUEST["i"]?>'>
+												<input type="submit" value="Adicionar Local">
+											</td>
+										</tr>
+									</table>
+								</fieldset>
+								</form>
+								<?php
+							}
+							if(isset($_GET['erro_l']) && $_GET['erro_l'] == 1)
+								echo '<div><p class="erro">Erro ao adicionar local<br>Selecione um itinerário</p></div>';
+							?>
 						</div>
 					</div>
 					<?php

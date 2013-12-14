@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	function sec_session_start() {
 			$session_name = 'sec_session_id'; // Set a custom session name
 			$secure = false; // Set to true if using https.
@@ -101,7 +101,7 @@
 					<div class='menu'>
 						<nav>
 							<ul class='menu'>
-								<a href='start_page.php'><li class='menu'> P&aacute;gina Inicial </li></a>";
+								<a href='start_page.php'><li class='menu'> Página Inicial </li></a>";
 								if($_SESSION['tipo'] == "Condutor" || $_SESSION['tipo'] == "Condutor e Passageiro")
 									echo "<a href='locais.php'><li class='menu'> Meus Locais </li></a>";
 								if($_SESSION['tipo'] == "Passageiro" || $_SESSION['tipo'] == "Condutor e Passageiro")
@@ -116,7 +116,8 @@
 	function rodape()
 	{
 		echo "<div class='rodape'>
-				Miguel Ribeiro, Francisco Barros, Juan Macedo, Pedro Camacho, Miguel Casaca
+				Miguel Ribeiro, Francisco Barros, Juan Macedo, Pedro Camacho, Miguel Casaca<br>
+				Otimizado para: Google Chrome, Internet Explorer 
 			  </div>";
 	}
 
@@ -151,29 +152,27 @@
 							echo "<p class='erro'>LOGIN ERRADO </p>";
 					}
 			echo	"<form name='login' id='login' method='post' action='submit_login.php'>
-					<p> <input type='text' name='mail'	   id='mail' placeholder='mail@host.com'/> </p>
-					<p> <input type='password' name='password' id='password' placeholder='password'/> </p>
+					<p> <input type='text' name='mail'	   id='mail' placeholder='mail@host.com'> </p>
+					<p> <input type='password' name='password' id='password' placeholder='password'> </p>
 
-					<p>	<input class='login' type='button' name='login' value='Login' onClick='formhash(this.form, this.form.password);' /> </p>
+					<p>	<input class='login' type='button' name='login' value='Login' onClick='formhash(this.form, this.form.password);'> </p>
 				</form>
 			</div>";
 		}
 		else
 		{
-
-
-			echo	"<div class='account_div'>
-						<p align='center'> Sess&atilde;o Iniciada </p>
-						<p align='left'> Tipo: ".$_SESSION['tipo']."</p>
-						<p align='left'> Utilizador:\n".
-							mysql_result($result, 0, "mail").
-						"</p>
-						<p> &nbsp </p>
-						<p> &nbsp </p>
-						<p> &nbsp </p>
-						<p> &nbsp </p>
-						<p align='center'> <a href='logout.php'> Logout </a></p>
-					</div>";
+			echo'<div class="account_div">
+					<p align="center"> Sessão Iniciada </p>
+					<p align="left"> Tipo: '.$_SESSION['tipo'].'</p>
+					<p align="left"> Utilizador:'.
+						mysql_result($result, 0, "mail").
+					'</p>
+					<p> &nbsp </p>
+					<p> &nbsp </p>
+					<p> &nbsp </p>
+					<p> &nbsp </p>
+					<p align="center"> <a href="logout.php"> Logout </a></p>
+				</div>';
 		}
 	}
 

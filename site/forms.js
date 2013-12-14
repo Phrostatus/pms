@@ -198,3 +198,16 @@ function verificar_locais()
 	else
 		document.getElementById("s1").disabled = false;
 }
+
+function selecionarOpcoes_locais(itinerario)
+{
+	var	select_o_concelho = document.getElementById("co");
+	var	select_o_freguesia = document.getElementById("fo");
+	var	select_o_local = document.getElementById("lo");
+	if(itinerario == null)
+		itinerario="";
+	window.location= "locais.php?i=" + itinerario + "&co=" + select_o_concelho[select_o_concelho.selectedIndex].value  +
+													"&fo=" + select_o_freguesia[select_o_freguesia.selectedIndex].value +
+													"&lo=" + select_o_local[select_o_local.selectedIndex].value;	
+}
+

@@ -17,36 +17,29 @@
 	function mostrarViagens()
 {
 	$id_utilizador=$_SESSION['user_id'];
-	$query_viagens = 'SELECT viagem_has_local.tipo as TIPO , concelho.nome as CONSELHO, freguesia.nome as FREGUESIA, ponto.nome as LOCAL   
+	$query_viagens = 'SELECT viagem_has_local.tipo as TIPO , concelho.nome as CONSELHO, freguesia.nome as FREGUESIA, local.nome as LOCAL   
 		FROM utilizador
-		JOIN condutor
-		JOIN viagem
-		JOIN itinerario
-		JOIN viagem_has_local
-		JOIN local
-		JOIN concelho
-		JOIN freguesia
-		JOIN ponto
-		WHERE utilizador.id="$id_utilizador"
-		AND  condutor.utilizador_id=utilizador.id
-		AND viagem.condutor_utilizador_id = condutor.utilizador_id
-		AND viagem_has_local.local_id=local.id
-		AND concelho.id = local.concelho_id
-		AND freguesia.id = local.freguesia_id
-		AND ponto.id = local.local_id
+		JOIN condutor			ON condutor.utilizador_id = utilizador.id
+		JOIN viagem				ON viagem.condutor_utilizador_id = utilizador.id
+		JOIN itinerario 	  	ON itinerario.condutor_utilizador_id=utilizador.id
+		JOIN viagem_has_local 	ON viagem_has_local.viagem_id=viagem.id
+		JOIN local 				ON local.id=viagem_has_local.local_id
+		JOIN freguesia 			ON freguesia.id=local.freguesia_id
+		JOIN concelho 			ON concelho.id=freguesia.concelho_id
+		WHERE utilizador.id="'.$id_utilizador.'"
 		GROUP BY viagem_has_local.local_id
-		ORDER BY viagem.id)';
+		ORDER BY viagem.id';
 		/*AND local.id = itinerario_has_local.local_id
 		AND concelho.id = '$concelho'
 		AND freguesia.id = '$freguesia'
 		AND ponto.id = '$local'"*/
-	echo $query_viagens;
+	mysql_set_charset("utf8");
 	$result_viagens =mysql_query($query_viagens);
 		
 	if(!mysql_error())
 	{
 		$contar=0;
-		while ($row = mysql_fetch_array($mostrarViagens))
+		while ($row = mysql_fetch_array($result_viagens))
 			{
 			if ($contar==0)
 			{

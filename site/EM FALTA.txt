@@ -1,19 +1,4 @@
-- Validar dados do registo por parte do servidor
-
-
-- Página locais
-
-
-
-
-
-MEUs LOCAIS = so aparece aos condutores
-Procurar BOleia so aparece aos passageirosg
-
-Viagens Marcadas - Aparece para os dois
-
-
-Procurar BOleia - REsutlados
+Procurar Boleia - REsutlados
 
 
 antes da tabela por a peskisa k foi feita
