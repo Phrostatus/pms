@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 14, 2013 at 11:25 PM
+-- Generation Time: Dec 14, 2013 at 11:31 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `pms-carpool`
 --
+CREATE DATABASE IF NOT EXISTS `pms-carpool` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `pms-carpool`;
 
 -- --------------------------------------------------------
 
@@ -26,6 +28,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `concelho`
 --
 
+DROP TABLE IF EXISTS `concelho`;
 CREATE TABLE IF NOT EXISTS `concelho` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) NOT NULL,
@@ -47,6 +50,7 @@ INSERT INTO `concelho` (`id`, `nome`) VALUES
 -- Table structure for table `condutor`
 --
 
+DROP TABLE IF EXISTS `condutor`;
 CREATE TABLE IF NOT EXISTS `condutor` (
   `utilizador_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`utilizador_id`)
@@ -65,6 +69,7 @@ INSERT INTO `condutor` (`utilizador_id`) VALUES
 -- Table structure for table `freguesia`
 --
 
+DROP TABLE IF EXISTS `freguesia`;
 CREATE TABLE IF NOT EXISTS `freguesia` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `concelho_id` int(11) NOT NULL,
@@ -100,6 +105,7 @@ INSERT INTO `freguesia` (`id`, `concelho_id`, `nome`) VALUES
 -- Table structure for table `itinerario`
 --
 
+DROP TABLE IF EXISTS `itinerario`;
 CREATE TABLE IF NOT EXISTS `itinerario` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `condutor_utilizador_id` int(10) unsigned NOT NULL,
@@ -126,6 +132,7 @@ INSERT INTO `itinerario` (`id`, `condutor_utilizador_id`, `dia`, `lugares_livres
 -- Table structure for table `itinerario_has_local`
 --
 
+DROP TABLE IF EXISTS `itinerario_has_local`;
 CREATE TABLE IF NOT EXISTS `itinerario_has_local` (
   `itinerario_id` int(11) NOT NULL,
   `local_id` int(10) unsigned NOT NULL,
@@ -152,6 +159,7 @@ INSERT INTO `itinerario_has_local` (`itinerario_id`, `local_id`, `hora`, `tolera
 -- Table structure for table `local`
 --
 
+DROP TABLE IF EXISTS `local`;
 CREATE TABLE IF NOT EXISTS `local` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `freguesia_id` int(11) NOT NULL,
@@ -221,6 +229,7 @@ INSERT INTO `local` (`id`, `freguesia_id`, `nome`) VALUES
 -- Table structure for table `notificacao`
 --
 
+DROP TABLE IF EXISTS `notificacao`;
 CREATE TABLE IF NOT EXISTS `notificacao` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `tipo` int(10) unsigned NOT NULL,
@@ -239,6 +248,7 @@ CREATE TABLE IF NOT EXISTS `notificacao` (
 -- Table structure for table `passageiro`
 --
 
+DROP TABLE IF EXISTS `passageiro`;
 CREATE TABLE IF NOT EXISTS `passageiro` (
   `utilizador_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`utilizador_id`)
@@ -258,6 +268,7 @@ INSERT INTO `passageiro` (`utilizador_id`) VALUES
 -- Table structure for table `utilizador`
 --
 
+DROP TABLE IF EXISTS `utilizador`;
 CREATE TABLE IF NOT EXISTS `utilizador` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `password` varchar(128) NOT NULL,
@@ -286,6 +297,7 @@ INSERT INTO `utilizador` (`id`, `password`, `salt`, `nome`, `mail`, `telemovel`,
 -- Table structure for table `viagem`
 --
 
+DROP TABLE IF EXISTS `viagem`;
 CREATE TABLE IF NOT EXISTS `viagem` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `avaliacao_condutor` int(10) unsigned DEFAULT NULL,
@@ -311,6 +323,7 @@ INSERT INTO `viagem` (`id`, `avaliacao_condutor`, `condutor_utilizador_id`, `ini
 -- Table structure for table `viagem_passageiro`
 --
 
+DROP TABLE IF EXISTS `viagem_passageiro`;
 CREATE TABLE IF NOT EXISTS `viagem_passageiro` (
   `viagem_id` int(11) NOT NULL,
   `passageiro_utilizador_id` int(10) unsigned NOT NULL,
