@@ -225,6 +225,12 @@ table.locais_itinerario tr.itinerario_incompleto
 	color:red;
 }
 
+table.locais_itinerario tr.itinerario_selecionado
+{
+	border: 1px solid black;
+	color:blue;
+}
+
 table.locais_itinerario tr.itinerario_completo:hover
 {
 	border: 1px solid black;
@@ -236,6 +242,13 @@ table.locais_itinerario tr.itinerario_incompleto:hover
 {
 	border: 1px solid black;
 	color:red;
+	background-color:black;
+}
+
+table.locais_itinerario tr.itinerario_selecionado:hover
+{
+	border: 1px solid black;
+	color:yellow;
 	background-color:black;
 }
 

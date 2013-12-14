@@ -22,14 +22,14 @@
 													JOIN itinerario ON itinerario.id = itinerario_has_local.itinerario_id
 													WHERE itinerario.id = "'.$row['id'].'"';
 				$result_local = mysql_query($query_local);	//so para saber se ja tem pelo menos 2 locais no itinerario
-				if(mysql_num_rows($result_local) < 2)
-				{ ?>
-					<tr class="itinerario_incompleto"> 
-		  <?php }
+				if(isset($_REQUEST['i']) && $row['id'] == $_REQUEST['i']) 
+					echo '<tr class="itinerario_selecionado">';
+				else if(mysql_num_rows($result_local) < 2)
+					echo '<tr class="itinerario_incompleto"> ';
 				else 
-				{ ?>
-					<tr class="itinerario_completo">
-		  <?php } ?>
+					echo '<tr class="itinerario_completo">';
+				?>
+					
 						<td style="width : 173px;" onclick="window.location='locais.php?i=<?=$row['id']?>'"><?=$row["nome"]?></td>
 						<td style="width : 55px;" onclick="window.location='locais.php?i=<?=$row['id']?>'"><?=$row["dia"]?></td>
 						<td style="width : 1px;" onclick="window.location='locais.php?i=<?=$row['id']?>'"><?=$row["lugares_livres"]?></td>
