@@ -1,66 +1,90 @@
 ﻿<?php
 	function imprimirDados($concelho_o,$freguesia_o,$local_o,$horas_o,$concelho_d,$freguesia_d,$local_d,$horas_d,$dia)
 	{
-		$listar_Origem =mysql_query("
-		SELECT itinerario_has_local.hora AS TIME_SEM_TOLERANCIA,
-		SEC_TO_TIME( TIME_TO_SEC( itinerario_has_local.hora ) + ( itinerario_has_local.tolerancia *60 ) ) AS TIME_COM_TOLERANCIA,
-		itinerario.id AS ID_ITINERARIO, 
-		itinerario.lugares_livres AS LIVRES, 
-		itinerario_has_local.hora AS HORAS, 
-		local.id AS LOCAL_ID, 
-		local.nome AS NOME_LOCAL
-		FROM condutor
-		JOIN itinerario ON itinerario.dia =  '$dia'
-		JOIN itinerario_has_local ON itinerario.id = itinerario_has_local.itinerario_id
-		JOIN LOCAL ON itinerario_has_local.local_id = local.id
-		");
+	
+		$itinerariosDia = mysql_query("SELECT itinerario.condutor_utilizador_id as CONDUTOR, itinerario.id as ID_ITINERARIO, itinerario.lugares_livres AS LIVRES , itinerario.nome as NOME  from itinerario  where itinerario.dia='$dia'");
+		;
 		
-		echo mysql_error();
-
 		if(!mysql_error())
 		{
-			echo "<table>
-			<tr> 
-				<th>DIA</th> 
-				<th>ORIGEM</th>
-				<th>CHEGADA</th>
-				<th>PARTIDA</th>
-			<tr>";
-			while ($row = mysql_fetch_array($listar_Origem))
+			$numeroviagens=0;
+			echo "<table><td>NOME ITINERARIO</td><td>DIA</td><td>CHEGADA ORIGEM</td><td>PARTIDA</td><td>CHEGADA DESTINO</td><td>LIMITE</td>";
+			while ($rowItinerariosDia = mysql_fetch_array($itinerariosDia))
 			{
-				$hora_origem = strtotime($horas_o);
-				$hora_origem_limite_superior = strtotime($row['TIME_COM_TOLERANCIA']);
-				$hora_origem_limite_inferior = strtotime($row['TIME_SEM_TOLERANCIA']);
-				
-				$hora_destino = strtotime($horas_d);
-				$hora_destino_limite_superior = strtotime($row['TIME_COM_TOLERANCIA']);
-				$hora_destino_limite_inferior = strtotime($row['TIME_SEM_TOLERANCIA']);
-				
-				if( ($hora_origem >= $hora_origem_limite_inferior && $hora_origem <= $hora_origem_limite_superior) ||
-					($hora_destino >= $hora_destino_limite_inferior && $hora_destino <= $hora_destino_limite_superior))
-				{			
-					echo "<tr>";
-					echo "<td>$dia</td>";
-					if($hora_origem >= $hora_origem_limite_inferior && $hora_origem <= $hora_origem_limite_superior)
+				if(!($rowItinerariosDia['LIVRES']==0))
+				{	
+					$itinerario=$rowItinerariosDia['ID_ITINERARIO'];
+					$itinerarioLocais=mysql_query(" SELECT itinerario_has_local.hora AS TIME_SEM_TOLERANCIA,SEC_TO_TIME( TIME_TO_SEC( itinerario_has_local.hora ) + ( itinerario_has_local.tolerancia *60 ) ) AS TIME_COM_TOLERANCIA, itinerario_has_local.hora AS HORAS ,
+												local.id AS LOCAL_ID from
+												itinerario 
+												JOIN itinerario_has_local ON itinerario.id=itinerario_has_local.itinerario_id 
+												JOIN LOCAL ON itinerario_has_local.local_id = local.id  
+												WHERE itinerario.id='$itinerario'");
+					echo mysql_error();
+					$horaInicio=false;
+					$horaFinal=false;
+					$imprimirDadosOrigem="";
+					$imprimirDadosDestino="";
+					while ($verificarHoras = mysql_fetch_array($itinerarioLocais))
 					{
-						if($row['LOCAL_ID'] == $local_o)
+						$hora_origem = strtotime($horas_o);
+						$hora_destino = strtotime($horas_d);
+						$hora_tolerancia = strtotime($verificarHoras['TIME_COM_TOLERANCIA']);
+						$hora_sem_tolerancia = strtotime($verificarHoras['TIME_SEM_TOLERANCIA']);
+
+
+						if(!$horaInicio)
 						{
-							echo "<td><center>".$row['NOME_LOCAL']."</center></td>";
-							echo "<td><center>".$row['TIME_SEM_TOLERANCIA']."</center></td>";
-							echo "<td><center>".$row['TIME_COM_TOLERANCIA']."</center></td>";
+							if($hora_origem >= $hora_sem_tolerancia && $hora_origem <= $hora_tolerancia)
+							{
+								if($verificarHoras['LOCAL_ID'] == $local_o)
+								{
+								
+									$imprimirDadosOrigem="<td>$dia</td><td><center>".
+									$verificarHoras['TIME_SEM_TOLERANCIA']."<td><center>".$verificarHoras['TIME_COM_TOLERANCIA']."</center></td>";
+									
+								}			
+								$horaInicio=true;
+							}
 						}
-						else 
-							echo "<td><center>-</center></td><td><center>-</center></td><td><center>-</center></td>";
+						
+						if(!$horaFinal)
+						{
+							if($hora_destino >= $hora_sem_tolerancia && $hora_destino <= $hora_tolerancia)
+							{
+								if($verificarHoras['LOCAL_ID'] == $local_d)
+								{
+									$imprimirDadosDestino="<td><center>".
+									$verificarHoras['TIME_SEM_TOLERANCIA']."<td><center>".$verificarHoras['TIME_COM_TOLERANCIA']."</center></td>";
+									
+								}			
+								$horaFinal=true;
+							}
+						}
 						
 					}
-					else if ($hora_destino >= $hora_destino_limite_inferior && $hora_destino <= $hora_destino_limite_superior)
-						echo "</tr>";
-				}
-				echo "</table>";
-			}	
-		}
+					if($imprimirDadosOrigem!="" && $imprimirDadosDestino!="" )
+					{
+						$numeroviagens=$numeroviagens+1;
+						echo "<tr><td>".$rowItinerariosDia['NOME']."</td>".$imprimirDadosOrigem.$imprimirDadosDestino."<td>";						
+					?>
+					<form method="POST" action="marcar_viagem.php">
+						<input type="hidden" name="itinerario_id" value="<?=$rowItinerariosDia['ID_ITINERARIO']?>">
+						<input type="button" class="apagar_local" value="M" onClick="if(confirm('Tem a certeza que quer marcar viagem ?')) {this.form.submit();}">
+				
+					</form>
+					<?php
+					echo "</td></tr>";
+					}
+				}	
+			}
+			
+			echo "</table>";
+		}	
 		else
 			echo "Houve um erro na visualização de viagens! Por favor tente novamente.";
+		if($numeroviagens==0)
+			echo "Não existem viagens no horario inserido.";
 	}
 
 	include "functions.php";
@@ -217,6 +241,9 @@
 							$horas_d = $hora_d.":".$minutos_d.":00";
 							imprimirDados($concelho_o,$freguesia_o,$local_o,$horas_o,$concelho_d,$freguesia_d,$local_d,$horas_d,$dia);
 						}
+						$estado=$_REQUEST['estado'];
+						if(isset($_REQUEST['estado']) && $_REQUEST['estado']=="sucesso")
+							echo "<br><br><center><h2>Viagem Marcada com Sucesso</h2></center>";
 						?>
 					</div>
 					<?php dadosPessoais(0, $result); ?>
