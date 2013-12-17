@@ -48,7 +48,7 @@
 	{
 		if(isset($_REQUEST['i']) && is_numeric($_REQUEST['i']))
 		{
-			echo '<center>Locais do itinerário selecionado</center>';
+			echo '<center><p>Locais do itinerário selecionado</p></center>';
 			
 			$query_local = 'SELECT itinerario_has_local.local_id AS local_id, itinerario_has_local.itinerario_id AS itinerario_id, local.nome AS local, freguesia.nome AS freguesia, concelho.nome as concelho, itinerario_has_local.hora, itinerario_has_local.tolerancia
 									FROM local 
@@ -66,7 +66,7 @@
 				echo 'Não existem locais.';
 				return true;
 			} ?>
-				<table class="locais_itinerario">
+				<table class="locais_local">
 					<tr>
 						<th>Concelho</th>
 						<th>Freguesia</th>
@@ -128,7 +128,7 @@
 					?>
 					<div class="main">
 						<div class="menuEsquerdo">
-							<center>Lista de Itinerários</center>
+							<center><p>Lista de Itinerários</p></center>
 							<?php listarItinerarios(); ?>  <!-- listar os itinerários -->
 							<br><br>
 							<form method="POST" action="adicionar_itinerario.php">
@@ -247,7 +247,9 @@
 								<?php
 							}
 							if(isset($_GET['erro_l']) && $_GET['erro_l'] == 1)
-								echo '<div><p class="erro">Erro ao adicionar local<br>Selecione um itinerário</p></div>';
+								echo '<div><p class="erro">Erro ao adicionar local<br><br>Selecione um itinerário</p></div>';
+							else if(isset($_GET['erro_l']) && $_GET['erro_l'] == 2)
+								echo '<div><p class="erro">Local já adicionado a este itinerário<br><br>Selecione um itinerário</p></div>';
 							?>
 						</div>
 					</div>

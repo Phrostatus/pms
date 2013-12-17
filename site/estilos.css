@@ -9,7 +9,7 @@ div.body
 {
 	display:inline-block;
 	width: 952px;
-	border: 1px solid black;
+	border: 1px solid white;
 	background-image:url(imagens/fundo_body.png);
 	background-repeat:repeat-y;
 	float:center;
@@ -25,17 +25,18 @@ div.header_div
 	padding-bottom: 87px;
 	text-align: center;
 
-	border: 1px solid black;
+	border: 1px solid white;
 }
 
 div.menu
 {
+	background-color:#333;
 	width: 950px;
 	height: 50px;
 	text-align: center;
 	word-wrap: break-word;
 
-	border: 1px solid black;
+	border: 1px solid white;
 }
 
 ul.menu
@@ -52,27 +53,32 @@ li.menu
 	padding-bottom:15px;
 	padding-top:15px;
 	margin:0 -3 0 -3;
-	background-image:url(imagens/menu_item.png);
+	color:#DDD;
+	font-weight:bold;
+	background-color:#333;
+	/*background-image:url(imagens/menu_item.png);
 	background-position:top;
-	background-repeat:repeat;
+	background-repeat:repeat;*/
 }
 
 li.menu:hover
 {
-	background-position:bottom;
+	/*background-position:bottom;*/
+	color:#FFF;
+	background-color:#C60;
 }
 
 div.account_div
 {
 	float:left;
-	background-color: grey;
+
 	min-height:500px;
 	height:auto;
 	width: 170px;
 	margin: 5 5 5 5;
 	word-wrap: break-word;
 
-	border: 1px solid black;
+	border: 1px solid white;
 }
 
 div.main
@@ -85,7 +91,12 @@ div.main
 	margin-right:5px;
 	text-align:justify;
 
-	border: 1px solid black;
+	border: 1px solid white;
+}
+
+p
+{
+	color:#FFF;
 }
 
 p.erro
@@ -143,7 +154,7 @@ div.registo_item
 	height:30px;
 	float:left;
 
-	border:1px solid black;
+	border:1px solid white;
 }
 
 div.erro_registo
@@ -152,7 +163,7 @@ div.erro_registo
 	margin-left:10px;
 	color:#06F;
 	font-weight:bold;
-	border: 1px solid black;
+	border: 1px solid white;
 }
 
 /*div.local_paragem
@@ -162,7 +173,7 @@ div.erro_registo
 	width:280px;
 	text-align:left;
 
-	border:1px solid black;
+	border:1px solid white;
 }
 
 div.local_espera
@@ -172,7 +183,7 @@ div.local_espera
 	width:280px;
 	text-align:left;
 
-	border:1px solid black;
+	border:1px solid white;
 }*/
 
 div.rodape
@@ -187,7 +198,12 @@ div.rodape
 	padding-bottom: 10px;
 	text-align: center;
 
-	border: 1px solid black;
+	border: 1px solid white;
+}
+
+legend
+{
+	color:white;
 }
 
 table
@@ -195,18 +211,23 @@ table
 	border-collapse: collapse;
 }
 
+table tr th
+{
+	color:white;
+}
+
 table.procurar_boleia_inserir
 {
 	display:block;
 	float:left;
 	width: 760px;
-	border: 1px solid black;
+	border: 1px solid white;
 }
 
 
 table.procurar_boleia_inserir tr td
 {
-	border: 1px solid black;
+	border: 1px solid white;
 }
 
 table.locais_itinerario
@@ -216,40 +237,52 @@ table.locais_itinerario
 
 table.locais_itinerario tr td
 {
-	border: 1px solid black;
+	border: 1px solid white;
+}
+
+table.locais_itinerario tr.itinerario_completo
+{
+	border: 1px solid white;
+	color:white;
 }
 
 table.locais_itinerario tr.itinerario_incompleto
 {
-	border: 1px solid black;
+	border: 1px solid white;
 	color:red;
 }
 
 table.locais_itinerario tr.itinerario_selecionado
 {
-	border: 1px solid black;
+	border: 1px solid white;
 	color:blue;
 }
 
 table.locais_itinerario tr.itinerario_completo:hover
 {
-	border: 1px solid black;
+	border: 1px solid white;
 	color:white;
-	background-color:black;
+	background-color:gray;
 }
 
 table.locais_itinerario tr.itinerario_incompleto:hover
 {
-	border: 1px solid black;
+	border: 1px solid white;
 	color:red;
-	background-color:black;
+	background-color:gray;
 }
 
 table.locais_itinerario tr.itinerario_selecionado:hover
 {
-	border: 1px solid black;
+	border: 1px solid white;
 	color:yellow;
-	background-color:black;
+	background-color:gray;
+}
+
+table.locais_local tr td
+{
+	color:white;
+	border:1px solid white;
 }
 
 table.insere_itinerario
@@ -273,7 +306,7 @@ div.menuEsquerdo
 	text-align: center;
 	word-wrap: break-word;
 
-	border: 1px solid black;
+	border: 1px solid white;
 }
 
 div.menuDireito
@@ -285,7 +318,7 @@ div.menuDireito
 	text-align: center;
 	word-wrap: break-word;
 
-	border: 1px solid black;
+	border: 1px solid white;
 }
 
 div.menuBoleia_Origem 
@@ -298,7 +331,7 @@ div.menuBoleia_Origem
 	word-wrap: break-word;
 	text-align:center;
 	
-	border: 1px solid black;
+	border: 1px solid white;
 	
 }
 
@@ -316,7 +349,7 @@ div.menuBoleia_Destino
 	text-align: center;
 	word-wrap: break-word;
 	
-	border: 1px solid black;
+	border: 1px solid white;
 }
 
 

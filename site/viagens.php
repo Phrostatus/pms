@@ -1,6 +1,4 @@
-<?php
-
-
+ï»¿<?php
 	include "functions.php";
 	
 	sec_session_start();
@@ -11,7 +9,7 @@
 		ligar_BD();
 		$query = "SELECT * FROM utilizador 	
 		WHERE id = \"".$_SESSION['user_id']."\"";
-		$result = mysql_query($query);				//só para poder mostrar os dados pessoais na barra lateral
+		$result = mysql_query($query);				//sÃ£o para poder mostrar os dados pessoais na barra lateral
 		
 		
 	function mostrarViagens()
@@ -57,7 +55,7 @@
 		echo "</table>";
 	}
 	else
-	echo "Houve um erro na visualização de viagens! Por favor tente novamente.";
+	echo "Houve um erro na visualizaÃ§Ã£o de viagens! Por favor tente novamente.";
 }
 ?>
 		<html>

@@ -15,7 +15,16 @@
 		header('LOCATION: locais.php?erro_l=1');
 		die();
 	}
-			
+		
+	$query_repetido = 'SELECT local_id FROM itinerario_has_local WHERE local_id="'.$local_id.'" AND itinerario_id="'.$itinerario_id.'"';
+	$result_repetido = mysql_query($query_repetido);
+	
+	if(mysql_num_rows($result_repetido) != 0)
+	{
+		header('LOCATION: locais.php?erro_l=2');
+		die();
+	}
+	
 	$query_inserir = 'INSERT INTO `itinerario_has_local` (`itinerario_id`, `local_id`, `hora`, `tolerancia`)
 									 VALUES ("'.$itinerario_id.'","'.$local_id.'","'.$hora.'","'.$espera.'")';
 	mysql_query($query_inserir);
