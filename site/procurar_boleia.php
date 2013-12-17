@@ -66,10 +66,21 @@
 					if($imprimirDadosOrigem!="" && $imprimirDadosDestino!="" )
 					{
 						$numeroviagens=$numeroviagens+1;
-						echo "<tr><td>".$rowItinerariosDia['NOME']."</td>".$imprimirDadosOrigem.$imprimirDadosDestino."<td>";						
+						echo "<tr><td>".$rowItinerariosDia['NOME']."</td>".$imprimirDadosOrigem.$imprimirDadosDestino."<td>";	
+						
+						$condutor=mysql_query("SELECT condutor.utilizador_id as ID FROM condutor join itinerario ON condutor.utilizador_id=itinerario.condutor_utilizador_id where itinerario.id=".$rowItinerariosDia['ID_ITINERARIO']."");
+						if(mysql_error())
+							{
+							die();
+							echo "Não foi possivel marcar viagem";
+							}
+						$condutor_id =mysql_fetch_array($condutor)['ID'];
 					?>
 					<form method="POST" action="marcar_viagem.php">
 						<input type="hidden" name="itinerario_id" value="<?=$rowItinerariosDia['ID_ITINERARIO']?>">
+						<input type="hidden" name="inicio" value="<?=$local_o?>">
+						<input type="hidden" name="final" value="<?=$local_d?>">
+						<input type="hidden" name="condutor" value="<?=$condutor_id?>">
 						<input type="button" class="apagar_local" value="M" onClick="if(confirm('Tem a certeza que quer marcar viagem ?')) {this.form.submit();}">
 				
 					</form>
@@ -87,6 +98,10 @@
 			echo "Não existem viagens no horario inserido.";
 	}
 
+function associarPassageiro()
+{
+
+}
 	include "functions.php";
 	
 	sec_session_start();
@@ -242,7 +257,13 @@
 							imprimirDados($concelho_o,$freguesia_o,$local_o,$horas_o,$concelho_d,$freguesia_d,$local_d,$horas_d,$dia);
 						}
 						if(isset($_REQUEST['estado']) && $_REQUEST['estado']=="sucesso")
+						{
 							echo "<br><br><center><h2>Viagem Marcada com Sucesso</h2></center>";
+						}
+						if(isset($_REQUEST['estado']) && $_REQUEST['estado']=="marcado")
+						{
+							echo "<br><br><center><h2>Já tem marcada esta viagem!!</h2></center>";
+						}
 						?>
 					</div>
 					<?php dadosPessoais(0, $result); ?>
