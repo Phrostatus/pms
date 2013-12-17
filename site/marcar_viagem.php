@@ -27,6 +27,7 @@
 		
 		$viagem_id=mysql_insert_id();
 		$query_marcar= mysql_query("INSERT INTO `viagem_passageiro`(`viagem_id`, `passageiro_utilizador_id`, `avaliacao_passageiro`) VALUES ('$viagem_id','$passageiro',-1)");
+		header("LOCATION: procurar_boleia.php?estado=sucesso");
 	}
 	else
 	{
@@ -34,13 +35,13 @@
 		$verificar_marcado=mysql_query("SELECT `viagem_id`, `passageiro_utilizador_id`, `avaliacao_passageiro` FROM `viagem_passageiro` WHERE passageiro_utilizador_id=$passageiro AND viagem_id=$viagem_id");
 		$marcado=mysql_num_rows($verificar_marcado);
 		if($marcado==0)
-		{
+		{ 
 			$query_marcar= mysql_query("INSERT INTO `viagem_passageiro`(`viagem_id`, `passageiro_utilizador_id`, `avaliacao_passageiro`) VALUES ('$viagem_id','$passageiro',-1)");
-			header('LOCATION: procurar_boleia.php?estado=sucesso');
+			header("LOCATION: procurar_boleia.php?estado=sucesso");
 		}
 		else
 		{
-			header('LOCATION: procurar_boleia.php?estado=marcado');
+			header("LOCATION: procurar_boleia.php?estado=marcado");
 		}
 	}
 	
