@@ -1,9 +1,10 @@
-<script type="text/javascript" src="sha512.js"></script>
-<script type="text/javascript" src="forms.js"></script>
-
 <?php
 	include "functions.php";
 ?>
+
+<script type="text/javascript" src="sha512.js"></script>
+<script type="text/javascript" src="forms.js"></script>
+
 
 
 <html>

@@ -178,7 +178,7 @@
 
 	function selectConcelho($valor)
 	{
-		
+		mysql_set_charset("utf8");
 		$query_concelho = "SELECT * from concelho order by nome";
 		
 		$result_concelho = mysql_query($query_concelho);
@@ -207,6 +207,7 @@
 
 	function selectFreguesia($valor)
 	{
+		mysql_set_charset("utf8");
 		if(isset($_REQUEST['cd']) ||isset($_REQUEST['co']))
 		{
 			if($valor=="origem")
@@ -242,6 +243,7 @@
 		
 	function selectLocal($valor)
 	{
+		mysql_set_charset("utf8");
 		if(isset($_REQUEST['fd']) || isset($_REQUEST['fo']))
 		{
 			if($valor=="origem")

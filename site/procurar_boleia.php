@@ -1,7 +1,7 @@
 ﻿<?php
 	function imprimirDados($concelho_o,$freguesia_o,$local_o,$horas_o,$concelho_d,$freguesia_d,$local_d,$horas_d,$dia)
 	{
-	
+		mysql_set_charset("utf8");
 		$itinerariosDia = mysql_query("SELECT itinerario.condutor_utilizador_id as CONDUTOR, itinerario.id as ID_ITINERARIO, itinerario.lugares_livres AS LIVRES , itinerario.nome as NOME  from itinerario  where itinerario.dia='$dia'");
 		;
 		
@@ -241,7 +241,6 @@
 							$horas_d = $hora_d.":".$minutos_d.":00";
 							imprimirDados($concelho_o,$freguesia_o,$local_o,$horas_o,$concelho_d,$freguesia_d,$local_d,$horas_d,$dia);
 						}
-						$estado=$_REQUEST['estado'];
 						if(isset($_REQUEST['estado']) && $_REQUEST['estado']=="sucesso")
 							echo "<br><br><center><h2>Viagem Marcada com Sucesso</h2></center>";
 						?>

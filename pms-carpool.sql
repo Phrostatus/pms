@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 14, 2013 at 11:31 PM
+-- Generation Time: Dec 17, 2013 at 03:52 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -121,10 +121,10 @@ CREATE TABLE IF NOT EXISTS `itinerario` (
 --
 
 INSERT INTO `itinerario` (`id`, `condutor_utilizador_id`, `dia`, `lugares_livres`, `nome`) VALUES
-(1, 8, 'quarta', 3, 'Funchal- Machico'),
+(1, 8, 'quarta', 4, 'Funchal- Machico'),
 (2, 8, 'segunda', 3, 'Funchal'),
-(4, 8, 'quarta', 3, 'Funchal'),
-(5, 8, 'Terça', 2, 'União');
+(4, 8, 'quarta', 0, 'Funchal'),
+(5, 8, 'Terça', 3, 'União');
 
 -- --------------------------------------------------------
 
@@ -151,7 +151,10 @@ INSERT INTO `itinerario_has_local` (`itinerario_id`, `local_id`, `hora`, `tolera
 (1, 1, '11:50:00', 20),
 (1, 2, '11:30:00', 5),
 (1, 3, '12:00:00', 5),
-(1, 15, '12:45:00', 10);
+(1, 15, '12:45:00', 10),
+(4, 2, '11:30:00', 15),
+(4, 7, '11:40:00', 10),
+(4, 15, '12:45:00', 15);
 
 -- --------------------------------------------------------
 
@@ -300,6 +303,7 @@ INSERT INTO `utilizador` (`id`, `password`, `salt`, `nome`, `mail`, `telemovel`,
 DROP TABLE IF EXISTS `viagem`;
 CREATE TABLE IF NOT EXISTS `viagem` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `itinerario_id` int(11) NOT NULL,
   `avaliacao_condutor` int(10) unsigned DEFAULT NULL,
   `condutor_utilizador_id` int(10) unsigned NOT NULL,
   `inicio` varchar(30) NOT NULL,
@@ -313,9 +317,9 @@ CREATE TABLE IF NOT EXISTS `viagem` (
 -- Dumping data for table `viagem`
 --
 
-INSERT INTO `viagem` (`id`, `avaliacao_condutor`, `condutor_utilizador_id`, `inicio`, `fim`, `data`) VALUES
-(1, NULL, 8, '', '', '0000-00-00 00:00:00'),
-(2, NULL, 8, '', '', '2013-12-08 20:51:23');
+INSERT INTO `viagem` (`id`, `itinerario_id`, `avaliacao_condutor`, `condutor_utilizador_id`, `inicio`, `fim`, `data`) VALUES
+(1, 0, NULL, 8, '', '', '0000-00-00 00:00:00'),
+(2, 0, NULL, 8, '', '', '2013-12-08 20:51:23');
 
 -- --------------------------------------------------------
 
