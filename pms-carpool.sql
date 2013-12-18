@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 18, 2013 at 01:18 PM
+-- Generation Time: Dec 18, 2013 at 05:43 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -123,8 +123,7 @@ CREATE TABLE IF NOT EXISTS `itinerario` (
 INSERT INTO `itinerario` (`id`, `condutor_utilizador_id`, `dia`, `lugares_livres`, `nome`) VALUES
 (1, 1, 'Quarta', 2, 'Funchal- Machico'),
 (2, 1, 'Segunda', 3, 'Funchal'),
-(4, 1, 'Quarta', 1, 'Funchal'),
-(5, 1, 'Terça', 2, 'União'),
+(5, 1, 'Terça', 0, 'União'),
 (6, 1, 'Sábado', 2, 'Casa-Trabalho');
 
 -- --------------------------------------------------------
@@ -155,11 +154,9 @@ INSERT INTO `itinerario_has_local` (`itinerario_id`, `local_id`, `hora`, `tolera
 (1, 15, '12:45:00', 10),
 (2, 3, '08:00:00', 15),
 (2, 47, '02:00:00', 15),
-(4, 2, '11:30:00', 10),
-(4, 4, '05:40:00', 15),
-(4, 6, '11:40:00', 15),
 (5, 32, '03:00:00', 15),
-(5, 38, '03:30:00', 15);
+(5, 38, '03:30:00', 15),
+(5, 48, '05:00:00', 15);
 
 -- --------------------------------------------------------
 
@@ -317,7 +314,7 @@ CREATE TABLE IF NOT EXISTS `viagem` (
   PRIMARY KEY (`id`),
   KEY `fk_viagem_condutor1_idx` (`condutor_utilizador_id`),
   KEY `fk_viagem_itinerario1_idx` (`itinerario_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `viagem`
@@ -325,7 +322,7 @@ CREATE TABLE IF NOT EXISTS `viagem` (
 
 INSERT INTO `viagem` (`id`, `itinerario_id`, `avaliacao_condutor`, `condutor_utilizador_id`, `inicio`, `fim`, `data`) VALUES
 (2, 5, 0, 1, '32', '38', '2013-12-17 21:44:48'),
-(3, 4, 0, 1, '2', '6', '2013-12-17 21:57:24');
+(7, 5, 0, 1, '38', '48', '2013-12-18 12:26:34');
 
 -- --------------------------------------------------------
 
@@ -349,7 +346,8 @@ CREATE TABLE IF NOT EXISTS `viagem_passageiro` (
 
 INSERT INTO `viagem_passageiro` (`viagem_id`, `passageiro_utilizador_id`, `avaliacao_passageiro`) VALUES
 (2, 2, -1),
-(3, 2, -1);
+(7, 2, -1),
+(7, 3, -1);
 
 --
 -- Constraints for dumped tables
