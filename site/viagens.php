@@ -30,13 +30,12 @@
 	}
 	else
 	{
-		$query_viagens = "select itinerario.nome as NOME_ITINERARIO, itinerario.id as ITINERARIO_ID , viagem.id as VIAGEM_ID,
-		viagem.condutor_utilizador_id as CONDUTOR, 
+		$query_viagens = "SELECT itinerario.nome AS NOME_ITINERARIO, itinerario.id AS ITINERARIO_ID, viagem.id as VIAGEM_ID,
 		viagem.fim as FIM, viagem.inicio as INICIO
-		from viagem JOIN viagem_passageiro on viagem.id=viagem_passageiro.viagem_id
-		JOIN passageiro  on viagem_passageiro.passageiro_utilizador_id = passageiro.utilizador_id
-		JOIN itinerario on itinerario.id=viagem.itinerario_id
-		where viagem.condutor_utilizador_id='$id_utilizador'";
+		FROM viagem
+		JOIN itinerario ON itinerario.id = viagem.itinerario_id
+		WHERE viagem.condutor_utilizador_id =1
+		GROUP BY itinerario.nome";
 	}
 	
 	mysql_set_charset("utf8");
@@ -50,17 +49,19 @@
 			while($row_viagens = mysql_fetch_array($result_viagens))
 			{
 				$itinerario_nome=$row_viagens['NOME_ITINERARIO'];
+				$itinerario_id=$row_viagens['ITINERARIO_ID'];
 				
-				$local_inicio=mysql_query("select nome as NOME from local where local.id=\"".$row_viagens['INICIO']."\"");
-				$local_fim=mysql_query("select nome as NOME from local where local.id=\"".$row_viagens['FIM']."\"");
-				$local_in =mysql_fetch_array($local_inicio)['NOME'];
-				$local_fi =mysql_fetch_array($local_fim)['NOME'];
+				
 					
 				if($passageiro_t!=1)
 				{
-					
+					$local_inicio=mysql_query("select nome as NOME from local where local.id=\"".$row_viagens['INICIO']."\"");
+					$local_fim=mysql_query("select nome as NOME from local where local.id=\"".$row_viagens['FIM']."\"");
+					$local_in =mysql_fetch_array($local_inicio)['NOME'];
+					$local_fi =mysql_fetch_array($local_fim)['NOME'];
 					$id_condutor=$row_viagens['CONDUTOR'];
-					$dados_condutor=mysql_query("select nome as NOME, mail as EMAIL, telemovel as TELEMOVEL from utilizador where utilizador.id='$id_condutor'");
+					$dados_condutor=mysql_query("select nome as NOME, mail as EMAIL, telemovel as TELEMOVEL 
+					from utilizador where utilizador.id='$id_condutor'");
 					while($dados = mysql_fetch_array($dados_condutor))
 					{
 						$nome_condutor=$dados['NOME'];
@@ -95,24 +96,66 @@
 				{
 					if ($contar==0)
 					{
-					echo "<table><tr><td>ITINERARIO</td><td>PASSAGEIRO</td><td>TELEMOVEL</td><td>EMAIL</td><td>INICIO</td><td>FIM</td></tr>";
+					echo "<table class='locais_itinerario'><tr><td>ITINERARIO</td><td>INICIO</td><td>FIM</td><td>PASSAGEIRO</td><td>TELEMOVEL</td><td>EMAIL</td></tr>";
 					$contar=1;
 					}
 					
-					$viagem_id=$row_viagens['VIAGEM_ID'];
-					$selecionar_passageiros=mysql_query("SELECT utilizador.nome as NOME , utilizador.mail as EMAIL, utilizador.telemovel as TELEMOVEL
-					from viagem_passageiro join passageiro on viagem_passageiro.passageiro_utilizador_id=passageiro.utilizador_id
-					join utilizador on utilizador.id=passageiro.utilizador_id where viagem_passageiro.viagem_id='$viagem_id'");
+					$selecionar_passageiros=mysql_query("SELECT viagem.id AS VIAGEM_ID, viagem.inicio AS INICIO, viagem.fim AS FIM
+														FROM viagem
+														JOIN viagem_passageiro ON viagem.id = viagem_passageiro.viagem_id
+														WHERE viagem.itinerario_id ='$itinerario_id'
+														 ");
 					
-					$num_passageiros=mysql_num_rows($selecionar_passageiros);
-					echo "<tr><td rowspan='$num_passageiros'>$itinerario_nome</td>";
-					while($row_selecionar_passageiros = mysql_fetch_array($selecionar_passageiros))
+					$num_passageiros_itinerario=mysql_num_rows($selecionar_passageiros);
+					
+					echo "<tr><td rowspan='$num_passageiros_itinerario'>$itinerario_nome</td>";
+					$query_passageiros_restrito=mysql_query("SELECT viagem.id AS VIAGEM_ID, viagem.inicio AS INICIO, viagem.fim AS FIM
+														FROM viagem
+														JOIN viagem_passageiro ON viagem.id = viagem_passageiro.viagem_id
+														WHERE viagem.itinerario_id ='$itinerario_id' group by viagem.id");
+	
+					while($row_selecionar_passageiros = mysql_fetch_array($query_passageiros_restrito))
 					{
-						echo "<td>".$row_selecionar_passageiros['NOME']."</td>";
-						echo "<td>".$row_selecionar_passageiros['TELEMOVEL']."</td>";
-						echo "<td>".$row_selecionar_passageiros['EMAIL']."</td>";
-						echo "<td>".$local_in."</td>";
-						echo "<td>".$local_fi."</td></tr>";						
+
+						
+						$local_inicio=mysql_query("select nome as NOME from local where local.id=\"".$row_selecionar_passageiros['INICIO']."\"");
+						$local_fim=mysql_query("select nome as NOME from local where local.id=\"".$row_selecionar_passageiros['FIM']."\"");
+						$local_in =mysql_fetch_array($local_inicio)['NOME'];
+						$local_fi =mysql_fetch_array($local_fim)['NOME'];
+					
+						$procurar_locais="SELECT * FROM `viagem_passageiro` WHERE viagem_id=\"".$row_selecionar_passageiros['VIAGEM_ID']."\" ";
+						$total_locais=mysql_query($procurar_locais);
+						$numero_de_locais=mysql_num_rows($total_locais);
+						echo "<td rowspan='$numero_de_locais'>$local_in</td>";
+						echo "<td rowspan='$numero_de_locais'>$local_fi</td>";
+						
+						$procurar_locais_restrito=$procurar_locais."group by viagem_id";
+
+						$total_locais_pesquisar=mysql_query($procurar_locais_restrito);
+						
+						while($row_total_locais = mysql_fetch_array($total_locais_pesquisar))
+						{
+							$local_viagem=mysql_query("SELECT utilizador.nome AS NOME, utilizador.mail AS EMAIL, utilizador.telemovel AS TELEMOVEL
+										FROM viagem_passageiro
+										JOIN passageiro ON passageiro.utilizador_id = viagem_passageiro.passageiro_utilizador_id
+										JOIN utilizador ON passageiro.utilizador_id = utilizador.id
+										WHERE viagem_passageiro.viagem_id =\"".$row_selecionar_passageiros['VIAGEM_ID']."\" GROUP BY utilizador.id ");
+								$numero_s=mysql_num_rows($local_viagem);
+							while($row_local_viagem = mysql_fetch_array($local_viagem))
+							{
+								echo "<td>".$row_local_viagem['NOME']."</td>";
+								echo "<td>".$row_local_viagem['TELEMOVEL']."</td>";
+								echo "<td>".$row_local_viagem['EMAIL']."</td>";
+								
+								if($numero_s>1)
+								echo "</tr>";
+								
+								
+							}
+						echo "</tr>";
+						}
+						
+									
 					}
 					
 				}
