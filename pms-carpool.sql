@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2013 at 03:52 PM
+-- Generation Time: Dec 18, 2013 at 01:18 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `condutor` (
 --
 
 INSERT INTO `condutor` (`utilizador_id`) VALUES
-(8);
+(1);
 
 -- --------------------------------------------------------
 
@@ -114,17 +114,18 @@ CREATE TABLE IF NOT EXISTS `itinerario` (
   `nome` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_local_has_condutor_condutor1_idx` (`condutor_utilizador_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `itinerario`
 --
 
 INSERT INTO `itinerario` (`id`, `condutor_utilizador_id`, `dia`, `lugares_livres`, `nome`) VALUES
-(1, 8, 'quarta', 4, 'Funchal- Machico'),
-(2, 8, 'segunda', 3, 'Funchal'),
-(4, 8, 'quarta', 0, 'Funchal'),
-(5, 8, 'Terça', 3, 'União');
+(1, 1, 'Quarta', 2, 'Funchal- Machico'),
+(2, 1, 'Segunda', 3, 'Funchal'),
+(4, 1, 'Quarta', 1, 'Funchal'),
+(5, 1, 'Terça', 2, 'União'),
+(6, 1, 'Sábado', 2, 'Casa-Trabalho');
 
 -- --------------------------------------------------------
 
@@ -152,9 +153,13 @@ INSERT INTO `itinerario_has_local` (`itinerario_id`, `local_id`, `hora`, `tolera
 (1, 2, '11:30:00', 5),
 (1, 3, '12:00:00', 5),
 (1, 15, '12:45:00', 10),
-(4, 2, '11:30:00', 15),
-(4, 7, '11:40:00', 10),
-(4, 15, '12:45:00', 15);
+(2, 3, '08:00:00', 15),
+(2, 47, '02:00:00', 15),
+(4, 2, '11:30:00', 10),
+(4, 4, '05:40:00', 15),
+(4, 6, '11:40:00', 15),
+(5, 32, '03:00:00', 15),
+(5, 38, '03:30:00', 15);
 
 -- --------------------------------------------------------
 
@@ -182,7 +187,7 @@ INSERT INTO `local` (`id`, `freguesia_id`, `nome`) VALUES
 (4, 4, 'Igreja'),
 (5, 5, 'Igreja'),
 (6, 6, 'Igreja'),
-(7, 6, 'Igreja'),
+(7, 7, 'Igreja'),
 (8, 6, 'Lido'),
 (9, 6, 'Ponta Gorda'),
 (10, 6, 'Forúm Madeira'),
@@ -262,8 +267,8 @@ CREATE TABLE IF NOT EXISTS `passageiro` (
 --
 
 INSERT INTO `passageiro` (`utilizador_id`) VALUES
-(12),
-(13);
+(2),
+(3);
 
 -- --------------------------------------------------------
 
@@ -283,16 +288,16 @@ CREATE TABLE IF NOT EXISTS `utilizador` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `telemovel_UNIQUE` (`telemovel`),
   UNIQUE KEY `mail_UNIQUE` (`mail`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `utilizador`
 --
 
 INSERT INTO `utilizador` (`id`, `password`, `salt`, `nome`, `mail`, `telemovel`, `morada`) VALUES
-(8, 'de0581a85c82d55004c0cfcae19e16041d42e4014c566eae7d82bbe7a1d95af35788860f46c5df78af3e870f00beb5711dcd982a561c5d0d476e5f8aa1ab93f7', '1˜ø°LÎœ$ö¬Íß®©·áÿ%‘Øý˜a8F?èMÒ²r—öú§ÑH=eˆÔYÕhº€ü¢RB¾ ', 'Teste_condutor', 'condutor@c.c', 123456789, ''),
-(12, 'd6b818bb52e528291424a2f0728a6943343129d9c83397a882c94a19bc2f85aa3b15b3a212356cb07b19ac72308be940bb3db9fd04e126e2a55269b70a712111', 'í|ã¶\0]ÙºÞêþÉå&ˆn`IüX}[4y GU9eZŽŽ½9ÝHí¿ûÈëØ¤o]õ8ñXµzÔ=—V', 'Teste_passageiro', 'passageiro@p.p', 213456789, ''),
-(13, '71183f67b84f8ad3768d73199ffa127e0f01ccad8fd6991852fc19e361ad37ca1ee8d63f82d436a8da672aed8b626931a68b90fc767a48e16f6ab7633ca7b57d', '', 'Francisco', 'fyn64@live.com.pt', 971222222, 'Estreito');
+(1, 'de0581a85c82d55004c0cfcae19e16041d42e4014c566eae7d82bbe7a1d95af35788860f46c5df78af3e870f00beb5711dcd982a561c5d0d476e5f8aa1ab93f7', '1˜ø°LÎœ$ö¬Íß®©·áÿ%‘Øý˜a8F?èMÒ²r—öú§ÑH=eˆÔYÕhº€ü¢RB¾ ', 'Teste_condutor', 'condutor@c.c', 123456789, ''),
+(2, 'd6b818bb52e528291424a2f0728a6943343129d9c83397a882c94a19bc2f85aa3b15b3a212356cb07b19ac72308be940bb3db9fd04e126e2a55269b70a712111', 'í|ã¶\0]ÙºÞêþÉå&ˆn`IüX}[4y GU9eZŽŽ½9ÝHí¿ûÈëØ¤o]õ8ñXµzÔ=—V', 'Teste_passageiro', 'passageiro@p.p', 213456789, ''),
+(3, 'c8bd89430924cef566003a6d511a862cc6ca622026998037870b38df42d056a51b85e7a812c0c029df359287d47c02c57d45df2d47537bc0437e5f7a290a5fb4', 'pg0+±µÊQJ<ƒÓ\0ú¨ú~ü1Ð&?×É$£ßžo=ú±ãáQ!ùìö<9¨,#aþ*aK\rÝ¥~LÜ', 'Francisco', 'passageiro1@p.p', 961212234, 'Estreito');
 
 -- --------------------------------------------------------
 
@@ -310,16 +315,17 @@ CREATE TABLE IF NOT EXISTS `viagem` (
   `fim` varchar(30) NOT NULL,
   `data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `fk_viagem_condutor1_idx` (`condutor_utilizador_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+  KEY `fk_viagem_condutor1_idx` (`condutor_utilizador_id`),
+  KEY `fk_viagem_itinerario1_idx` (`itinerario_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `viagem`
 --
 
 INSERT INTO `viagem` (`id`, `itinerario_id`, `avaliacao_condutor`, `condutor_utilizador_id`, `inicio`, `fim`, `data`) VALUES
-(1, 0, NULL, 8, '', '', '0000-00-00 00:00:00'),
-(2, 0, NULL, 8, '', '', '2013-12-08 20:51:23');
+(2, 5, 0, 1, '32', '38', '2013-12-17 21:44:48'),
+(3, 4, 0, 1, '2', '6', '2013-12-17 21:57:24');
 
 -- --------------------------------------------------------
 
@@ -336,6 +342,14 @@ CREATE TABLE IF NOT EXISTS `viagem_passageiro` (
   KEY `fk_viagem_has_passageiro_passageiro1_idx` (`passageiro_utilizador_id`),
   KEY `fk_viagem_has_passageiro_viagem1_idx` (`viagem_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `viagem_passageiro`
+--
+
+INSERT INTO `viagem_passageiro` (`viagem_id`, `passageiro_utilizador_id`, `avaliacao_passageiro`) VALUES
+(2, 2, -1),
+(3, 2, -1);
 
 --
 -- Constraints for dumped tables
@@ -390,7 +404,8 @@ ALTER TABLE `passageiro`
 -- Constraints for table `viagem`
 --
 ALTER TABLE `viagem`
-  ADD CONSTRAINT `fk_viagem_condutor1` FOREIGN KEY (`condutor_utilizador_id`) REFERENCES `condutor` (`utilizador_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_viagem_condutor1` FOREIGN KEY (`condutor_utilizador_id`) REFERENCES `condutor` (`utilizador_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_viagem_itinerario1` FOREIGN KEY (`itinerario_id`) REFERENCES `itinerario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `viagem_passageiro`
