@@ -61,7 +61,8 @@
 
 	//PREPARACAO DA HASH E SALT DA PALAVRA PASSE
 
-	$salt = mcrypt_create_iv(64, MCRYPT_DEV_URANDOM);
+	//$salt = mcrypt_create_iv(64, MCRYPT_DEV_URANDOM);  // isto seria otimo mas da carateres bue eskisitos k dpx nao passam bem em utf8 e fica difentes e n da pa comparar direito
+	$salt = substr(sha1(rand()), 0, 128);
 
 	$salted_password = $password.$salt;	//adiciona salt à hash
 	$salted_hash = hash('SHA512', $salted_password);
