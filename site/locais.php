@@ -18,6 +18,14 @@
 			echo '</tr>';
 			while($row = mysql_fetch_array($result_itinerario))
 			{
+				$query_viagem = 'SELECT id FROM viagem WHERE viagem.itinerario_id = "'.$row['id'].'"';
+				$result_viagem = mysql_query($query_viagem);
+
+				if(mysql_num_rows($result_viagem) == 0)
+					$tem_viagens = 0;
+				else
+					$tem_viagens = 1;
+			
 				$query_local = 'SELECT local.id FROM local JOIN itinerario_has_local ON local.id = itinerario_has_local.local_id
 													JOIN itinerario ON itinerario.id = itinerario_has_local.itinerario_id
 													WHERE itinerario.id = "'.$row['id'].'"';
@@ -29,19 +37,23 @@
 				else 
 					echo '<tr class="itinerario_completo">';
 				?>
-					
-						<td style="width : 173px;" onclick="window.location='locais.php?i=<?=$row['id']?>'"><?=$row["nome"]?></td>
+						<td style="width : 173px;" onclick="window.location='locais.php?i=<?=$row['id']?>'"><?php if($tem_viagens) echo "*"; echo $row["nome"];?></td>
 						<td style="width : 55px;" onclick="window.location='locais.php?i=<?=$row['id']?>'"><?=$row["dia"]?></td>
 						<td style="width : 1px;" onclick="window.location='locais.php?i=<?=$row['id']?>'"><?=$row["lugares_livres"]?></td>
 						<td style="width : 1px;">
 							<form method="POST" action="apagar_itinerario.php">
 								<input type="hidden" name="itinerario_id" value="<?=$row['id']?>">
-								<input type="button" class="apagar_local" value="X" onClick="if(confirm('Tem a certeza que pretende apagar este local deste itinerário ?')) {this.form.submit();}">
+							<?php if($tem_viagens) { ?>
+								<input type="button" class="apagar_local" value="X" onClick="if(confirm('Itinerário com viagens marcadas.O seu rating baixará em 10 pontos. Apagar mesmo assim ?')) {this.form.submit();}">
+							<?php }else { ?>
+								<input type="button" class="apagar_local" value="X" onClick="if(confirm('Tem a certeza que pretende apagar este itinerário ?')) {this.form.submit();}">
+							<?php } ?>
 							</form>
 						</td>
 					</tr>
 	  <?php }
 		echo '</table>';
+		echo '<p align="left">* Já tem viagens marcadas</p>';
 	}
 
 	function listarLocais()
@@ -60,6 +72,14 @@
 										AND itinerario.condutor_utilizador_id="'.$_SESSION['user_id'].'" 
 										ORDER BY hora';
 			$result_local = mysql_query($query_local);
+			
+			$query_viagem = 'SELECT id FROM viagem WHERE viagem.itinerario_id = "'.$_REQUEST['i'].'"';
+			$result_viagem = mysql_query($query_viagem);
+
+			if(mysql_num_rows($result_viagem) == 0)
+				$tem_viagens = 0;
+			else
+				$tem_viagens = 1;
 			
 			if(mysql_num_rows($result_local) == 0)
 			{
@@ -83,16 +103,24 @@
 						<td style="width : 100px;"><?=$row["local"]?></td>
 						<td style="width : 1px;"><?=substr($row["hora"],0,5)?></td>
 						<td style="width : 1px;"><?=$row["tolerancia"]?></td>
-						<td style="width : 1px;">
-							<form method="POST" action="apagar_local.php">
-								<input type="hidden" name="itinerario_id" value="<?=$row['itinerario_id']?>">
-								<input type="hidden" name="local_id" value="<?=$row['local_id']?>">
-								<input type="button" class="apagar_local" value="X" onClick="if(confirm('Tem a certeza que pretende apagar este local deste itinerário ?')) this.form.submit();">
-							</form>
-						</td>
+						<?php if(!$tem_viagens){	?>
+							<td style="width : 1px;">
+								<form method="POST" action="apagar_local.php">
+									<input type="hidden" name="itinerario_id" value="<?=$row['itinerario_id']?>">
+									<input type="hidden" name="local_id" value="<?=$row['local_id']?>">
+									<input type="button" class="apagar_local" value="X" onClick="if(confirm('Tem a certeza que pretende apagar este local deste itinerário ?')) this.form.submit();">
+								</form>
+							</td>
+						<?php } ?>
 					</tr>
 		  <?php }
 			echo '</table>';
+			if($tem_viagens)
+			{
+				echo '<p align="left">Não pode apagar locais porque existem viagens marcadas</p>';
+			}
+			if(mysql_num_rows($result_local) < 2)
+				echo '<p align="left">O itinerário precisa de ter pelo menos 2 locais</p>';
 			return true;
 		}
 		else
