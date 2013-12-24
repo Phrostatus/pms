@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.9
+-- version 4.0.4.1
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 24, 2013 at 01:11 PM
--- Server version: 5.6.14
--- PHP Version: 5.5.6
+-- Máquina: 127.0.0.1
+-- Data de Criação: 24-Dez-2013 às 13:17
+-- Versão do servidor: 5.5.32
+-- versão do PHP: 5.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `pms-carpool`
+-- Base de Dados: `pms-carpool`
 --
 CREATE DATABASE IF NOT EXISTS `pms-carpool` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `pms-carpool`;
@@ -25,7 +25,7 @@ USE `pms-carpool`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `concelho`
+-- Estrutura da tabela `concelho`
 --
 
 DROP TABLE IF EXISTS `concelho`;
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `concelho` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `concelho`
+-- Extraindo dados da tabela `concelho`
 --
 
 INSERT INTO `concelho` (`id`, `nome`) VALUES
@@ -47,27 +47,28 @@ INSERT INTO `concelho` (`id`, `nome`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `condutor`
+-- Estrutura da tabela `condutor`
 --
 
 DROP TABLE IF EXISTS `condutor`;
 CREATE TABLE IF NOT EXISTS `condutor` (
   `utilizador_id` int(10) unsigned NOT NULL,
+  `rating` float NOT NULL DEFAULT '0',
   PRIMARY KEY (`utilizador_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `condutor`
+-- Extraindo dados da tabela `condutor`
 --
 
-INSERT INTO `condutor` (`utilizador_id`) VALUES
-(1),
-(5);
+INSERT INTO `condutor` (`utilizador_id`, `rating`) VALUES
+(1, 0),
+(5, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `freguesia`
+-- Estrutura da tabela `freguesia`
 --
 
 DROP TABLE IF EXISTS `freguesia`;
@@ -80,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `freguesia` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
 
 --
--- Dumping data for table `freguesia`
+-- Extraindo dados da tabela `freguesia`
 --
 
 INSERT INTO `freguesia` (`id`, `concelho_id`, `nome`) VALUES
@@ -103,7 +104,7 @@ INSERT INTO `freguesia` (`id`, `concelho_id`, `nome`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `itinerario`
+-- Estrutura da tabela `itinerario`
 --
 
 DROP TABLE IF EXISTS `itinerario`;
@@ -118,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `itinerario` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
--- Dumping data for table `itinerario`
+-- Extraindo dados da tabela `itinerario`
 --
 
 INSERT INTO `itinerario` (`id`, `condutor_utilizador_id`, `dia`, `lugares_livres`, `nome`) VALUES
@@ -131,7 +132,7 @@ INSERT INTO `itinerario` (`id`, `condutor_utilizador_id`, `dia`, `lugares_livres
 -- --------------------------------------------------------
 
 --
--- Table structure for table `itinerario_has_local`
+-- Estrutura da tabela `itinerario_has_local`
 --
 
 DROP TABLE IF EXISTS `itinerario_has_local`;
@@ -146,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `itinerario_has_local` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `itinerario_has_local`
+-- Extraindo dados da tabela `itinerario_has_local`
 --
 
 INSERT INTO `itinerario_has_local` (`itinerario_id`, `local_id`, `hora`, `tolerancia`) VALUES
@@ -165,7 +166,7 @@ INSERT INTO `itinerario_has_local` (`itinerario_id`, `local_id`, `hora`, `tolera
 -- --------------------------------------------------------
 
 --
--- Table structure for table `local`
+-- Estrutura da tabela `local`
 --
 
 DROP TABLE IF EXISTS `local`;
@@ -178,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `local` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=50 ;
 
 --
--- Dumping data for table `local`
+-- Extraindo dados da tabela `local`
 --
 
 INSERT INTO `local` (`id`, `freguesia_id`, `nome`) VALUES
@@ -235,7 +236,7 @@ INSERT INTO `local` (`id`, `freguesia_id`, `nome`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `notificacao`
+-- Estrutura da tabela `notificacao`
 --
 
 DROP TABLE IF EXISTS `notificacao`;
@@ -246,6 +247,7 @@ CREATE TABLE IF NOT EXISTS `notificacao` (
   `lida` binary(1) NOT NULL,
   `emissor_id` int(10) unsigned NOT NULL,
   `recetor_id` int(10) unsigned NOT NULL,
+  `data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `fk_notificacao_utilizador1_idx` (`emissor_id`),
   KEY `fk_notificacao_utilizador2_idx` (`recetor_id`)
@@ -254,28 +256,29 @@ CREATE TABLE IF NOT EXISTS `notificacao` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `passageiro`
+-- Estrutura da tabela `passageiro`
 --
 
 DROP TABLE IF EXISTS `passageiro`;
 CREATE TABLE IF NOT EXISTS `passageiro` (
   `utilizador_id` int(10) unsigned NOT NULL,
+  `rating` float DEFAULT '0',
   PRIMARY KEY (`utilizador_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `passageiro`
+-- Extraindo dados da tabela `passageiro`
 --
 
-INSERT INTO `passageiro` (`utilizador_id`) VALUES
-(2),
-(3),
-(4);
+INSERT INTO `passageiro` (`utilizador_id`, `rating`) VALUES
+(2, 0),
+(3, 0),
+(4, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `utilizador`
+-- Estrutura da tabela `utilizador`
 --
 
 DROP TABLE IF EXISTS `utilizador`;
@@ -293,7 +296,7 @@ CREATE TABLE IF NOT EXISTS `utilizador` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
--- Dumping data for table `utilizador`
+-- Extraindo dados da tabela `utilizador`
 --
 
 INSERT INTO `utilizador` (`id`, `password`, `salt`, `nome`, `mail`, `telemovel`, `morada`) VALUES
@@ -306,14 +309,14 @@ INSERT INTO `utilizador` (`id`, `password`, `salt`, `nome`, `mail`, `telemovel`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `viagem`
+-- Estrutura da tabela `viagem`
 --
 
 DROP TABLE IF EXISTS `viagem`;
 CREATE TABLE IF NOT EXISTS `viagem` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `itinerario_id` int(11) NOT NULL,
-  `avaliacao_condutor` int(10) unsigned DEFAULT NULL,
+  `avaliacao_condutor` float unsigned DEFAULT '0',
   `condutor_utilizador_id` int(10) unsigned NOT NULL,
   `inicio` varchar(30) NOT NULL,
   `fim` varchar(30) NOT NULL,
@@ -324,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `viagem` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
--- Dumping data for table `viagem`
+-- Extraindo dados da tabela `viagem`
 --
 
 INSERT INTO `viagem` (`id`, `itinerario_id`, `avaliacao_condutor`, `condutor_utilizador_id`, `inicio`, `fim`, `data`) VALUES
@@ -335,21 +338,21 @@ INSERT INTO `viagem` (`id`, `itinerario_id`, `avaliacao_condutor`, `condutor_uti
 -- --------------------------------------------------------
 
 --
--- Table structure for table `viagem_passageiro`
+-- Estrutura da tabela `viagem_passageiro`
 --
 
 DROP TABLE IF EXISTS `viagem_passageiro`;
 CREATE TABLE IF NOT EXISTS `viagem_passageiro` (
   `viagem_id` int(11) NOT NULL,
   `passageiro_utilizador_id` int(10) unsigned NOT NULL,
-  `avaliacao_passageiro` int(11) NOT NULL,
+  `avaliacao_passageiro` float NOT NULL DEFAULT '-1',
   PRIMARY KEY (`viagem_id`,`passageiro_utilizador_id`),
   KEY `fk_viagem_has_passageiro_passageiro1_idx` (`passageiro_utilizador_id`),
   KEY `fk_viagem_has_passageiro_viagem1_idx` (`viagem_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `viagem_passageiro`
+-- Extraindo dados da tabela `viagem_passageiro`
 --
 
 INSERT INTO `viagem_passageiro` (`viagem_id`, `passageiro_utilizador_id`, `avaliacao_passageiro`) VALUES
@@ -364,59 +367,59 @@ INSERT INTO `viagem_passageiro` (`viagem_id`, `passageiro_utilizador_id`, `avali
 --
 
 --
--- Constraints for table `condutor`
+-- Limitadores para a tabela `condutor`
 --
 ALTER TABLE `condutor`
   ADD CONSTRAINT `fk_condutor_utilizador` FOREIGN KEY (`utilizador_id`) REFERENCES `utilizador` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `freguesia`
+-- Limitadores para a tabela `freguesia`
 --
 ALTER TABLE `freguesia`
   ADD CONSTRAINT `fk_freguesia_concelho1` FOREIGN KEY (`concelho_id`) REFERENCES `concelho` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `itinerario`
+-- Limitadores para a tabela `itinerario`
 --
 ALTER TABLE `itinerario`
   ADD CONSTRAINT `fk_local_has_condutor_condutor1` FOREIGN KEY (`condutor_utilizador_id`) REFERENCES `condutor` (`utilizador_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `itinerario_has_local`
+-- Limitadores para a tabela `itinerario_has_local`
 --
 ALTER TABLE `itinerario_has_local`
   ADD CONSTRAINT `fk_itinerario_has_local_itinerario1` FOREIGN KEY (`itinerario_id`) REFERENCES `itinerario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_itinerario_has_local_local1` FOREIGN KEY (`local_id`) REFERENCES `local` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `local`
+-- Limitadores para a tabela `local`
 --
 ALTER TABLE `local`
   ADD CONSTRAINT `fk_local_freguesia1` FOREIGN KEY (`freguesia_id`) REFERENCES `freguesia` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_local_viagem_freguesia1` FOREIGN KEY (`freguesia_id`) REFERENCES `freguesia` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `notificacao`
+-- Limitadores para a tabela `notificacao`
 --
 ALTER TABLE `notificacao`
   ADD CONSTRAINT `fk_notificacao_utilizador1` FOREIGN KEY (`emissor_id`) REFERENCES `utilizador` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_notificacao_utilizador2` FOREIGN KEY (`recetor_id`) REFERENCES `utilizador` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `passageiro`
+-- Limitadores para a tabela `passageiro`
 --
 ALTER TABLE `passageiro`
   ADD CONSTRAINT `fk_passageiro_utilizador1` FOREIGN KEY (`utilizador_id`) REFERENCES `utilizador` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `viagem`
+-- Limitadores para a tabela `viagem`
 --
 ALTER TABLE `viagem`
   ADD CONSTRAINT `fk_viagem_condutor1` FOREIGN KEY (`condutor_utilizador_id`) REFERENCES `condutor` (`utilizador_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_viagem_itinerario1` FOREIGN KEY (`itinerario_id`) REFERENCES `itinerario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `viagem_passageiro`
+-- Limitadores para a tabela `viagem_passageiro`
 --
 ALTER TABLE `viagem_passageiro`
   ADD CONSTRAINT `fk_viagem_has_passageiro_passageiro1` FOREIGN KEY (`passageiro_utilizador_id`) REFERENCES `passageiro` (`utilizador_id`) ON DELETE CASCADE ON UPDATE CASCADE,
