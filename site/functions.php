@@ -163,8 +163,27 @@
 		{
 			$query_notificacao = 'SELECT * FROM notificacao WHERE recetor_id = "'.$_SESSION['user_id'].'" AND lida="0"';
 			$result_notificacao = mysql_query($query_notificacao);
-			
 			$nao_lidas = mysql_num_rows($result_notificacao);
+			
+			if($_SESSION['tipo'] == "Condutor")	//descobrir o rating
+			{
+				$result_rating = mysql_query('SELECT rating FROM condutor WHERE utilizador_id = "'.$_SESSION['user_id'].'"');
+				$rating = mysql_fetch_array($result_rating)['rating'];
+			}
+			else if($_SESSION['tipo'] == "Passageiro")
+			{
+				$result_rating = mysql_query('SELECT rating FROM passageiro WHERE utilizador_id = "'.$_SESSION['user_id'].'"');
+				$rating = mysql_fetch_array($result_rating)['rating'];
+			}
+			else
+			{
+				$result_rating = mysql_query('SELECT rating FROM condutor WHERE utilizador_id = "'.$_SESSION['user_id'].'"');
+				$rating = mysql_fetch_array($result_rating)['rating'];
+				$result_rating = mysql_query('SELECT rating FROM passageiro WHERE utilizador_id = "'.$_SESSION['user_id'].'"');
+				$rating = $rating + mysql_fetch_array($result_rating)['rating'];
+				$rating = $rating / 2;
+			}
+				
 			
 			echo'<div class="account_div">
 					<p align="center"> Sessão Iniciada </p>
@@ -172,7 +191,7 @@
 					<p align="left"> Utilizador:'.
 						mysql_result($result, 0, "mail").
 					'</p>
-					<p> &nbsp </p>
+					<p align="left">Rating: '.$rating.'</p>
 					<p> &nbsp </p>';
 					
 					if($nao_lidas == 0)
