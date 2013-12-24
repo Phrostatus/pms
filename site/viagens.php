@@ -34,7 +34,7 @@
 		viagem.fim as FIM, viagem.inicio as INICIO
 		FROM viagem
 		JOIN itinerario ON itinerario.id = viagem.itinerario_id
-		WHERE viagem.condutor_utilizador_id =1
+		WHERE viagem.condutor_utilizador_id ='$id_utilizador'
 		GROUP BY itinerario.nome";
 	}
 	
@@ -122,7 +122,7 @@
 					$selecionar_passageiros=mysql_query("SELECT viagem.id AS VIAGEM_ID, viagem.inicio AS INICIO, viagem.fim AS FIM
 														FROM viagem
 														JOIN viagem_passageiro ON viagem.id = viagem_passageiro.viagem_id
-														WHERE viagem.itinerario_id ='$itinerario_id'
+														WHERE viagem.itinerario_id ='$itinerario_id' and viagem.condutor_utilizador_id='$id_utilizador'
 														 ");
 					
 					$num_passageiros_itinerario=mysql_num_rows($selecionar_passageiros);
@@ -131,7 +131,7 @@
 					$query_passageiros_restrito=mysql_query("SELECT viagem.id AS VIAGEM_ID, viagem.inicio AS INICIO, viagem.fim AS FIM
 														FROM viagem
 														JOIN viagem_passageiro ON viagem.id = viagem_passageiro.viagem_id
-														WHERE viagem.itinerario_id ='$itinerario_id' group by viagem.id");
+														WHERE viagem.itinerario_id ='$itinerario_id' and viagem.condutor_utilizador_id='$id_utilizador' group by viagem.id");
 	
 					while($row_selecionar_passageiros = mysql_fetch_array($query_passageiros_restrito))
 					{

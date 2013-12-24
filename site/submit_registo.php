@@ -12,9 +12,14 @@
     	$utilizador_passageiro = 0;
 
 	if(isset($_POST['condutor']) && $_POST['condutor'] == '1')
+	{
     	$utilizador_condutor = 1;
+	}
 	else
+	{
     	$utilizador_condutor = 0;
+		echo "CHEGOU AQUI!!!";
+	}
 
 	$password = $_POST['p'];	//é gerado um input p oculto onde é guardada a hash da pass
 
