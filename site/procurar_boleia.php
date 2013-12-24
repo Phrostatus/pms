@@ -78,6 +78,7 @@
 					?>
 					<form method="POST" action="marcar_viagem.php">
 						<input type="hidden" name="itinerario_id" value="<?=$rowItinerariosDia['ID_ITINERARIO']?>">
+						<input type="hidden" name="nome_itinerario" value="<?=$rowItinerariosDia['NOME']?>">
 						<input type="hidden" name="inicio" value="<?=$local_o?>">
 						<input type="hidden" name="final" value="<?=$local_d?>">
 						<input type="hidden" name="condutor" value="<?=$condutor_id?>">
