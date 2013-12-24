@@ -99,6 +99,14 @@ p
 	color:#FFF;
 }
 
+p.notificacao
+{
+	text-align:left;
+	height:30px;
+	padding:0 0 0 0;
+	margin:0 0 0 0;
+}
+
 p.erro
 {
 	text-align: center;
@@ -297,6 +305,37 @@ table.insere_local
 	margin-right:-8px;
 }
 
+table.notificacao tr td
+{
+	border:1px solid white;
+}
+
+table.notificacao tr
+{
+	border: 1px solid white;
+	color:white;
+}
+
+table.notificacao tr.notificacao_selecionada
+{
+	border: 1px solid white;
+	color:blue;
+}
+
+table.notificacao tr:hover
+{
+	border: 1px solid white;
+	color:white;
+	background-color:gray;
+}
+
+table.notificacao tr.notificacao_selecionada:hover
+{
+	border: 1px solid white;
+	color:yellow;
+	background-color:gray;
+}
+
 div.menuEsquerdo
 {
 	float:left;
@@ -314,6 +353,30 @@ div.menuDireito
 	float:left;
 	display:block;
 	width: 450px;
+	height: auto;
+	text-align: center;
+	word-wrap: break-word;
+
+	border: 1px solid white;
+}
+
+div.listaNotificacoes
+{
+	float:left;
+	display:block;
+	width: 370px;
+	height: auto;
+	text-align: center;
+	word-wrap: break-word;
+
+	border: 1px solid white;
+}
+
+div.notificacao
+{
+	float:left;
+	display:block;
+	width: 386px;
 	height: auto;
 	text-align: center;
 	word-wrap: break-word;

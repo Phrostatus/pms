@@ -123,7 +123,7 @@
 
 	function dadosPessoais($pagina_inicial, $result)
 	{
-		if($pagina_inicial == 1)
+		if($pagina_inicial == 1)			//   pagina inicial
 		{
 			echo "<div class='account_div'>
 				<p align='center'> <a href='registo.php'> Registo </a> </p>
@@ -141,7 +141,7 @@
 				</form>
 			</div>";
 		}
-		else if($pagina_inicial == 2) //registo
+		else if($pagina_inicial == 2)		 //registo (tira o autofocus do input pk dos inputs do registo)
 		{
 			echo "<div class='account_div'>
 				<p align='center'> <a href='registo.php'> Registo </a> </p>
@@ -159,8 +159,13 @@
 				</form>
 			</div>";
 		}
-		else
+		else				// o resto das paginas dpx d fazer login
 		{
+			$query_notificacao = 'SELECT * FROM notificacao WHERE recetor_id = "'.$_SESSION['user_id'].'" AND lida="0"';
+			$result_notificacao = mysql_query($query_notificacao);
+			
+			$nao_lidas = mysql_num_rows($result_notificacao);
+			
 			echo'<div class="account_div">
 					<p align="center"> Sessão Iniciada </p>
 					<p align="left"> Tipo: '.$_SESSION['tipo'].'</p>
@@ -168,8 +173,17 @@
 						mysql_result($result, 0, "mail").
 					'</p>
 					<p> &nbsp </p>
-					<p> &nbsp </p>
-					<p> &nbsp </p>
+					<p> &nbsp </p>';
+					
+					if($nao_lidas == 0)
+						echo '<a href="notificacao.php"><p>Não tem mensagens novas</p></a>';
+					else if($nao_lidas == 1)
+						echo '<a href="notificacao.php"><p>Tem 1 mensagem nova</p></a>';
+					else
+						echo '<a href="notificacao.php"><p>Tem '.$nao_lidas.' mensagens novas</p></a>';
+					
+					
+				echo '<p> &nbsp </p>
 					<p> &nbsp </p>
 					<p align="center"> <a href="logout.php"> Logout </a></p>
 				</div>';
