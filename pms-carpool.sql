@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 18, 2013 at 05:43 PM
+-- Generation Time: Dec 24, 2013 at 01:11 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -61,7 +61,8 @@ CREATE TABLE IF NOT EXISTS `condutor` (
 --
 
 INSERT INTO `condutor` (`utilizador_id`) VALUES
-(1);
+(1),
+(5);
 
 -- --------------------------------------------------------
 
@@ -114,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `itinerario` (
   `nome` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_local_has_condutor_condutor1_idx` (`condutor_utilizador_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `itinerario`
@@ -124,7 +125,8 @@ INSERT INTO `itinerario` (`id`, `condutor_utilizador_id`, `dia`, `lugares_livres
 (1, 1, 'Quarta', 2, 'Funchal- Machico'),
 (2, 1, 'Segunda', 3, 'Funchal'),
 (5, 1, 'Terça', 0, 'União'),
-(6, 1, 'Sábado', 2, 'Casa-Trabalho');
+(6, 1, 'Sábado', 2, 'Casa-Trabalho'),
+(7, 5, 'Segunda', 0, 'Minha Zona');
 
 -- --------------------------------------------------------
 
@@ -156,7 +158,9 @@ INSERT INTO `itinerario_has_local` (`itinerario_id`, `local_id`, `hora`, `tolera
 (2, 47, '02:00:00', 15),
 (5, 32, '03:00:00', 15),
 (5, 38, '03:30:00', 15),
-(5, 48, '05:00:00', 15);
+(5, 48, '05:00:00', 15),
+(7, 32, '00:00:00', 15),
+(7, 38, '00:30:00', 5);
 
 -- --------------------------------------------------------
 
@@ -265,7 +269,8 @@ CREATE TABLE IF NOT EXISTS `passageiro` (
 
 INSERT INTO `passageiro` (`utilizador_id`) VALUES
 (2),
-(3);
+(3),
+(4);
 
 -- --------------------------------------------------------
 
@@ -285,7 +290,7 @@ CREATE TABLE IF NOT EXISTS `utilizador` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `telemovel_UNIQUE` (`telemovel`),
   UNIQUE KEY `mail_UNIQUE` (`mail`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `utilizador`
@@ -294,7 +299,9 @@ CREATE TABLE IF NOT EXISTS `utilizador` (
 INSERT INTO `utilizador` (`id`, `password`, `salt`, `nome`, `mail`, `telemovel`, `morada`) VALUES
 (1, 'de0581a85c82d55004c0cfcae19e16041d42e4014c566eae7d82bbe7a1d95af35788860f46c5df78af3e870f00beb5711dcd982a561c5d0d476e5f8aa1ab93f7', '1˜ø°LÎœ$ö¬Íß®©·áÿ%‘Øý˜a8F?èMÒ²r—öú§ÑH=eˆÔYÕhº€ü¢RB¾ ', 'Teste_condutor', 'condutor@c.c', 123456789, ''),
 (2, 'd6b818bb52e528291424a2f0728a6943343129d9c83397a882c94a19bc2f85aa3b15b3a212356cb07b19ac72308be940bb3db9fd04e126e2a55269b70a712111', 'í|ã¶\0]ÙºÞêþÉå&ˆn`IüX}[4y GU9eZŽŽ½9ÝHí¿ûÈëØ¤o]õ8ñXµzÔ=—V', 'Teste_passageiro', 'passageiro@p.p', 213456789, ''),
-(3, 'c8bd89430924cef566003a6d511a862cc6ca622026998037870b38df42d056a51b85e7a812c0c029df359287d47c02c57d45df2d47537bc0437e5f7a290a5fb4', 'pg0+±µÊQJ<ƒÓ\0ú¨ú~ü1Ð&?×É$£ßžo=ú±ãáQ!ùìö<9¨,#aþ*aK\rÝ¥~LÜ', 'Francisco', 'passageiro1@p.p', 961212234, 'Estreito');
+(3, 'c8bd89430924cef566003a6d511a862cc6ca622026998037870b38df42d056a51b85e7a812c0c029df359287d47c02c57d45df2d47537bc0437e5f7a290a5fb4', 'pg0+±µÊQJ<ƒÓ\0ú¨ú~ü1Ð&?×É$£ßžo=ú±ãáQ!ùìö<9¨,#aþ*aK\rÝ¥~LÜ', 'Francisco', 'passageiro1@p.p', 961212234, 'Estreito'),
+(4, '85fc2726c101c78b3a85b563141d68d3706720caed4ea5de5cb015645bda1074f36648b7322c0baddfba162dd2d9794b57a3ee0229fd3e9e93918b0d6bd08aa5', 'ý“bvõÝ<¥;“¾A‡eýsYÆ­?eî7…MœÖ8ˆDvç­ÒOµ/ÿšI\ZT	½Ë2Ï’·Ó·Ú-', 'Tiago', 'passageiro2@p.p', 912342455, 'Machico'),
+(5, '7c93432cf83ff23bcb8d805b99da1fa45d6346b51c33c0acf560283ba9a446a026180e5a9af08f526b69ee0b25cb4a94f4ed34fb5d157b453357d49302f25780', ';ºÐÏùˆ¢vŸëÍÇ¹5]* £`å2˜ ªfæ¶Ú¶´¿=][fHdl\0‰719W‘xLÅífü¾ÕGÔê9Ø', 'JOSE', 'condutor1@c.c', 971222222, 'Funchal');
 
 -- --------------------------------------------------------
 
@@ -314,7 +321,7 @@ CREATE TABLE IF NOT EXISTS `viagem` (
   PRIMARY KEY (`id`),
   KEY `fk_viagem_condutor1_idx` (`condutor_utilizador_id`),
   KEY `fk_viagem_itinerario1_idx` (`itinerario_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `viagem`
@@ -322,7 +329,8 @@ CREATE TABLE IF NOT EXISTS `viagem` (
 
 INSERT INTO `viagem` (`id`, `itinerario_id`, `avaliacao_condutor`, `condutor_utilizador_id`, `inicio`, `fim`, `data`) VALUES
 (2, 5, 0, 1, '32', '38', '2013-12-17 21:44:48'),
-(7, 5, 0, 1, '38', '48', '2013-12-18 12:26:34');
+(7, 5, 0, 1, '38', '48', '2013-12-18 12:26:34'),
+(8, 7, 0, 5, '32', '38', '2013-12-19 12:15:01');
 
 -- --------------------------------------------------------
 
@@ -346,8 +354,10 @@ CREATE TABLE IF NOT EXISTS `viagem_passageiro` (
 
 INSERT INTO `viagem_passageiro` (`viagem_id`, `passageiro_utilizador_id`, `avaliacao_passageiro`) VALUES
 (2, 2, -1),
+(2, 3, -1),
 (7, 2, -1),
-(7, 3, -1);
+(7, 3, -1),
+(8, 3, -1);
 
 --
 -- Constraints for dumped tables
