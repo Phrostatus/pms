@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	include "functions.php";
 	
 	sec_session_start();
@@ -9,7 +9,7 @@
 		ligar_BD();
 		$query = "SELECT * FROM utilizador 	
 		WHERE id = \"".$_SESSION['user_id']."\"";
-		$result = mysql_query($query);				//s� para poder mostrar os dados pessoais na barra lateral
+		$result = mysql_query($query);				//só para poder mostrar os dados pessoais na barra lateral
 ?>
 		<html>
 			<link rel="stylesheet" type="text/css" href="estilos.css" media="screen" />

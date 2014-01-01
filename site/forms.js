@@ -211,3 +211,16 @@ function selecionarOpcoes_locais(itinerario)
 													"&lo=" + select_o_local[select_o_local.selectedIndex].value;	
 }
 
+// NOVA MENSAGEM LIMITAR CARATERES
+function limitarCaracteres(input, max_char)
+{
+	if(input.value.length > max_char)
+	{
+		final_input = slice(input.value(0, input.value.length - 1));
+		document.getElementById("caracteres_restantes").value = max_char;
+	}
+	else
+	{
+		document.getElementById("caracteres_restantes").innerHTML = max_char - input.value.length;
+	}
+}

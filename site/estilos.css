@@ -155,6 +155,15 @@ label.registo
 	display:block;
 }
 
+label.nova_notificacao
+{
+
+	float:left;
+	display:block;
+	width:110px;
+	
+}
+
 div.registo_item
 {
 	display:block;
@@ -211,6 +220,7 @@ div.rodape
 
 legend
 {
+	text-align:center;
 	color:white;
 }
 
@@ -398,11 +408,6 @@ div.menuBoleia_Origem
 	
 }
 
-/*td 
-{
-	text-align:center;
-}*/
-
 div.menuBoleia_Destino
 {
 	float:left;
@@ -413,6 +418,17 @@ div.menuBoleia_Destino
 	word-wrap: break-word;
 	
 	border: 1px solid white;
+}
+
+textarea.notificacao
+{
+	float:left;
+	display:block;
+	width:400px;
+	max-width:400px;
+	
+	height:200px;
+	max-height:200px;
 }
 
 

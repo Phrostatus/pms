@@ -16,9 +16,9 @@
 			<body>
 				<div class="body">
 					<?php cabecalho(2); ?>
-						<div class="main">
+					<div class="main">
 						BALBLABLABLA AKIBALBLABLABLA AKIBALBLABLABLA AKIBkjsdjhdasfsdsjfskajfhakdfhackajskcakbcac
-						</div>
+					</div>
 					<?php dadosPessoais(0, $result); ?>
 					<?php rodape(); ?>
 				</div>
