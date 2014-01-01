@@ -87,7 +87,7 @@
 					
 					if ($contar==0)
 					{
-					echo "<table><tr><td>ITINERARIO</td><td>CONDUTOR</td><td>TELEMOVEL</td><td>EMAIL</td><td>DIA</td><td>INICIO</td></td><td>HORA</td><td>FIM</td></td><td>HORA</td></tr>";
+					echo "<table class='locais_itinerario'><tr><td>ITINERARIO</td><td>CONDUTOR</td><td>TELEMOVEL</td><td>EMAIL</td><td>DIA</td><td>INICIO</td></td><td>HORA</td><td>FIM</td></td><td>HORA</td><td>C</td><td>M</td></tr>";
 					$contar=1;
 					}
 					?>
@@ -101,21 +101,25 @@
 					<td><?php echo  $hora_inic?></td>
 					<td><?php echo  $local_fi?></td>
 					<td><?php echo  $hora_fi?></td>
-					
+								
 					<td><form method="POST" action="cancelar_viagem.php">
 					<input type="hidden" name="itinerario_id" value="<?=$row_viagens['ITINERARIO_ID']?>">
 					<input type="hidden" name="viagem_id" value="<?=$row_viagens['VIAGEM_ID']?>">
-					<input type="button"  value="Cancelar" onClick="if(confirm('Tem a certeza que quer cancelar viagem ?')) {this.form.submit();}">
+					<input type="button"  value="C" onClick="if(confirm('Tem a certeza que quer cancelar viagem ?')) {this.form.submit();}">
 					</form>
-					<td>
+					<td><form method='POST' action='nova_notificacao.php'>
+								<input type='hidden' name='r' value='<?=$id_condutor?>'>
+								<input type='button'  value='M'  onClick="if(confirm('Que enviar mensagem ?')) {this.form.submit();}">
+								</form></td>
 					<?php
+					
 					echo"</tr>";
 				}
 				else
 				{
 					if ($contar==0)
 					{
-					echo "<table class='locais_itinerario'><tr><td>ITINERARIO</td><td>HORA</td><td>INICIO</td><td>HORA</td><td>FIM</td><td>HORA</td><td>PASSAGEIRO</td><td>TELEMOVEL</td><td>EMAIL</td></tr>";
+					echo "<table class='locais_itinerario'><tr><td>ITINERARIO</td><td>HORA</td><td>INICIO</td><td>HORA</td><td>FIM</td><td>HORA</td><td>PASSAGEIRO</td><td>TELEMOVEL</td><td>EMAIL</td><td>M</td></tr>";
 					$contar=1;
 					}
 					
@@ -169,7 +173,7 @@
 						
 						while($row_total_locais = mysql_fetch_array($total_locais_pesquisar))
 						{
-							$local_viagem=mysql_query("SELECT utilizador.nome AS NOME, utilizador.mail AS EMAIL, utilizador.telemovel AS TELEMOVEL
+							$local_viagem=mysql_query("SELECT utilizador.nome AS NOME, utilizador.id as ID, utilizador.mail AS EMAIL, utilizador.telemovel AS TELEMOVEL
 										FROM viagem_passageiro
 										JOIN passageiro ON passageiro.utilizador_id = viagem_passageiro.passageiro_utilizador_id
 										JOIN utilizador ON passageiro.utilizador_id = utilizador.id
@@ -177,9 +181,19 @@
 								$numero_s=mysql_num_rows($local_viagem);
 							while($row_local_viagem = mysql_fetch_array($local_viagem))
 							{
+								$id_utilizador1=$row_local_viagem['ID'];
 								echo "<td>".$row_local_viagem['NOME']."</td>";
 								echo "<td>".$row_local_viagem['TELEMOVEL']."</td>";
 								echo "<td>".$row_local_viagem['EMAIL']."</td>";
+								?>
+								
+								<td><form method='POST' action='nova_notificacao.php'>
+								<input type='hidden' name='r' value='<?=$id_utilizador1?>'>
+								<input type='button'  value='M'  onClick="if(confirm('Que enviar mensagem ?')) {this.form.submit();}">
+								</form></td>
+								
+								<?php
+							
 								
 								
 								if($numero_s>1)
@@ -196,6 +210,8 @@
 				}
 			}
 			echo "</table>";
+			if($passageiro_t!=1)
+			echo "<b>C</b> - Cancelar <br>";
 		}
 		else 
 			echo "<center><h3>Não tem viagens marcadas</h3></center>";
@@ -213,6 +229,7 @@
 						<?php 
 						mostrarViagens();
 						?>
+						<b>M</b> - Mensagem Privada<br>
 					</div>
 					<?php dadosPessoais(0, $result); ?>
 					<?php rodape(); ?>
