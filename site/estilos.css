@@ -16,8 +16,23 @@ table tr th
 
 table tr td
 {
-	border:1px solid white;
 	font:13px verdana,arial,Tahoma, Sans-serif;
+}
+
+b
+{
+	font:13px verdana,arial,Tahoma, Sans-serif;
+}
+
+p.legend
+{
+	color:white;
+	margin: 0 0 0 0;
+}
+
+a
+{
+	color:white;
 }
 
 /*     ####### FIM FONTS ###########    */
@@ -68,6 +83,11 @@ ul.menu
 	padding:0 0 0 0;
 	float:middle;
 	vertical-align:middle;
+}
+
+ul a
+{
+	text-decoration:none;
 }
 
 li.menu
@@ -254,7 +274,7 @@ legend
 
 table tr td input
 {
-	margin-top:10px;
+	margin-top:-1px;
 }
 
 table
@@ -335,6 +355,11 @@ table.insere_itinerario
 {
 	margin-left:-8px;
 	margin-right:-8px;
+}
+
+table.insere_itinerario tr
+{
+	color:white;
 }
 
 table.insere_local
