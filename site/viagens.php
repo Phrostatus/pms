@@ -229,7 +229,7 @@
 						<?php 
 						mostrarViagens();
 						?>
-						<b>M</b> - Mensagem Privada<br>
+						<p class="legend"><b>M</b> - Mensagem Privada</p>
 					</div>
 					<?php dadosPessoais(0, $result); ?>
 					<?php rodape(); ?>
