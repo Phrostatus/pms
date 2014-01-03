@@ -1,3 +1,27 @@
+p,div,label,li
+{
+	font:14px verdana,arial,Tahoma, Sans-serif;
+}
+
+input
+{
+	font:13px verdana,arial,Tahoma, Sans-serif;
+}
+
+table tr th
+{
+	color:white;
+	font:15px verdana,arial,Tahoma, Sans-serif;
+}
+
+table tr td
+{
+	border:1px solid white;
+	font:13px verdana,arial,Tahoma, Sans-serif;
+}
+
+/*     ####### FIM FONTS ###########    */
+
 body
 {
 	background-image:url(imagens/fundo.png);
@@ -32,7 +56,7 @@ div.menu
 {
 	background-color:#333;
 	width: 950px;
-	height: 50px;
+	height: 46px;
 	text-align: center;
 	word-wrap: break-word;
 
@@ -41,18 +65,20 @@ div.menu
 
 ul.menu
 {
+	padding:0 0 0 0;
 	float:middle;
 	vertical-align:middle;
 }
 
 li.menu
 {
+	text-align:center;
 	display: inline;
 	padding-right: 25px;
 	padding-left: 25px;
 	padding-bottom:15px;
-	padding-top:15px;
-	margin:0 -3 0 -3;
+	padding-top:14px;
+	margin:-0 -3 0 -3;
 	color:#DDD;
 	font-weight:bold;
 	background-color:#333;
@@ -105,6 +131,7 @@ p.notificacao
 	height:30px;
 	padding:0 0 0 0;
 	margin:0 0 0 0;
+	font:11px verdana,arial,Tahoma, Sans-serif;
 }
 
 p.erro
@@ -112,6 +139,7 @@ p.erro
 	text-align: center;
 	font-size: 15;
 	color: red;
+	font:11px verdana,arial,Tahoma, Sans-serif;
 }
 
 img.erro
@@ -224,14 +252,14 @@ legend
 	color:white;
 }
 
+table tr td input
+{
+	margin-top:10px;
+}
+
 table
 {
 	border-collapse: collapse;
-}
-
-table tr th
-{
-	color:white;
 }
 
 table.procurar_boleia_inserir

@@ -107,6 +107,8 @@
 								if($_SESSION['tipo'] == "Passageiro" || $_SESSION['tipo'] == "Condutor e Passageiro")
 									echo "<a href='procurar_boleia.php'><li class='menu'> Procurar Boleia </li></a>";
 								echo "<a href='viagens.php'><li class='menu'> Viagens Marcadas </li></a>
+								<a href='sobre.php'><li class='menu'>Sobre</li></a>
+								<a href='faq.php'><li class='menu'>FAQ</li></a>
 							</ul>
 						</nav>
 					</div>";

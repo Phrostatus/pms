@@ -87,7 +87,7 @@
 					
 					if ($contar==0)
 					{
-					echo "<table class='locais_itinerario'><tr><td>ITINERARIO</td><td>CONDUTOR</td><td>TELEMOVEL</td><td>EMAIL</td><td>DIA</td><td>INICIO</td></td><td>HORA</td><td>FIM</td></td><td>HORA</td><td>C</td><td>M</td></tr>";
+					echo "<table class='locais_local'><tr><td>ITINERARIO</td><td>CONDUTOR</td><td>TELEMOVEL</td><td>EMAIL</td><td>DIA</td><td>INICIO</td></td><td>HORA</td><td>FIM</td></td><td>HORA</td><td>C</td><td>M</td></tr>";
 					$contar=1;
 					}
 					?>
@@ -119,7 +119,7 @@
 				{
 					if ($contar==0)
 					{
-					echo "<table class='locais_itinerario'><tr><td>ITINERARIO</td><td>HORA</td><td>INICIO</td><td>HORA</td><td>FIM</td><td>HORA</td><td>PASSAGEIRO</td><td>TELEMOVEL</td><td>EMAIL</td><td>M</td></tr>";
+					echo "<table class='locais_local'><tr><td>ITINERARIO</td><td>HORA</td><td>INICIO</td><td>HORA</td><td>FIM</td><td>HORA</td><td>PASSAGEIRO</td><td>TELEMOVEL</td><td>EMAIL</td><td>M</td></tr>";
 					$contar=1;
 					}
 					
