@@ -35,6 +35,10 @@ a
 	color:white;
 }
 
+a.text
+{
+	text-decoration:none;
+}
 /*     ####### FIM FONTS ###########    */
 
 body
@@ -56,12 +60,13 @@ div.body
 
 div.header_div
 {
-	background-image: url(imagens/header_div.png);
+	background-image: url(imagens/header_div.jpg);
+	background-position:center;
 	/*height: 100px;*/
 	width: 950px;
-	margin: auto;
-	padding-top: 87px;
-	padding-bottom: 87px;
+	margin: 0 0 0 0;
+	height:220px;
+	
 	text-align: center;
 
 	border: 1px solid white;

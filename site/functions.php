@@ -73,14 +73,16 @@
 
 	function cabecalho($pagina_inicial)
 	{
+		echo '<a class="text" href="index.php">
+				<div class="header_div">
+					<h6>&nbsp;</h6>
+					<h6>&nbsp;</h6>
+					CAR Pooling MAD
+				</div>
+			</a>';
 		if($pagina_inicial == 1)
 		{
-			echo "<a href='index.php'>
-					<div class='header_div'>
-						CAR Pooling MAD
-					</div>
-				</a>
-				<div class='menu'>
+			echo "<div class='menu'>
 					<nav>
 						<ul class='menu'>
 							<a href='index.php'><li class='menu'>P&aacute;gina Inicial</li></a>
@@ -93,12 +95,7 @@
 		}
 		else
 		{
-			echo 	"<a href='start_page.php'>
-						<div class='header_div'>
-							CAR Pooling MAD
-						</div>
-					</a>
-					<div class='menu'>
+			echo  "<div class='menu'>
 						<nav>
 							<ul class='menu'>
 								<a href='start_page.php'><li class='menu'> Página Inicial </li></a>";
