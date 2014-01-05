@@ -1,0 +1,3 @@
+1 - Passageiro marca viagem e manda mensagem para o condutor
+2 - Condutor apaga itinerario e manda mensagem para todos os passageiros que tem viagem marcada naquele itinerario
+3 - Mensagem pessoal entre utilizadores
