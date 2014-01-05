@@ -1,7 +1,7 @@
+Ôªø<?php include "functions.php"; ?>
+
 <script type="text/javascript" src="sha512.js"> </script>
 <script type="text/javascript" src="forms.js">	</script>
-
-<?php include "functions.php"; ?>
 
 <html>
     <link rel="stylesheet" type="text/css" href="estilos.css" media="screen" />
@@ -11,15 +11,15 @@
 			<div class="main">
                 <form name="registo" id="registo" method="post" action="submit_registo.php">
 					<div class="registo_item"><label class="registo">*Nome:</label> <input type="text" name="nome" id="nome" onBlur="verificar_registo()" autofocus=true/>
-	                    <div id="erro_nome" class="erro_registo" hidden="true">Nome inv·lido !</div>
+	                    <div id="erro_nome" class="erro_registo" hidden="true">Nome inv√°lido !</div>
                     </div>
 
 					<div class="registo_item"><label class="registo">*E-mail :</label>	<input type="text" name="mail" 	id="mail" onBlur="verificar_registo()"/>
-						<div id="erro_mail" class="erro_registo" hidden="true">E-mail inv·lido !</div>
+						<div id="erro_mail" class="erro_registo" hidden="true">E-mail inv√°lido !</div>
                     </div>
 
 					<div class="registo_item"><label class="registo">*Telem&oacute;vel: </label>	<input type="text" name="telemovel" id="telemovel" onKeyUp="verificar_registo()"/>
-						<div id="erro_telemovel" class="erro_registo" hidden="true">N˙mero de telÈmovel inv·lido !</div>
+						<div id="erro_telemovel" class="erro_registo" hidden="true">N√∫mero de telem√≥vel inv√°lido !</div>
                     </div>
 
 					<div class="registo_item"><label class="registo">Morada:</label> <input type="text" name="morada" id="morada" /></div>
@@ -32,12 +32,12 @@
 					</div>
 
 					<div class="registo_item"><label class="registo">*Password:</label> <input type="password" name="password" id="password" onBlur="verificar_registo()"/>
-                    	<div id="erro_password" class="erro_registo" hidden="true">Password inv·lida! (min 4 carateres)</div>
+                    	<div id="erro_password" class="erro_registo" hidden="true">Password inv√°lida-min 4 carateres</div>
                     </div>
 
-					<div class="registo_item"><label class="registo">*Confirma&ccedil;&atilde;o: </label>
+					<div class="registo_item"><label class="registo">*Confirma√ß√£o: </label>
                     			<input type="password" name="confirmacao" 	id="confirmacao" onKeyUp="verificar_registo()"/>
-						<div id="erro_confirmacao" class="erro_registo" hidden="true">Passwords n„o coincidem !</div>
+						<div id="erro_confirmacao" class="erro_registo" hidden="true">Passwords n√£o coincidem !</div>
         			</div>
 
                     <div class="registo_item"><input class="login" id="s1" type="button" name="s1" value="Registar" onClick="formhash(this.form, this.form.password);" disabled="true"/></div>

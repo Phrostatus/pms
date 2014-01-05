@@ -36,7 +36,7 @@
 											<label class=""><?=$recetor_mail?></label><br><br>
 										<label class="nova_notificacao">Mensagem</label>
 										<textarea maxLength="500" class="notificacao" name="mensagem" id="mensagem" onKeyUp="limitarCaracteres(mensagem, 500);"></textarea>
-											<br><br><br><br><br><br><br><br><br><br>
+											<br><br><br><br><br><br><br><br><br><br><br><br><br>
 										<label class="nova_notificacao">&nbsp;</label>
 											<label id="caracteres_restantes">500</label><label> caracteres restantes</label>
 										

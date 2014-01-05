@@ -211,7 +211,7 @@
 			}
 			echo "</table>";
 			if($passageiro_t!=1)
-			echo "<b>C</b> - Cancelar <br>";
+			echo "<p class='legend'><b>C</b> - Cancelar </p>";
 		}
 		else 
 			echo "<center><h3>Não tem viagens marcadas</h3></center>";
