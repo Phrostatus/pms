@@ -19,6 +19,12 @@ table tr td
 	font:13px verdana,arial,Tahoma, Sans-serif;
 }
 
+table tr td b
+{
+	font:13px verdana,arial,Tahoma, Sans-serif;
+	font-weight:bold;
+}
+
 b
 {
 	font:13px verdana,arial,Tahoma, Sans-serif;
@@ -299,6 +305,7 @@ table.procurar_boleia_inserir
 table.procurar_boleia_inserir tr td
 {
 	border: 1px solid white;
+	color:white;
 }
 
 table.locais_itinerario

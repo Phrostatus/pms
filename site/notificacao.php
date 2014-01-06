@@ -28,7 +28,7 @@
 							$query_notificacao = 'SELECT notificacao.id AS "notificacao.id", notificacao.tipo, notificacao.mensagem, notificacao.lida, notificacao.emissor_id, notificacao.recetor_id, notificacao.data, utilizador.mail
 													FROM notificacao
 													JOIN utilizador ON utilizador.id = notificacao.emissor_id
-														WHERE recetor_id = "'.$_SESSION['user_id'].'"';
+														WHERE recetor_id = "'.$_SESSION['user_id'].'" order by notificacao.data DESC';
 							$result_notificacao = mysql_query($query_notificacao);
 				
 							$num_notificacao = mysql_num_rows($result_notificacao);
