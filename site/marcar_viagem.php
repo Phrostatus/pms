@@ -33,7 +33,7 @@
 		mysql_query("INSERT INTO `viagem`(`itinerario_id`, `avaliacao_condutor`, `condutor_utilizador_id`, `inicio`, `fim`) 
 		VALUES ('$itinerario','-1','$condutor','$local_inicio','$local_final')");
 		$notificacao="INSERT INTO `notificacao`(`tipo`, `mensagem`, `lida`, `emissor_id`, `recetor_id`)
-		VALUES ('Viagem Marcada', '$mensagem', '0', '$passageiro', '$condutor')";
+		VALUES ('1', '$mensagem', '0', '$passageiro', '$condutor')";
 		mysql_query($notificacao);
 		$viagem_id=mysql_insert_id();
 		$query_marcar= mysql_query("INSERT INTO `viagem_passageiro`(`viagem_id`, `passageiro_utilizador_id`, `avaliacao_passageiro`) VALUES ('$viagem_id','$passageiro',-1)");
