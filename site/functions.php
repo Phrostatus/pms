@@ -16,6 +16,9 @@
 	{
 		ligar_BD();
 
+		if(!isset($_SESSION['user_id']))
+			return false;
+		
 		$query = "SELECT id, mail, password FROM utilizador
 			WHERE id = '".$_SESSION['user_id']."'";
 
