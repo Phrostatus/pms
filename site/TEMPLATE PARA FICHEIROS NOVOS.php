@@ -5,13 +5,15 @@
 				
 	if(login_check() == true)
 	{			// PROTECTED PAGE HERE
-	
 		ligar_BD();
 		$query = "SELECT * FROM utilizador 	
 		WHERE id = \"".$_SESSION['user_id']."\"";
 		$result = mysql_query($query);				//só para poder mostrar os dados pessoais na barra lateral
 ?>
 		<html>
+			<head>
+				<title>CarPool-MAD</title>
+			</head>
 			<link rel="stylesheet" type="text/css" href="estilos.css" media="screen" />
 			<body>
 				<div class="body">

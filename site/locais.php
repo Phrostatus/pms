@@ -144,6 +144,9 @@
 		$result_user = mysql_query($query_user);	//para poder mostrar os dados pessoais na barra lateral
 ?>
 		<html>
+			<head>
+				<title>CarPool-MAD</title>
+			</head>
 			<meta http-equiv="Content-type" content="text/html;charset=utf-8" />
 			<link rel="stylesheet" type="text/css" href="estilos.css" media="screen" />
 			<script type="text/javascript" src="forms.js">	</script>

@@ -4,6 +4,9 @@
 <script type="text/javascript" src="forms.js">	</script>
 
 <html>
+	<head>
+		<title>CarPool-MAD</title>
+	</head>
     <link rel="stylesheet" type="text/css" href="estilos.css" media="screen" />
 	<body>
     	<div class="body">
@@ -40,7 +43,7 @@
 						<div id="erro_confirmacao" class="erro_registo" hidden="true">Passwords não coincidem !</div>
         			</div>
 
-                    <div class="registo_item"><input class="login" id="s1" type="button" name="s1" value="Registar" onClick="formhash(this.form, this.form.password);" disabled="true"/></div>
+					<div class="registo_item"><center><input class="login" id="s1" type="button" name="s1" value="Registar" onClick="formhash(this.form, this.form.password);" disabled="true"/></center></div>
                 </form>
 				<?php
 					if(isset($_GET['erro']) && $_GET['erro'] == 1)

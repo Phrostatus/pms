@@ -1,4 +1,7 @@
 <html>
+<head>
+	<title>CarPool-MAD</title>
+</head>
 	<link rel="stylesheet" type="text/css" href="estilos.css" media="screen" />
 	<body>
 		<p class="erro">Necessita ter sess&atilde;o iniciada para aceder a esta p&aacute;gina. <br/></p>

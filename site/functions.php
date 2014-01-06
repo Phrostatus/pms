@@ -116,7 +116,8 @@
 	{
 		echo "<div class='rodape'>
 				Miguel Ribeiro, Francisco Barros, Juan Macedo, Pedro Camacho, Miguel Casaca<br>
-				Otimizado para: Google Chrome, Internet Explorer 
+				Processos e Métricas de Software - Universidade da Madeira © 2013<br>
+				Otimizado para: Google Chrome, Internet Explorer, Mozilla Firefox 
 			  </div>";
 	}
 

@@ -8,15 +8,18 @@
 
 
 <html>
+<head>
+	<title>CarPool-MAD</title>
+</head>
 	<link rel="stylesheet" type="text/css" href="estilos.css" media="screen" />
 	<body>
 		<div class="body">
 			<?php cabecalho(1); ?>
 			<div class="main">
-				<p> MAIN BODY HERE </p>
-				<p> blablabla </p>
-				<p> blablabla </p>
-				<p style="font-size: 0.6em;">
+				<p align=center> CAR Pooling MAD</p>
+				<p>&nbsp;</p>
+				<p>&nbsp;</p>
+				<p style="font-size: 1em;">
                 	©2008 Lorem Ipsum Dolar Lorem ipsum dolor sit amet, consetetur 
                     sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et 
 			        dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam 

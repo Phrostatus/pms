@@ -207,11 +207,17 @@ input.apagar_local
 	border:0;
 }
 
+label
+{
+	color:white;
+}
+
 label.registo
 {
 	width: 130px;
 	float:left;
 	display:block;
+	color:white;
 }
 
 label.nova_notificacao
@@ -230,7 +236,7 @@ div.registo_item
 	height:30px;
 	float:left;
 
-	border:1px solid white;
+
 }
 
 div.erro_registo
@@ -239,28 +245,7 @@ div.erro_registo
 	margin-left:10px;
 	color:#06F;
 	font-weight:bold;
-	border: 1px solid white;
 }
-
-/*div.local_paragem
-{
-	display:block;
-	float:left;
-	width:280px;
-	text-align:left;
-
-	border:1px solid white;
-}
-
-div.local_espera
-{
-	display:block;
-	float:right;
-	width:280px;
-	text-align:left;
-
-	border:1px solid white;
-}*/
 
 div.rodape
 {

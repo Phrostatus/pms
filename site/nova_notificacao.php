@@ -15,6 +15,9 @@
 		$result = mysql_query($query);				//só para poder mostrar os dados pessoais na barra lateral
 ?>
 		<html>
+			<head>
+				<title>CarPool-MAD</title>
+			</head>
 			<link rel="stylesheet" type="text/css" href="estilos.css" media="screen" />
 			<body>
 				<div class="body">

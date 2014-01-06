@@ -221,6 +221,9 @@
 }
 ?>
 		<html>
+			<head>
+				<title>CarPool-MAD</title>
+			</head>
 			<link rel="stylesheet" type="text/css" href="estilos.css" media="screen" />
 			<body>
 				<div class="body">
