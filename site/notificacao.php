@@ -89,7 +89,7 @@
 								$notificacao = mysql_fetch_array($result_notificacao);
 								
 								if($notificacao == false) //notificacao nao existe para este utilizador
-									echo '<p>Selecione uma mensgem</p>';
+									echo '<p>Selecione uma mensagem</p>';
 								else
 								{
 									echo '<p>Mensagem</p>';
