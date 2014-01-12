@@ -27,7 +27,7 @@
 						cabecalho(1);
 				?>
 				<div class="main">
-					<p>Sobre</p>
+					<p align=center>Sobre</p>
 					<p>Com crescente preços de combustível e transporte público, este já uma regalia de custo considerável nesta localização, e espaço de estacionamento a diminuir, possuir transporte privado e livre fica cada vez mais necessário mas de díficil obtenção.</p>
   <p>CarPool-MAD compromete-se a minimizar este problema através da cooperação entre a população usando carpooling: a partilha de transporte privado, preenchendo lugares que estariam outraem vazios.</p>
   <p>Este portal servirá para correr este serviço online, auxiliando a descoberta de possíveis condutores com horários semelhantes, ou ofereçer como um, e trocar mensagems e informação.</p>

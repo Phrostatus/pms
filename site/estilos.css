@@ -396,6 +396,27 @@ table.notificacao tr.notificacao_selecionada:hover
 	background-color:gray;
 }
 
+table.faq tr td.p
+{
+	color:yellow;
+	height:40px;
+	border:1px solid white;
+}
+
+table.faq tr td.r
+{
+	color:#ccc;
+	height:40px;
+	border:1px solid white;
+}
+
+table.faq tr.blank td
+{
+	color:white;
+	height:20px;
+	border:1px solid white;
+}
+
 div.menuEsquerdo
 {
 	float:left;
